@@ -1,0 +1,18 @@
+# This file is under Public Domain
+
+BLACK {color0}
+RED {color1}
+GREEN {color2}
+BROWN {color3}
+BLUE {color4}
+MAGENTA {color5}
+CYAN {color6}
+DGRAY {color8}
+LGRAY {color8}
+LRED {color9}
+LGREEN {color10}
+YELLOW {color11}
+LBLUE {color12}
+LCYAN {color13}
+LMAGENTA {color14}
+WHITE {color15}

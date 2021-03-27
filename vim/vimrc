@@ -1,1 +1,82 @@
-/home/jarmusz/.config/vim/vimrc
+source ~/.config/vim/autoload/plug.vim
+
+let mapleader =","
+
+call plug#begin('~/.config/vim/plugged')
+call plug#end()
+
+" snippets
+"source ~/.vim/snippets.vim
+
+" Custom paths
+set directory=$XDG_DATA_HOME/vim/swap
+set backupdir=$XDG_DATA_HOME/vim/backup
+set undodir=$XDG_DATA_HOME/vim/undo
+set viewdir=$XDG_DATA_HOME/vim/view
+set viminfo+='1000,n$XDG_DATA_HOME/vim/viminfo
+set runtimepath=$XDG_CONFIG_HOME/vim,$VIMRUNTIME,$XDG_CONFIG_HOME/vim/after
+
+set path+=**
+set wildmenu
+
+set number relativenumber
+ set nocompatible
+set showcmd
+"set paste
+filetype plugin indent on
+syntax enable
+
+" statusline
+set laststatus=2
+set statusline=%f%m\ [l%l/%L]\ [c%c]
+hi statusline cterm=NONE ctermbg=0 ctermfg=1
+
+" tab
+set tabstop=2
+set shiftwidth=2
+set softtabstop=2
+set autoindent
+set smartindent
+set smarttab
+set expandtab
+
+" window
+set splitright
+set splitbelow
+
+" Complete
+set complete+="kspell"
+
+"
+" Kbds
+" 
+" Buffers
+map H :bn<cr>
+map L :bp<cr>
+map B :buffers<cr>
+
+map <C-y> <Esc>"+y
+
+" Netrw
+let g:netrw_banner=0
+
+" Add semicolon on the eol
+map <C-l> <Esc>$a;<Esc>
+
+nmap <M-o> o<Esc>
+nmap <M-l> O<Esc>
+
+" spellcheck
+nmap <leader>enuss :setlocal spell! spelllang=en_us<CR>
+nmap <leader>pls :setlocal spell! spelllang=pl<CR>
+nmap <leader>des :setlocal spell! spelllang=de<CR>
+nmap <leader>nos :set nospell<CR>
+
+" make
+nmap <leader>m :mak<CR>
+
+" tex
+nmap <leader>bf a\textbf{}<Esc>i
+nmap <leader>it a\textit{}<Esc>i
+nmap <leader>tmi a\(  \)<Esc>hhi
+nmap <leader>tmo a\[  \]<Esc>hhi
