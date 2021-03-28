@@ -47,7 +47,7 @@ Can be formatted with the :prefix and :affix arguments."
 ;;; Simple Keybindings
 (define-mult-keys *root-map*
     '(("SunPrint_Screen"   . "run-shell-command flameshot gui")
-      ("s-SunPrint_Screen" . "run-shell-command flameshot full -p ~/utmp")
+      ("s-SunPrint_Screen" . "run-shell-command xfce4-screenshooter")
       ("s-f"               . "fullscreen")
       ("s-t"               . "float-this")
       ("s-T"               . "unfloat-this")))

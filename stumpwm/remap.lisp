@@ -16,6 +16,8 @@
     ("M-a"    . "C-a")
     ("C-v"    . "Next")
     ("M-v"    . "Prior")
+    ("C-d"    . "Delete")
+    ("M-d"    . "C-Delete")
     ("M-w"    . "C-c")
     ("C-w"    . "C-x")
     ("C-y"    . "C-v")
