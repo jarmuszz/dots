@@ -38,18 +38,18 @@
                     nil))))
 
 (define-remapped-keys
-    `( ,(remap/new ("Discord"
-                    ("C-x" . "C-k"))
-                   :emacs t)
+    (list (remap/new ("Discord"
+                      ("C-x" . "C-k"))
+                     :emacs t)
 
-       ,(remap/new ("Firefox"
-                    ("C-1"   . "C-b")     ; Bookmarks
-                    ("C-2"   . "C-h")     ; History menu
-                    ("C-N"   . "C-]")     ; History - forward
-                    ("C-P"   . "C-[")     ; Hsitory - back
-                    ("C-M-n" . "C-Next")  ; Prior Tab
-                    ("C-M-p" . "C-Prior") ; Next Tab
-                    ("C-x"   . "F6")      ; URL bar
-                    ("C-M-i" . "C-P")   ; Private tab
-                    ("C-M-t" . "C-w"))    ; Close a tab
-                   :emacs t)))
+          (remap/new ("Firefox"
+                      ("C-1"   . "C-b")     ; Bookmarks
+                      ("C-2"   . "C-h")     ; History menu
+                      ("C-N"   . "C-]")     ; History - forward
+                      ("C-P"   . "C-[")     ; Hsitory - back
+                      ("C-M-n" . "C-Next")  ; Prior Tab
+                      ("C-M-p" . "C-Prior") ; Next Tab
+                      ("C-x"   . "F6")      ; URL bar
+                      ("C-M-i" . "C-P")     ; Private tab
+                      ("C-M-t" . "C-w"))    ; Close a tab
+                     :emacs t)))
