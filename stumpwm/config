@@ -17,7 +17,7 @@
 
 (defmacro shell-cmd-neol (cmd &key (prefix "") (affix ""))
   "Runs shell command and returns the result without the EOL.
-Can be formatted with the :prefix and :affix arguments."
+Can be formatted with the :PREFIX and :AFFIX arguments."
   `(run-shell-command (strcon "echo -n " ,prefix "$(" ,cmd ")" ,affix) t))
 
 (defun define-mult-keys (map list)
@@ -25,7 +25,7 @@ Can be formatted with the :prefix and :affix arguments."
      do (define-key map (kbd key) cmd)))
 
 (defmacro inbtp (n min max)
-  "``Does n fit in range (min; max)?'' predicate."
+  "``Does N fit in range (MIN; MAX)?'' predicate."
   `(and (>= ,n ,min)
         (<= ,n ,max)))
 
@@ -34,6 +34,7 @@ Can be formatted with the :prefix and :affix arguments."
   (loop for f in filenames
        do (load (strcon confpath "/" f))))
 ;;; END of Meta
+
 
 ;;; Loading confs
 (loadconf "remap.lisp"

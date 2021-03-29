@@ -7,8 +7,8 @@
 
 ;;; Bar'sx content
 (defmacro ml-shell-cmd (cmd &key (prefix "") (affix ""))
-  "Runs shell-cmd-neol but wraps it into the '(:eval) which enables refreshing
-in mode line. Takes the same arguments as shell-cmd-neol."
+  "Runs SHELL-CMD-NEOL but wraps it into the '(:EVAL) which enables refreshing
+in mode line. Takes the same arguments as SHELL-CMD-NEOL."
   `'(:eval (shell-cmd-neol ,cmd :prefix ,prefix :affix ,affix)))
 
 (setf *group-format* "%t")
@@ -25,7 +25,6 @@ in mode line. Takes the same arguments as shell-cmd-neol."
             (ml-shell-cmd "amixer get Master | grep 'Front Left' | grep -o '[0-9]*%'"
                           :prefix "a:")
             " | "
-            ;(current-song)))
             (ml-shell-cmd "mpc current -f '%artist% - %title%'")))
 
 (setf *mode-line-timeout* 1)
@@ -36,7 +35,7 @@ in mode line. Takes the same arguments as shell-cmd-neol."
 
 ;;; Bar click hook
 (defmacro shell-cmd-as-list (&rest cmd)
-  "Wraps run-shell-command result into a single-atom list."
+  "Wraps RUN-SHELL-COMMAND result into a single-atom list."
   `(list (run-shell-command ,@cmd t)))
 
 ;; Click hook

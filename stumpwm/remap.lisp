@@ -32,6 +32,16 @@
     ("C-k"    . ("S-End" "C-x"))))
 
 (defmacro remap/new (body &key (emacs nil))
+  "Returns quoted expresion to use in DEFINE-REMAPPED-KEYS. (CAR BODY)
+is the window class and (CDR BODY) is a list of remaped keys with
+following structure:
+(\"Key to remap\" . \"Original key\")
+or
+(\"Key to remap\" . (\"Original key 1\" \"Original key 2\" \"Original key 3\" ...))
+
+If :EMACS is set to T then additionaly, emacs keybindings defined in
+REMAP/EMACS-KEYMAP are applied"
+  
   ``(,(lambda (win)
         (string-equal (window-class win) ,(car body)))
       ,@(append ',(cdr body)

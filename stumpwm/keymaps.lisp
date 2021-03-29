@@ -3,7 +3,7 @@
 (define-key *top-map* (kbd "s-e") *edit-map*)
 
 (defun emacs-cmd (&optional args)
-  "Returns stump command that runs emacs with
+  "Returns Stump command that runs emacs with
 specified ARGS"
   (strcon "run-shell-command emacs " args))
 
