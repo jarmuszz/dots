@@ -40,7 +40,8 @@ Can be formatted with the :PREFIX and :AFFIX arguments."
 (loadconf "remap.lisp"
           "keymaps.lisp"
           "media.lisp"
-          "modeline.lisp")
+          "modeline.lisp"
+          "books.lisp")
 ;;; END of Loading confs
 
 
