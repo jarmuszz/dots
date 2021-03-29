@@ -41,7 +41,8 @@ Can be formatted with the :PREFIX and :AFFIX arguments."
           "keymaps.lisp"
           "media.lisp"
           "modeline.lisp"
-          "books.lisp")
+          "books.lisp"
+          "prj.lisp")
 ;;; END of Loading confs
 
 
