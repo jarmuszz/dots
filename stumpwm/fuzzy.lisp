@@ -27,7 +27,8 @@ file will be opened in PROGRAM."
                          `(,@(loop for dir in directories
                                 collect (if (pathnamep dir)
                                             (namestring dir)
-                                            dir)))))))
+                                            dir)))
+                         prompt))))
 
     (if directory
         (progn

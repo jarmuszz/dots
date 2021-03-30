@@ -42,7 +42,8 @@ Can be formatted with the :PREFIX and :AFFIX arguments."
           "media.lisp"
           "modeline.lisp"
           "books.lisp"
-          "prj.lisp")
+          "prj.lisp"
+          "nonascii.lisp")
 ;;; END of Loading confs
 
 

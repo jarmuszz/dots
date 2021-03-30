@@ -1,6 +1,10 @@
+(defmacro defmap (name parent key)
+  "Defines NAME map bound to the KEY under the PARENT map."
+  `(progn (defparameter ,name (make-sparse-keymap))
+          (define-key ,parent (kbd ,key) ,name)))
+
 ;;; Edit map
-(defparameter *edit-map* (make-sparse-keymap))
-(define-key *top-map* (kbd "s-e") *edit-map*)
+(defmap *edit-map* *top-map* "s-e")
 
 (defun emacs-cmd (&optional args)
   "Returns Stump command that runs emacs with
@@ -20,8 +24,7 @@ specified ARGS"
 
 
 ;;; Launch map
-(defparameter *launch-map* (make-sparse-keymap))
-(define-key *root-map* (kbd "a") *launch-map*)
+(defmap *launch-map* *root-map* "a")
 
 (define-mult-keys *launch-map*
     '(("f" . "run-shell-command firefox")
