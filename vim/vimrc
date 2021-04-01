@@ -1,3 +1,5 @@
+" Obligatory: I don't really use vim. It's just as a fallback.
+
 source ~/.config/vim/autoload/plug.vim
 
 let mapleader =","
