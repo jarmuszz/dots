@@ -1,4 +1,4 @@
-;;; Bar'sx content
+;;; Mode line's contents
 (defmacro modeline/shell-cmd (cmd &key (prefix "") (affix ""))
   "Runs SHELL-CMD-NEOL but wraps it into the '(:EVAL) which enables refreshing
 in mode line. Takes the same arguments as SHELL-CMD-NEOL."
