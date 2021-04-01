@@ -1,5 +1,3 @@
-(ql:quickload "cl-fad")
-
 (defparameter fuzzy/home-dir (namestring (user-homedir-pathname)))
 
 (defun fuzzy/to-program (program directory &key (prompt "Select: "))

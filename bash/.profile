@@ -7,7 +7,7 @@ export PATH="${PATH}:/home/jarmusz/.local/bin/:/home/jarmusz/.scripts"
 export TERMINAl="xterm -ti vt340"
 export BROWSER="firefox"
 export EDITOR="vim"
-export VISUAL="emacsclient"
+export VISUAL="emacs"
 
 # XDG
 export XDG_CONFIG_HOME="/home/jarmusz/.config"

@@ -11,25 +11,26 @@
 in mode line. Takes the same arguments as SHELL-CMD-NEOL."
   `'(:eval (shell-cmd-neol ,cmd :prefix ,prefix :affix ,affix)))
 
-(setf *group-format* "%t")
-(setf *screen-mode-line-format*
-      (list "| "
-            "%g"
-            " | "
-            (modeline/shell-cmd "date +'%H:%M | %a %d'")
-            " | "
-            (modeline/shell-cmd "cat /sys/class/power_supply/BAT0/capacity"
-                          :prefix "b:"
-                          :affix "%")
-            " | "
-            (modeline/shell-cmd "amixer get Master | grep 'Front Left' | grep -o '[0-9]*%'"
-                          :prefix "a:")
-            " | "
-            (modeline/shell-cmd "mpc current -f '%artist% - %title%'")))
+(defun modeline/init-bar ()
+  (setf *group-format* "%t")
+  (setf *screen-mode-line-format*
+        (list "| "
+              "%g"
+              " | "
+              (modeline/shell-cmd "date +'%H:%M | %a %d'")
+              " | "
+              (modeline/shell-cmd "cat /sys/class/power_supply/BAT0/capacity"
+                                  :prefix "b:"
+                                  :affix "%")
+              " | "
+              (modeline/shell-cmd "amixer get Master | grep 'Front Left' | grep -o '[0-9]*%'"
+                                  :prefix "a:")
+              " | "
+              (modeline/shell-cmd "mpc current -f '%artist% - %title%'")))
 
-(setf *mode-line-timeout* 1)
+  (setf *mode-line-timeout* 1)
 
-(mode-line)
+  (mode-line))
 ;;; END of Bar's content
 
 
@@ -59,5 +60,10 @@ of defined ranges prints the X cord."
       (modeline/click-hook-handler a b x y
                            :action-list (cdr action-list)))))
 
-(add-hook stumpwm:*mode-line-click-hook* 'modeline/click-hook-handler)
+(defun modeline/init-hook ()
+  (add-hook stumpwm:*mode-line-click-hook* 'modeline/click-hook-handler))
 ;;; END of Bar click hook
+
+(defun modeline/init ()
+  (modeline/init-bar)
+  (modeline/init-hook))

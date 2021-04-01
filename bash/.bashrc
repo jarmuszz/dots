@@ -1,7 +1,5 @@
 [ "$UID" -eq "0" ] && export PS1="# " || export PS1="% "
 
-#export QT_QPA_PLATFORMTHEME=qt5ct
-
 shopt -s autocd
 
 export WINEPREFIX=~/.cache/wine
