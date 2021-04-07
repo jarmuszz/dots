@@ -2,7 +2,7 @@
 ;; Stumpwm configuration file
 
 (defparameter confpath "~/.config/stumpwm")
-(ql:quickload "cl-fad")
+(ql:quickload "cl-fad")  ; Used for fuzzy
 
 (init-load-path confpath)
 (add-to-load-path "~/.config/stumpwm")
@@ -16,7 +16,6 @@
 ;; Create the rest
 (loop for n from 2 to 10
       do (gnewbg (format nil "~A" n)))
-
 
 ;;; Loading confs
 (defun loadconf (&rest filenames)

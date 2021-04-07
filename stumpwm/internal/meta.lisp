@@ -16,7 +16,9 @@ Can be formatted with the :PREFIX and :AFFIX arguments."
   `(and (>= ,n ,min)
         (<= ,n ,max)))
 
+;; TODO - When using this macro, keymaps are named
+;;        ``Anonymous Keymap'' for some reason...
 (defmacro defmap (name parent key)
-  "Defines NAME map bound to the KEY under the PARENT map."
+  "Defines ``NAME'' map bound to the KEY under the PARENT map."
   `(progn (defparameter ,name (make-sparse-keymap))
           (define-key ,parent (kbd ,key) ,name)))

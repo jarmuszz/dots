@@ -20,6 +20,8 @@ file will be opened in PROGRAM."
                      "\"")))))
 
 (defun fuzzy/open-in-directory (programs directories &key (prompt "Select: "))
+  "Displays menu with DIRECTORIES for user to select. In selected
+directory PROGRAMS will be launched."
   (let ((directory (car (select-from-menu
                          (current-screen)
                          `(,@(loop for dir in directories
