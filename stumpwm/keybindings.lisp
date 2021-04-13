@@ -19,14 +19,16 @@
     '(("f" . "run-shell-command firefox")
       ("g" . "run-shell-command gimp")
       ("t" . "run-shell-command teams")
-      ("d" . "run-shell-command discord")
+      ("d" . "run-shell-command lightcord")
+      ("a" . "run-shell-command pavucontrol")
+      ("c" . "run-shell-command gcolor2")
       
       ("b" . "books/open")
       ("p" . "prj/open")))
 
 
 (define-mult-keys *edit-map*
-    `(("s"   . ,(emacs-cmd "-e 'slime'"))
+    `(("s"   . ,(emacs-cmd "--no-splash -e 'slime'"))
       ("d"   . ,(emacs-cmd "--no-splash --eval '(dired \".\" )'"))
       ("p"   . ,(emacs-cmd "--no-splash --eval '(dired \"~/prj\" )'"))
       ("o"   . ,(emacs-cmd "--no-splash ~/.cache/org/main.org"))

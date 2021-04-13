@@ -50,13 +50,14 @@ REMAP/EMACS-KEYMAP are applied"
                     nil))))
 (defun remap/init ()
   (define-remapped-keys
-      (list (remap/new ("Discord"
-                        ("C-x" . "C-k"))
+      (list (remap/new ("Lightcord"
+                        ("C-x" . "C-k"))     ; Quick-switcher
                        :emacs t)
 
             (remap/new ("Firefox"
                         ("C-1"   . "C-b")     ; Bookmarks
                         ("C-2"   . "C-h")     ; History menu
+                        ("C-3"   . "C-d")     ; Add to bookmarks
                         ("C-N"   . "C-]")     ; History - forward
                         ("C-P"   . "C-[")     ; Hsitory - back
                         ("C-M-n" . "C-Next")  ; Prior Tab
