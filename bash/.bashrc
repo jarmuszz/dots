@@ -1,14 +1,17 @@
+# My root and main account share the same home
 [ "$UID" -eq "0" ] && export PS1="# " || export PS1="% "
 
 shopt -s autocd
 
 export WINEPREFIX=~/.cache/wine
+export VIMINIT=
 
 alias sudo="doas"
+alias vim="nvim"
 
 alias e="emacs -nw"
 alias se="sudo emacs -nw"
-alias v="vim"
+alias v="nvim"
 alias vs="sudo vim"
 alias cl="clisp"
 alias rsbcl="rlwrap sbcl"
