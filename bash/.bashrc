@@ -4,7 +4,6 @@
 shopt -s autocd
 
 export WINEPREFIX=~/.cache/wine
-export VIMINIT=
 
 alias sudo="doas"
 alias vim="nvim"
@@ -12,6 +11,7 @@ alias vim="nvim"
 alias e="emacs -nw"
 alias se="sudo emacs -nw"
 alias v="nvim"
+alias n="nvim"
 alias vs="sudo vim"
 alias cl="clisp"
 alias rsbcl="rlwrap sbcl"

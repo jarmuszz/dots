@@ -49,8 +49,11 @@ set smartindent
 set softtabstop=2
 
 " Window splits
-set splitright
 set splitbelow
+set splitright
+
+" Complete
+set complete+="kspell"
 
 """"""""""""""""""""""""""""""
 " Appearance
@@ -60,10 +63,6 @@ set splitbelow
 set laststatus=2
 set statusline=%f%m\ [l%l/%L]\ [c%c]
 hi statusline cterm=NONE ctermbg=0 ctermfg=1
-
-
-" Complete
-set complete+="kspell"
 
 """"""""""""""""""""""""""""""
 " Kbds
@@ -78,7 +77,7 @@ nmap <leader>bd :bd<CR>
 nmap <leader>bD :bd!<CR>
 
 " Copying into system clipboard
-map <C-y> <Esc>"+y
+vmap <C-y> "+y
 
 " Clearing search highlight
 nmap <leader>/ :noh<CR>
@@ -102,5 +101,7 @@ function TexBinds()
   nmap <leader>it a\textit{}<Esc>i
   nmap <leader>tmi a\(  \)<Esc>hhi
   nmap <leader>tmo a\[  \]<Esc>hhi
+  nmap <leader>tbe a\begin{}<Esc>i
+  nmap <leader>ten a\end{}<Esc>i
 endfunction
 autocmd FileType tex call TexBinds()

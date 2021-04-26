@@ -4,10 +4,11 @@
 
 # Exports
 export PATH="${PATH}:/home/jarmusz/.local/bin/:/home/jarmusz/.scripts"
-export TERMINAl="xterm -ti vt340"
+export TERMINAl="urxvt"
 export BROWSER="firefox"
-export EDITOR="vim"
-export VISUAL="emacs"
+export EDITOR="nvim"
+export VISUAL="nvim"
+export PAGER=less
 
 # XDG
 export XDG_CONFIG_HOME="/home/jarmusz/.config"
