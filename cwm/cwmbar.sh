@@ -23,7 +23,7 @@ battery() {
   if [ "$b" -eq "100" ]; then
     echo -n "$full"
   else
-    echo -n"${b}${percent}"
+    echo -n "${b}${percent}"
   fi
 }
 
