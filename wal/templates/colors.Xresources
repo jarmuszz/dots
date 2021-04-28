@@ -1,6 +1,6 @@
 ! Default colors.Xresources but 
-! width `URxvt*depth: 32` which 
-! fixes bugs with urxvt and wm`s
+! without `URxvt*depth: 32` which 
+! fixed bugs with urxvt and wm`s
 ! border transparency.
 
 ! X colors.
