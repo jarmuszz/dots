@@ -55,8 +55,8 @@ element {{
   /* Yeah, I know lightbg is actually darker than darkbg but whatever
      * change & pull it if you wish */
   --lightbg: linear-gradient(
-      rgba(255, 255, 255, 0.06),
-      rgba(255, 255, 255, 0.06)
+      rgba({background.rgb}, 0.06),
+      rgba({background.rgb}, 1)
     ),
     var(--background);
   --darkbg: linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)),
@@ -480,6 +480,7 @@ html body div#app-mount.appMount-3lHmkl {{
 }}
 */
 
+.itemCard-v9viV7,
 .peopleList-3c4jOR.auto-Ge5KZx.scrollerBase-289Jih {{
   background-color: var(--background);
 }}
@@ -488,3 +489,11 @@ html body div#app-mount.appMount-3lHmkl {{
   background-color: var(--background-secondary);
 }}
 
+.reaction-1hd86g.reactionMe-wv5HKu {{
+  border-color: var(--background-modifier-hover);
+  background-color: var(--background-modifier-hover);
+}}
+
+.layer-v9HyYc {{
+  background-color: var(--background);
+}}

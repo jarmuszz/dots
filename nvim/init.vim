@@ -87,10 +87,10 @@ autocmd FileType c,h,cpp,hpp,java let g:eolString = ";"
 nmap <leader>; :exe "normal! $a" . eolString<CR>
 
 " Spellcheck
-nmap <leader>enuss :setlocal spell! spelllang=en_us<CR>
-nmap <leader>pls   :setlocal spell! spelllang=pl<CR>
-nmap <leader>des   :setlocal spell! spelllang=de<CR>
-nmap <leader>nos   :set nospell<CR>
+nmap <leader>senus :setlocal spell! spelllang=en_us<CR>
+nmap <leader>spl   :setlocal spell! spelllang=pl<CR>
+nmap <leader>sde   :setlocal spell! spelllang=de<CR>
+nmap <leader>sno   :set nospell<CR>
 
 " Make
 nmap <leader>m :mak<CR>
@@ -105,3 +105,22 @@ function TexBinds()
   nmap <leader>ten a\end{}<Esc>i
 endfunction
 autocmd FileType tex call TexBinds()
+
+" Lisps
+function LispBinds() 
+  " Prev )
+  nmap <leader>9 ?[\(\[]<CR>:noh<CR>
+  " Next )
+  nmap <leader>o /[\(\[]<CR>:noh<CR>
+
+  " Prev (
+  nmap <leader>p ?[\)\]]<CR>:noh<CR>
+  " Next (
+  nmap <leader>0 /[\)\]]<CR>:noh<CR>
+  
+  " Next Keyword
+  nmap <leader>k h<leader>9l
+  " Prev Keyword
+  nmap <leader>K l<leader>ol
+endfunction
+autocmd FileType lisp,scheme call LispBinds()

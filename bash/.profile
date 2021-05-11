@@ -3,7 +3,7 @@
 #
 
 # Exports
-export PATH="${PATH}:/home/jarmusz/.local/bin/:/home/jarmusz/.scripts"
+export PATH="${PATH}:/home/jarmusz/.local/bin/:/home/jarmusz/.scripts:/usr/lib/plan9/bin"
 export TERMINAl="urxvt"
 export BROWSER="firefox"
 export EDITOR="nvim"

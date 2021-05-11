@@ -1,28 +1,37 @@
-# This file needs to be parsed by pywal
-
 command "λ firefox" firefox
-command "λ discord" lightcord
+command "λ discord" discord
 command "λ urxvt"   urxvt
 
+# Snap to groups by default
 sticky yes
 
+# Discord should spawn at group #3
 autogroup 3 "Discord,Lightcord"
 
-borderwidth 5
-gap 22 0 0 0
-ignore bar # lemonbar
-autogroup 0 bar
 
+# Bar
+ignore bar      # lemonbar
+gap 22 0 0 0    # 22 - lemonbar width
+autogroup 0 bar # omnipresent
+
+# Move amount
 moveamount 5
+
+# How far windows should snap to edges
 snapdist 20
 
-bind-key XF86AudioRaiseVolume "amixer -q set Master 2%+ unmute"
-bind-key XF86AudioLowerVolume "amixer -q set Master 2%- unmute"
+# Width of the border
+borderwidth 5
+
+# Keybindings
+bind-key XF86AudioRaiseVolume  "amixer -q set Master 2%+ unmute"
+bind-key XF86AudioLowerVolume  "amixer -q set Master 2%- unmute"
 bind-key XF86AudioMute         "amixer -q set Master toggle"
 bind-key XF86AudioMicMute      "amixer -q set Capture toggle"
 bind-key XF86MonBrightnessUp   "xbacklight +2"
 bind-key XF86MonBrightnessDown "xbacklight -2"
 
+# Colors
 color activeborder   "{color1}"
 color font           "{foreground}"
 color selfont        "{color1}"
