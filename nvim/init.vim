@@ -59,10 +59,12 @@ set complete+="kspell"
 " Appearance
 """"""""""""""""""""""""""""""
 
+" Theme
+colorscheme czarzly
+
 " Statusline
 set laststatus=2
-set statusline=%f%m\ [l%l/%L]\ [c%c]
-hi statusline cterm=NONE ctermbg=0 ctermfg=1
+set statusline=%f%r%m\ [%l/%L]\ [%c]
 
 """"""""""""""""""""""""""""""
 " Kbds
@@ -72,7 +74,7 @@ hi statusline cterm=NONE ctermbg=0 ctermfg=1
 nmap <leader>,  :bn<CR>
 nmap <leader>.  :bp<CR>
 nmap <leader>bb :buffers<CR>
-nmap <leader>B  :buffer
+nmap <leader>B  :buffer<space>
 nmap <leader>bd :bd<CR>
 nmap <leader>bD :bd!<CR>
 
