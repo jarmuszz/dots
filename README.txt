@@ -1,4 +1,4 @@
-Distro: Artix
+Distro: Slackware
 WM:     CWM (Cum Window Manager)
 Bar:    Lemonbar (cwm/cwmbar.sh)
 Sh:     Bash

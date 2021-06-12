@@ -495,7 +495,11 @@ html body div#app-mount.appMount-3lHmkl {{
   background-color: var(--background-modifier-hover);
 }}
 
-.layer-v9HyYc {{
+.drawerSizingWrapper-17Mss4 {{
+  background-color: var(--background);
+}}
+
+.messagesPopoutWrap-1MQ1bW {{
   background-color: var(--background);
 }}
 
@@ -541,4 +545,9 @@ html body div#app-mount.appMount-3lHmkl {{
 .selectorButtonSelected-t5V9On,
 .lookFilled-1Gx00P.colorBrand-3pXr91 {{
   background-color: rgba({color1.rgb}, 0.55);
+}}
+
+.avatar-1BDn8e {{
+  width: 2em;
+  height: 2em;
 }}

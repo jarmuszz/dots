@@ -20,3 +20,5 @@ export LESSHISTFILE='-'
 
 # Qt5
 export QT_QPA_PLATFORMTHEME=qt5ct
+
+. ~/.bashrc

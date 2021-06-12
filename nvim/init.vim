@@ -3,7 +3,7 @@
 """"""""""""""""""""""""""""""
 
 " Remap leader to a space
-let mapleader =" "
+let mapleader=" "
 
 " Turn on the wildmenu
 set wildmenu
@@ -26,13 +26,14 @@ set magic
 " Show matching braces
 set showmatch
 
-" Spaces instead of tabs ;)
-set expandtab
+" Tabs instead of spaces, makes files
+" easier to read for visually impared
+set noexpandtab
 
 " Be smart about tabs
 set smarttab
 
-" 1 tab -> 2 spaces
+" Tabs are width of 2 chars
 set tabstop=2
 set shiftwidth=2
 
@@ -71,12 +72,27 @@ set statusline=%f%r%m\ [%l/%L]\ [%c]
 """"""""""""""""""""""""""""""
 
 " Buffers
-nmap <leader>,  :bn<CR>
-nmap <leader>.  :bp<CR>
+nmap <leader>,	:bn<CR>
+nmap <leader>.	:bp<CR>
 nmap <leader>bb :buffers<CR>
-nmap <leader>B  :buffer<space>
+nmap <leader>B	:buffer<space>
 nmap <leader>bd :bd<CR>
 nmap <leader>bD :bd!<CR>
+
+" Tabs
+nmap <m-1>	1gt
+nmap <m-2>	2gt
+nmap <m-3>	3gt
+nmap <m-4>	4gt
+nmap <m-5>	5gt
+nmap <m-6>	6gt
+nmap <m-7>	7gt
+nmap <m-8>	8gt
+nmap <m-9>	9gt
+nmap <m-0>	0gt
+nmap <m-->	:tabclose<CR>
+nmap <m-=>	:tabnew<CR>
+nmap <m-+>	:tabedit 
 
 " Copying into system clipboard
 vmap <C-y> "+y
@@ -90,39 +106,39 @@ nmap <leader>; :exe "normal! $a" . eolString<CR>
 
 " Spellcheck
 nmap <leader>senus :setlocal spell! spelllang=en_us<CR>
-nmap <leader>spl   :setlocal spell! spelllang=pl<CR>
-nmap <leader>sde   :setlocal spell! spelllang=de<CR>
-nmap <leader>sno   :set nospell<CR>
+nmap <leader>spl	 :setlocal spell! spelllang=pl<CR>
+nmap <leader>sde	 :setlocal spell! spelllang=de<CR>
+nmap <leader>sno	 :set nospell<CR>
 
 " Make
 nmap <leader>m :mak<CR>
 
 " Tex
 function TexBinds()
-  nmap <leader>bf a\textbf{}<Esc>i
-  nmap <leader>it a\textit{}<Esc>i
-  nmap <leader>tmi a\(  \)<Esc>hhi
-  nmap <leader>tmo a\[  \]<Esc>hhi
-  nmap <leader>tbe a\begin{}<Esc>i
-  nmap <leader>ten a\end{}<Esc>i
+	nmap <leader>bf a\textbf{}<Esc>i
+	nmap <leader>it a\textit{}<Esc>i
+	nmap <leader>im a\(	\)<Esc>hhi
+	nmap <leader>om a\[	\]<Esc>hhi
+	nmap <leader>eg a\begin{}<Esc>i
+	nmap <leader>en a\end{}<Esc>i
 endfunction
 autocmd FileType tex call TexBinds()
 
 " Lisps
 function LispBinds() 
-  " Prev )
-  nmap <leader>9 ?[\(\[]<CR>:noh<CR>
-  " Next )
-  nmap <leader>o /[\(\[]<CR>:noh<CR>
+	" Prev (
+	nmap <leader>9 ?[\(\[]<CR>:noh<CR>
+	" Next (
+	nmap <leader>o /[\(\[]<CR>:noh<CR>
 
-  " Prev (
-  nmap <leader>p ?[\)\]]<CR>:noh<CR>
-  " Next (
-  nmap <leader>0 /[\)\]]<CR>:noh<CR>
-  
-  " Next Keyword
-  nmap <leader>k h<leader>9l
-  " Prev Keyword
-  nmap <leader>K l<leader>ol
+	" Prev )
+	nmap <leader>p ?[\)\]]<CR>:noh<CR>
+	" Next )
+	nmap <leader>0 /[\)\]]<CR>:noh<CR>
+	
+	" Next Keyword
+	nmap <leader>k h<leader>9l
+	" Prev Keyword
+	nmap <leader>K l<leader>ol
 endfunction
 autocmd FileType lisp,scheme call LispBinds()

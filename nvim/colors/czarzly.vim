@@ -37,10 +37,15 @@ hi  StatusLine    ctermfg=1   ctermbg=0  cterm=none
 hi  StatusLineNC  ctermfg=0   ctermbg=8
 
 " Msgs
-highlight ErrorMsg      ctermfg=0   ctermbg=1
+hi  ErrorMsg      ctermfg=0   ctermbg=1
+
+" Tabs
+hi  TabLine       ctermfg=6   ctermbg=0   cterm=none
+hi  TabLineFill   ctermfg=0   ctermbg=1
+hi  TabLineSel    ctermfg=1   ctermbg=0   cterm=underline
 
 " C-like syntaxes
-" Made specially for my C style.
+" Made specially for OpenBSD style(9).
 function HiC()
     syn match cFunction     "\w\+("me=e-1
     syn match cFunctionDef  "^\w\+("me=e-1
