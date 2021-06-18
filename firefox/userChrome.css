@@ -1,0 +1,115 @@
+/* 
+ * vim: expandtab ts=2 sw=2 
+ */
+@import url("file:///home/jarmusz/.cache/wal/colors.css");
+
+:root {
+  /*
+  --foreground: #282A1F !important;
+  --background: #EBDBB9 !important;
+  */
+  --accent: var(--color1) !important;
+  
+  --tabs-navbar-shadow-size: 0 !important;
+  --button-active-bgcolor: var(--color1-transparent2) !important;
+  --buton-bg-color: var(--background) !important;
+  --button-color: var(--foreground) !important;
+  --button-hover-bgcolor: var(--color1-transparent1) !important;
+  
+  /* Disable bg color tint */
+  --toolbar-bgimage: var(--color1) !important;
+  
+  /* Smaller toolbar */
+  --proton-tab-block-margin: 0 !important;
+  
+  --focus-outline: none !important;
+  
+  --chrome-content-separator-color: none !important;
+  
+  --arrowpanel-border-color: none !important;
+  --arrowpanel-background: var(--background) !important;
+  --arrowpanel-color: var(--foreground) !important;
+  
+  font-family: Iosevka !important;
+  font-size: 11pt !important;
+}
+
+* {
+  color: var(--foreground) !important;
+  font-family: Iosevka !important;
+  /*background-color: var(--background) !important;*/
+}
+
+html {
+  color: var(--foreground);
+  /*background-color: var(--background);*/
+}
+
+menu,
+menuitem,
+menucaption {
+  background-color: var(--background) !important;
+}
+
+/* Tabbar */
+#tabbrowser-tabs {
+  background-color: var(--background) !important;
+}
+
+#TabsToolbar {
+  height: auto !important;
+}
+
+#url-bar {
+  shadow: none !important;
+  border-radius: 0;
+}
+
+/* Generic tab */
+.tab-background {
+  border-radius: 0 !important;
+  border-bottom: 2px solid var(--foreground) !important;
+  box-shadow: none !important;
+  background-color: var(--background) !important;
+}
+
+/* New-tab button */
+#new-tab-button {
+  background-color: var(--background) !important;
+}
+
+/* Focused tab */ 
+#TabsToolbar:not([brighttext]) #tabbrowser-tabs:not([noshadowfortests]) .tabbrowser-tab:is([visuallyselected="true"],
+[multiselected]) > .tab-stack > .tab-background {
+  box-shadow: none !important;
+}
+
+.tab-background[selected] {
+  border-color: var(--accent) !important;
+  background-color: var(--background) !important;
+  box-shadow: none !important;
+}
+
+/* Navigation bar */
+#nav-bar {
+  background-color: var(--background) !important;
+}
+
+#urlbar-input-container {
+  background-color: var(--background) !important;
+}
+
+/* Burger menu */
+#appMenu-popup panelview, #PanelUI-fxa {
+  background-color: var(--background) !important;
+  border-radius: 0 !important;
+}
+
+panel[type="arrow"] {
+	background-color: var(--background) !important;;
+}
+
+.PanelUI-subView toolbarseparator.proton-zap {
+  border-image: none !important;
+  border-color: var(--color1) !important;
+}
