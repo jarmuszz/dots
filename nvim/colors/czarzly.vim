@@ -1,9 +1,9 @@
 " vim: ts=2 sw=2
-" Maintainer: jarmusz (jarmusz at tuta dot io)
-" Repo: `https://github.com/jarmuszz/dots/tree/master/nvim/colors/czarzly.vim'
+" maintainer: jarmusz (jarmusz at tuta dot io)
+" repo: `https://github.com/jarmuszz/dots/tree/master/nvim/colors/czarzly.vim'
 "
-" Works fine with pywal, I don't know how it will work without
-" external theming or in a GUI. Written for NeoVim.
+" Works fine with pywal, i don't know how it will work without
+" external theming or in a gui. written for neovim.
 
 hi clear
 if exists("syntax_on")

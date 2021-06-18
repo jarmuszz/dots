@@ -5,8 +5,14 @@
 . ~/.cache/wal/colors.sh
 
 # hexcodes -> lemonbar color format
-fgd="%{F${foreground}}"
-bgd="%{B${background}}"
+if [ -z "$REVERSE" ]; then
+	fgd="%{F${foreground}}"
+	bgd="%{B${background}}"
+else
+	fgd="%{F${background}}"
+	bgd="%{B${foreground}}"
+fi
+
 accent="%{F${color1}}"
 overline="%{U${color1}}"
 
@@ -43,15 +49,15 @@ volume() {
 {
   xprop -spy -root _NET_CURRENT_DESKTOP &
   while true; do
-    echo 0
+    echo
     sleep 1
   done
 } | while read -r; do
   current=$(( $(xprop -root _NET_CURRENT_DESKTOP | cut -d' ' -f3) ))
-  workspaces=$(seq -s' ' $(( $(xprop -root _NET_NUMBER_OF_DESKTOPS | cut -d' ' -f3) - 1)) |
+  workspaces=$(seq -s' ' $(( $(xprop -root _NET_NUMBER_OF_DESKTOPS | cut -d' ' -f3) - 1 )) |
                  sed 's/'${current}'/%{+o}'${current}'%{-o}/g')
-  echo "${overline}${bgd} ${fgd}\
+  echo "${overline}${bgd}${fgd}\
         %{l}  $(clock)\
-        %{c}  $workspaces\
-        %{r} $(battery)$(volume) "
+        %{c}  ${workspaces}\
+        %{r}  $(battery)$(volume) "
 done

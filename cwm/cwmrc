@@ -31,12 +31,15 @@ bind-key XF86AudioMicMute      "amixer -q set Capture toggle"
 bind-key XF86MonBrightnessUp   "xbacklight +2"
 bind-key XF86MonBrightnessDown "xbacklight -2"
 
+# Theme changing
+bind-key 4-p									 "cht"
+
 # Colors
-color activeborder   "{color1}"
+color activeborder   "{background}"
 color font           "{foreground}"
 color selfont        "{color1}"
 color groupborder    "{color2}"
-color inactiveborder "{background}"
+color inactiveborder "{foreground}"
 color menubg         "{background}"
 color menufg         "{background}"
 color urgencyborder  "{foreground}"

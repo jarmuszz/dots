@@ -61,7 +61,7 @@ set complete+="kspell"
 """"""""""""""""""""""""""""""
 
 " Theme
-colorscheme czarzly
+colorscheme min
 
 " Statusline
 set laststatus=2
@@ -126,19 +126,32 @@ autocmd FileType tex call TexBinds()
 
 " Lisps
 function LispBinds() 
-	" Prev (
+	" Prev opening bracket 
 	nmap <leader>9 ?[\(\[]<CR>:noh<CR>
-	" Next (
+	" Next opening bracker
 	nmap <leader>o /[\(\[]<CR>:noh<CR>
 
-	" Prev )
+	" Prev closing bracket
 	nmap <leader>p ?[\)\]]<CR>:noh<CR>
-	" Next )
+	" Next closing bracket
 	nmap <leader>0 /[\)\]]<CR>:noh<CR>
 	
-	" Next Keyword
-	nmap <leader>k h<leader>9l
 	" Prev Keyword
+	nmap <leader>k h<leader>9l
+	" Next Keyword
 	nmap <leader>K l<leader>ol
 endfunction
 autocmd FileType lisp,scheme call LispBinds()
+
+" Emacs-like kbds in insert
+function EmacsBinds()
+	imap <A-a> <Esc>^i
+	imap <A-e> <Esc>$a
+	imap <C-f> <Esc>la
+	imap <C-b> <Esc>ha
+	imap <A-f> <Esc>ea
+	imap <A-b> <Esc>bi
+	imap <A-k> <Esc>d$a
+	imap <C-d> <Esc>lxi
+endfunction
+call EmacsBinds()
