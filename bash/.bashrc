@@ -1,6 +1,8 @@
 # My root and main account share the same home
 [ "$UID" -eq "0" ] && export PS1="# " || export PS1="% "
 
+export LS_COLORS="no=00:fi=00:di=0;1:ex=0;31:ln=0;4"
+
 shopt -s autocd
 
 export WINEPREFIX=~/.cache/wine
@@ -13,7 +15,7 @@ alias e="emacs -nw"
 alias se="sudo emacs -nw"
 alias v="nvim"
 alias n="nvim"
-alias vs="sudo vim"
+alias sv="sudo nvim"
 alias cl="clisp"
 alias rsbcl="rlwrap sbcl"
 alias p="slackpkg"
@@ -25,7 +27,6 @@ alias lla="ls -la"
 alias rmr="rm -r"
 alias sl="ls"
 alias mak="make"
-alias hc="herbstclient"
 alias cmd="WINEDEBUG=-all wine cmd"
 alias tcli="transmission-cli"
 alias ch="curl -s 'ftp://ftp.osuosl.org/pub/slackware/slackware-current/ChangeLog.txt' | less"

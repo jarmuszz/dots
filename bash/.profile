@@ -25,4 +25,7 @@ export QT_QPA_PLATFORMTHEME=qt5ct
 # pfetch
 export PF_COLOR=0
 
+# dialog
+export DIALOGRC="~/.config/dialog"
+
 . ~/.bashrc

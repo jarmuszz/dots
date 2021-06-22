@@ -46,6 +46,7 @@
 	color: {foreground};
 	--brand-experiment-200: {foreground};
   --brand-experiment-560: {color1};
+  --brand-experiment-560: {color1};
 }}
 
 /*
@@ -87,9 +88,9 @@ element {{
   --background-floating: var(--background);
   --background-mobile-primary: var(--background);
   --background-mobile-secondary: var(--color1);
-  --background-modifier-hover: rgba({color1.rgb}, 0.24);
-  --background-modifier-active: rgba({color1.rgb}, 0.32);
-  --background-modifier-selected: rgba({color1.rgb}, 0.32);
+  --background-modifier-hover: rgba({color1.rgb}, 0.48);
+  --background-modifier-active: rgba({color1.rgb}, 0.64);
+  --background-modifier-selected: rgba({color1.rgb}, 0.72);
   --background-modifier-accent: hsla(0, 0%, 100%, 0.06);
   --background-mentioned: rgba({color1.rgb}, 0.05);
   --background-mentioned-hover: rgba({color1.rgb}, 0.01);
@@ -114,6 +115,13 @@ element {{
   --deprecated-text-input-border-hover: {color1};
   --deprecated-text-input-border-disabled: #202225;
   --deprecated-text-input-prefix: #dcddde;
+
+	--scrollbar-auto-scrollbar-color-thumb: var(--foreground);
+	--scrollbar-auto-scrollbar-color-track: white;
+	--scrollbar-thin-thumb: var(--foreground);
+	--scrollbar-auto-thumb: var(--foreground);
+	--scrollbar-auto-track: var(--background);
+
 }} /* end .theme-dark */
 
 .theme-light {{
@@ -489,6 +497,7 @@ html body div#app-mount.appMount-3lHmkl {{
 
 .itemCard-v9viV7,
 .peopleList-3c4jOR.auto-Ge5KZx.scrollerBase-289Jih {{
+	margin-top: 0;
   background-color: var(--background);
 }}
 
@@ -547,21 +556,41 @@ html body div#app-mount.appMount-3lHmkl {{
   background-color: rgba({color1.rgb}, 0.80);
 }}
 
+/* Some footer */
 .root-1gCeng,
 .footer-2gL1pp {{
   background-color: var(--background);
 }}
 
+/* Button color */
 .selectorButtonSelected-t5V9On,
 .lookFilled-1Gx00P.colorBrand-3pXr91 {{
   background-color: rgba({color1.rgb}, 0.55);
 }}
 
+/* Smaller avatars */
 .avatar-1BDn8e {{
   width: 2em;
   height: 2em;
 }}
 
+/* Message content */
 .markup-2BOw-j .messageContent-2qWWxC {{
 	color: var(--foreground);
+}}
+
+/* Cooldown in foreground color */
+.cooldownWrapper-3joyFc {{
+	color: var(--foreground) !important;
+}}
+
+/* Disable colored usernames */
+.username-1A8OIy {{
+	color: var(--foreground) !important;
+	font-weight: bold;
+}}
+
+/* Discord button */
+.wrapper-1BJsBx.selected-bZ3Lue .childWrapper-anI2G9, .wrapper-1BJsBx:hover .childWrapper-anI2G9 {{
+	background-color: var(--background-modifier-selected);
 }}

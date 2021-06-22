@@ -3,35 +3,35 @@
  */
 /* @import url("file:///home/jarmusz/.cache/wal/colors.css"); */
 
-:root {
-	--wallpaper: url("/home/jarmusz/other/wallpapers/cat.png");
+:root {{
+	--wallpaper: url("{wallpaper}");
 
 	/* Special */
-	--background: #EBDBB9;
-	--foreground: #282A1F;
-	--cursor: #282A1F;
+	--background: {background};
+	--foreground: {foreground};
+	--cursor: {cursor};
 
 	/* Colors */
-	--color0: #282A1F;
-	--color1: #E63A36;
-	--color2: #282A1F;
-	--color3: #282A1F;
-	--color4: #282A1F;
-	--color5: #282A1F;
-	--color6: #282A1F;
-	--color7: #EBDBB9;
-	--color8: #282A1F;
-	--color9: #282A1F;
-	--color10: #282A1F;
-	--color11: #282A1F;
-	--color12: #282A1F;
-	--color13: #282A1F;
-	--color14: #282A1F;
-	--color15: #EBDBB9;
+	--color0: {color0};
+	--color1: {color1};
+	--color2: {color2};
+	--color3: {color3};
+	--color4: {color4};
+	--color5: {color5};
+	--color6: {color6};
+	--color7: {color7};
+	--color8: {color8};
+	--color9: {color9};
+	--color10: {color10};
+	--color11: {color11};
+	--color12: {color12};
+	--color13: {color13};
+	--color14: {color14};
+	--color15: {color15};
 
 	/* Transparent colors */
-	--color1-transparent1: rgba(230,58,54, 0.16);
-	--color1-transparent2: rgba(230,58,54, 0.32);
+	--color1-transparent1: rgba({color1.rgb}, 0.16);
+	--color1-transparent2: rgba({color1.rgb}, 0.32);
 
   --accent: var(--color1) !important;
   
@@ -57,84 +57,84 @@
   
   font-family: Iosevka !important;
   font-size: 11pt !important;
-}
+}}
 
-* {
+* {{
   /*! color: var(--foreground) !important; */
   font-family: Iosevka !important;
   /*background-color: var(--background) !important;*/
-}
+}}
 
-html {
+html {{
   color: var(--foreground);
   /*background-color: var(--background);*/
-}
+}}
 
 menu,
 menuitem,
-menucaption {
+menucaption {{
   background-color: var(--background) !important;
-}
+}}
 
 /* Tabbar */
-#tabbrowser-tabs {
+#tabbrowser-tabs {{
   background-color: var(--background) !important;
-}
+}}
 
-#TabsToolbar {
+#TabsToolbar {{
   height: auto !important;
-}
+}}
 
-#url-bar {
+#url-bar {{
   shadow: none !important;
   border-radius: 0;
-}
+}}
 
 /* Generic tab */
-.tab-background {
+.tab-background {{
   border-radius: 0 !important;
   border-bottom: 2px solid var(--foreground) !important;
   box-shadow: none !important;
   background-color: var(--background) !important;
-}
+}}
 
 /* New-tab button */
-#new-tab-button {
+#new-tab-button {{
   background-color: var(--background) !important;
-}
+}}
 
 /* Focused tab */ 
 #TabsToolbar:not([brighttext]) #tabbrowser-tabs:not([noshadowfortests]) .tabbrowser-tab:is([visuallyselected="true"],
-[multiselected]) > .tab-stack > .tab-background {
+[multiselected]) > .tab-stack > .tab-background {{
   box-shadow: none !important;
-}
+}}
 
-.tab-background[selected] {
+.tab-background[selected] {{
   border-color: var(--accent) !important;
   background-color: var(--background) !important;
   box-shadow: none !important;
-}
+}}
 
 /* Navigation bar */
-#nav-bar {
+#nav-bar {{
   background-color: var(--background) !important;
-}
+}}
 
-#urlbar-input-container {
+#urlbar-input-container {{
   background-color: var(--background) !important;
-}
+}}
 
 /* Burger menu */
-#appMenu-popup panelview, #PanelUI-fxa {
+#appMenu-popup panelview, #PanelUI-fxa {{
   background-color: var(--background) !important;
   border-radius: 0 !important;
-}
+}}
 
-panel[type="arrow"] {
+panel[type="arrow"] {{
 	background-color: var(--background) !important;;
-}
+}}
 
-.PanelUI-subView toolbarseparator.proton-zap {
+.PanelUI-subView toolbarseparator.proton-zap {{
   border-image: none !important;
   border-color: var(--color1) !important;
-}
+}}

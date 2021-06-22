@@ -1,4 +1,4 @@
-![Screen](images/cwm/2.png)
+![Screen](images/cwm/3.png)
 -----------------------
 	* Distro: Slackware
 	* WM:     CWM (Cum Window Manager)

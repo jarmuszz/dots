@@ -1,6 +1,7 @@
 command "λ firefox" firefox
 command "λ discord" discord
 command "λ urxvt"   urxvt
+command "λ kill"    xkill
 
 # Snap to groups by default
 sticky yes
