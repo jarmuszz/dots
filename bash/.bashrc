@@ -69,7 +69,7 @@ fun prev  'img2sixel $1 -w 350'
 fun 0x0   'curl -F"file=@${1}" https://0x0.st'
 fun rc    'sudo sh /etc/rc.d/rc.$*'
 fun smap  'map -s " " $1'
-fun lmap	"map \"lam '\$*'\""
-fun slmap	"map -s ',' \"lam '\$*'\""
+fun lmap  "map \"lam '\$*'\""
+fun slmap "map -s ',' \"lam '\$*'\""
 
 motd
