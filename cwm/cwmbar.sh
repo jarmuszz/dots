@@ -45,7 +45,7 @@ volume() {
   fi
 }
 
-
+# Main logic
 {
   xprop -spy -root _NET_CURRENT_DESKTOP &
   while true; do

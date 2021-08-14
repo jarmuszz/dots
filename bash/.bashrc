@@ -3,13 +3,10 @@
 
 . ~/.cache/wal/colors.sh
 
-export LS_COLORS="no=00:fi=00:di=0;1:ex=0;31:ln=0;4"
-
 shopt -s autocd
 
-export WINEPREFIX=~/.cache/wine
-
-alias sudo="doas"
+# Aliases
+alias sudo="doas "
 alias vim="nvim"
 alias ls="ls --color=auto"
 
@@ -34,25 +31,45 @@ alias mak="make"
 alias cmd="WINEDEBUG=-all wine cmd"
 alias tcli="transmission-cli"
 alias ch="curl -s 'ftp://ftp.osuosl.org/pub/slackware/slackware-current/ChangeLog.txt' | less"
-
-eh()  { emacs $@ & }
-seh() { su -c "emacs $@ &"; }
-
-prev() {
-  img2sixel $1 -w 350
-}
-
-0x0() {
-  curl -F"file=@${1}" https://0x0.st
-}
+alias so=". ~/prj/shell/sbo-shell/sbo-shell"
+alias s2n='tr " " "\n"'
+alias n2s='tr "\n" " "'
 
 urxtell() {
   [ -z "$1" ] && return
   printf '\33]50;%s\007' $*
 }
 
-rc() {
-  /etc/rc.d/rc.$*
+map() {
+	if [ "$1" = "-s" ]; then
+		application="`sed 's/'$2'/\n/g' /dev/stdin`"
+		shift 2
+	fi
+
+	eval 'echo "$application" | while read -r args; do' $@ '$args; done'
+
+	unset -v application
 }
+
+lam() {
+	[ -z "$1" ] && return 1
+
+	fname="l`mcookie`"
+	fun $fname "$1"
+	shift
+	$fname $@
+
+	unset -f $fname 
+	unset -v fname
+}
+
+# One-line functions
+fun() { eval "function $1 {" "${2}" '; }'; }
+fun prev  'img2sixel $1 -w 350'
+fun 0x0   'curl -F"file=@${1}" https://0x0.st'
+fun rc    'sudo sh /etc/rc.d/rc.$*'
+fun smap  'map -s " " $1'
+fun lmap	"map \"lam '\$*'\""
+fun slmap	"map -s ',' \"lam '\$*'\""
 
 motd
