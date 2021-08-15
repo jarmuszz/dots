@@ -34,6 +34,7 @@ alias ch="curl -s 'ftp://ftp.osuosl.org/pub/slackware/slackware-current/ChangeLo
 alias so=". ~/prj/shell/sbo-shell/sbo-shell"
 alias s2n='tr " " "\n"'
 alias n2s='tr "\n" " "'
+alias ssr="simplescreenrecorder"
 
 urxtell() {
   [ -z "$1" ] && return
@@ -44,6 +45,8 @@ map() {
 	if [ "$1" = "-s" ]; then
 		application="`sed 's/'$2'/\n/g' /dev/stdin`"
 		shift 2
+	else
+		application="`cat /dev/stdin`"
 	fi
 
 	eval 'echo "$application" | while read -r args; do' $@ '$args; done'
@@ -70,6 +73,6 @@ fun 0x0   'curl -F"file=@${1}" https://0x0.st'
 fun rc    'sudo sh /etc/rc.d/rc.$*'
 fun smap  'map -s " " $1'
 fun lmap  "map \"lam '\$*'\""
-fun slmap "map -s ',' \"lam '\$*'\""
+fun slmap "map -s ' ' \"lam '\$*'\""
 
 motd
