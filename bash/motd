@@ -1,17 +1,15 @@
 #!/bin/bash
-# Not POSIX complaint - read -a
 
-[ -z "$(mpc current 2>/dev/null)" ] && exit 1
+info="`mpc current -f "%title%:%artist%:%album%"`"
 
-# I may be dumb but this works
-export IFS=":"
-read -ra arr <<EOF
-$(mpc current -f "%title%:%artist%:%album%")
-EOF
+[ -z "`mpc current 2>/dev/null`" ] && exit 1
+
+IFS=:
+read song artist album <<<"$info"
 
 cat <<EOF
 now playing ♪
-song:  ${arr[0]}
-by:    ${arr[1]}
-album: ${arr[2]}
+song:  ${song}
+by:    ${artist}
+album: ${album}
 EOF

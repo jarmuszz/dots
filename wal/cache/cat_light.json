@@ -2,7 +2,7 @@
     "wallpaper": "/home/jarmusz/other/wallpapers/cat.png",
     "alpha": "100",
     "special": {
-        "background": "#EBDBB9",
+        "background": "#F4E3C0",
         "foreground": "#282A1F",
         "cursor": "#282A1F"
     },
@@ -14,7 +14,7 @@
         "color4": "#282A1F",
         "color5": "#282A1F",
         "color6": "#282A1F",
-        "color7": "#EBDBB9",
+        "color7": "#f4e3c0",
 
         "color8": "#282A1F",
         "color9":  "#282A1F",
@@ -23,6 +23,6 @@
         "color12": "#282A1F",
         "color13": "#282A1F",
         "color14": "#282A1F",
-        "color15": "#EBDBB9"
+        "color15": "#F4E3C0"
     }
 }

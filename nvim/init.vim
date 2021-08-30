@@ -92,7 +92,15 @@ nmap <m-9>	9gt
 nmap <m-0>	0gt
 nmap <m-->	:tabclose<CR>
 nmap <m-=>	:tabnew<CR>
-nmap <m-+>	:tabedit 
+nmap <m-+>	:tabedit
+
+" Cmdline
+cnoremap <C-a> <home>
+cnoremap <C-e> <end>
+cnoremap <C-f> <right>
+cnoremap <C-b> <left>
+cnoremap <m-f> <S-right>
+cnoremap <m-b> <S-left>
 
 " Copying into system clipboard
 vmap <C-y> "+y
@@ -145,8 +153,8 @@ autocmd FileType lisp,scheme call LispBinds()
 
 " Emacs-like kbds in insert
 function EmacsBinds()
-	imap <A-a> <Esc>^i
-	imap <A-e> <Esc>$a
+	imap <C-a> <Esc>^i
+	imap <C-e> <Esc>$a
 	imap <C-f> <Esc>la
 	imap <C-b> <Esc>ha
 	imap <A-f> <Esc>ea

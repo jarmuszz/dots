@@ -31,14 +31,20 @@ alias mak="make"
 alias cmd="WINEDEBUG=-all wine cmd"
 alias tcli="transmission-cli"
 alias ch="curl -s 'ftp://ftp.osuosl.org/pub/slackware/slackware-current/ChangeLog.txt' | less"
-alias so=". ~/prj/shell/sbo-shell/sbo-shell"
+alias so="REPO=~/sbo/repo; . ~/prj/shell/sbo-shell/sbo-shell.sh"
 alias s2n='tr " " "\n"'
 alias n2s='tr "\n" " "'
 alias ssr="simplescreenrecorder"
 
 urxtell() {
-  [ -z "$1" ] && return
-  printf '\33]50;%s\007' $*
+	[ -z "$1" ] && return
+	printf '\33]50;%s\007' $*
+}
+
+oodsb() {
+	dl="${DOWNLOAD_x86_64:-${DOWNLOAD}}"
+	str="${dl#*com/}"
+	nv "$str" | sed 's/\/archive.*//'
 }
 
 map() {
@@ -49,7 +55,7 @@ map() {
 		application="`cat /dev/stdin`"
 	fi
 
-	eval 'echo "$application" | while read -r args; do' $@ '$args; done'
+	echo "$application" | while read -r args; do $@ $args; done
 
 	unset -v application
 }
@@ -68,11 +74,11 @@ lam() {
 
 # One-line functions
 fun() { eval "function $1 {" "${2}" '; }'; }
-fun prev  'img2sixel $1 -w 350'
-fun 0x0   'curl -F"file=@${1}" https://0x0.st'
-fun rc    'sudo sh /etc/rc.d/rc.$*'
-fun smap  'map -s " " $1'
-fun lmap  "map \"lam '\$*'\""
+fun prev	'img2sixel $1 -w 350'
+fun 0x0		'curl -F"file=@${1}" https://0x0.st'
+fun rc		'sudo sh /etc/rc.d/rc.$*'
+fun smap	'map -s " " $1'
+fun lmap	"map \"lam '\$*'\""
 fun slmap "map -s ' ' \"lam '\$*'\""
 
 motd
