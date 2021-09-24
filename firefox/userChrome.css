@@ -4,34 +4,34 @@
 /* @import url("file:///home/jarmusz/.cache/wal/colors.css"); */
 
 :root {
-	--wallpaper: url("/home/jarmusz/other/wallpapers/cat.png");
+	--wallpaper: url("/home/jarmusz/other/wallpapers/lite_lightbg.png");
 
 	/* Special */
-	--background: #F4E3C0;
-	--foreground: #282A1F;
-	--cursor: #282A1F;
+	--background: #f7f0c6;
+	--foreground: #423d37;
+	--cursor: #423d37;
 
 	/* Colors */
-	--color0: #282A1F;
-	--color1: #E63A36;
-	--color2: #282A1F;
-	--color3: #282A1F;
-	--color4: #282A1F;
-	--color5: #282A1F;
-	--color6: #282A1F;
-	--color7: #f4e3c0;
-	--color8: #282A1F;
-	--color9: #282A1F;
-	--color10: #282A1F;
-	--color11: #282A1F;
-	--color12: #282A1F;
-	--color13: #282A1F;
-	--color14: #282A1F;
-	--color15: #F4E3C0;
+	--color0: #423d37;
+	--color1: #fc7047;
+	--color2: #7c9299;
+	--color3: #423d37;
+	--color4: #423d37;
+	--color5: #423d37;
+	--color6: #423d37;
+	--color7: #ede6be;
+	--color8: #423d37;
+	--color9: #423d37;
+	--color10: #423d37;
+	--color11: #423d37;
+	--color12: #423d37;
+	--color13: #423d37;
+	--color14: #423d37;
+	--color15: #ede6be;
 
 	/* Transparent colors */
-	--color1-transparent1: rgba(230,58,54, 0.16);
-	--color1-transparent2: rgba(230,58,54, 0.32);
+	--color1-transparent1: rgba(252,112,71, 0.16);
+	--color1-transparent2: rgba(252,112,71, 0.32);
 
   --accent: var(--color1) !important;
   
@@ -54,14 +54,28 @@
   --arrowpanel-border-color: none !important;
   --arrowpanel-background: var(--background) !important;
   --arrowpanel-color: var(--foreground) !important;
+
+  /* Tab sizing */
+  --tab-min-height: 0px !important;
+  --inline-tab-padding: 2px !important;
+  --tab-block-margin: 0px !important;
+
+  /* Compact toolbar */
+  --urlbar-min-height: 20px !important;
+  --urlbar-height: 20px !important;
+  --toolbarbutton-inner-padding: 0px !important;
+  --toolbar-start-end-padding: 0px !important;
+  --urlbar-icon-padding: 0px !important;
+  --arrowpanel-padding: 0px !important;
+
   
-  font-family: Iosevka !important;
+  font-family: GohuFont !important;
   font-size: 11pt !important;
 }
 
 * {
   /*! color: var(--foreground) !important; */
-  font-family: Iosevka !important;
+  font-family: GohuFont !important;
   color: var(--foreground);
   /*background-color: var(--background) !important;*/
 }
@@ -82,48 +96,97 @@ menucaption {
   background-color: var(--background) !important;
 }
 
+.tabbrowser-tab {
+  padding: 0 !important;
+}
+
 #TabsToolbar {
   height: auto !important;
 }
 
 #url-bar {
   shadow: none !important;
-  border-radius: 0;
-}
-
-/* Generic tab */
-.tab-background {
   border-radius: 0 !important;
-  border-bottom: 2px solid var(--foreground) !important;
-  box-shadow: none !important;
-  background-color: var(--background) !important;
 }
 
 /* New-tab button */
 #new-tab-button {
   background-color: var(--background) !important;
+  padding: 0 !important;
+}
+
+/* Generic tab */
+.tab-background, .tab-stack {
+  border-radius: 0 !important;
+  border-bottom: 2px solid var(--foreground) !important;
+  box-shadow: none !important;
+  background-color: var(--background) !important;
+  border: none !important;
+  min-height: auto;
 }
 
 /* Focused tab */ 
 #TabsToolbar:not([brighttext]) #tabbrowser-tabs:not([noshadowfortests]) .tabbrowser-tab:is([visuallyselected="true"],
 [multiselected]) > .tab-stack > .tab-background {
   box-shadow: none !important;
+
+  /* TODO */
+  color: var(--color2) !important;
 }
 
 .tab-background[selected] {
+  /*
   border-color: var(--accent) !important;
   background-color: var(--background) !important;
   box-shadow: none !important;
+  */
+
+  border-bottom: 2px solid var(--accent) !important;
+  border: none !important;
+  background-color: var(--color7) !important;
 }
+
 
 /* Navigation bar */
 #nav-bar {
   background-color: var(--background) !important;
+  max-height: 0px !important;
+}
+
+.toolbarbutton-icon,
+.urlbar-icon {
+  padding: 0px !important;
+}
+
+.urlbar-icon {
+  height: 20px !important;
+  width: auto !important;
+}
+
+#urlbar-container {
+    margin: 0 !important;
 }
 
 #urlbar-input-container {
+	padding-top: 0px !important;
+	border-top-width: 0px !important;
   background-color: var(--background) !important;
 }
+
+#urlbar-background {
+	border-top-width: 0px !important;
+}
+
+.toolbarbutton-1 {
+  padding: 0 !important;
+}
+
+toolbarbutton {
+	-moz-box-align: start !important;
+  margin-left: 5px !important;
+  margin-right: 5px !important;
+}
+
 
 /* Burger menu */
 #appMenu-popup panelview, #PanelUI-fxa {

@@ -1,0 +1,23 @@
+#!/bin/sh
+
+TEMPLATE_DIR=~/.config/templates
+
+usage() {
+	echo "$0:"
+}
+
+[ -z "$1" ] && {
+	usage 1>&2
+	exit 1
+}
+
+SUFFIX="${1#*.}"
+FILENAME="${1%.*}"
+[ "$SUFFIX" = "$FILENAME" ] && FILENAME=main
+
+[ -e "$TEMPLATE_DIR/$SUFFIX" ] || {
+	echo "Template '$SUFFIX' does not exist."
+	exit 1
+}
+
+cat "$TEMPLATE_DIR/$SUFFIX" > ${FILENAME}.${SUFFIX}

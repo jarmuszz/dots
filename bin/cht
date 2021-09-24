@@ -5,10 +5,10 @@
 #set -e
 
 # Set those values by hand
-WALL="/home/jarmusz/other/wallpapers/cat.png"
+WALL="/home/jarmusz/other/wallpapers/lite_darkbg.png"
 # Note the use of ${HOME}; unlink doesn't seem to expand the `~'
-DARK="${HOME}/.cache/wal/schemes/cat_dark.json"
-LIGHT="${HOME}/.cache/wal/schemes/cat_light.json"
+DARK="${HOME}/.cache/wal/schemes/lite_dark.json"
+LIGHT="${HOME}/.cache/wal/schemes/lite_light.json"
 
 TARGET="${HOME}/.cache/wal/schemes/`echo $WALL | sed 's/\//_/g; s/\./_/g'`_dark_None_None_1.1.0.json"
 
@@ -19,13 +19,13 @@ switch() {
 	wal -i "$WALL"
 	pkill -1 cwm
 	killall lemonbar
-	REVERSE=$2 ~/.scripts/cwmbar.sh | lemonbar -f "iosevka-11" > /dev/null &
+	REVERSE=$2 ~/.scripts/cwmbar.sh | lemonbar -f "gohufont-11" > /dev/null &
 }
 
 case "$1" in
 	d) switch "$DARK"
 		;;
-	l) switch "$LIGHT" yes
+	l) switch "$LIGHT"
 		;;
 	r) [ "`readlink $TARGET`" = "$DARK" ] &&
 			$0 d	||
@@ -33,7 +33,7 @@ case "$1" in
 		 ;;
 	*) if [ "`readlink $TARGET`" = "$DARK" ]; then
 			echo light
-			switch "$LIGHT" yes
+			switch "$LIGHT"
 		else
 			echo dark
 			switch "$DARK"

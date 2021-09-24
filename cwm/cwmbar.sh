@@ -13,7 +13,7 @@ else
 	bgd="%{B${foreground}}"
 fi
 
-accent="%{F${color1}}"
+accent="%{F${color2}}"
 overline="%{U${color1}}"
 
 separator="${accent}->${fgd}"
@@ -48,16 +48,22 @@ volume() {
 # Main logic
 {
   xprop -spy -root _NET_CURRENT_DESKTOP &
-  while true; do
+  while :; do
     echo
     sleep 1
   done
 } | while read -r; do
-  current=$(( $(xprop -root _NET_CURRENT_DESKTOP | cut -d' ' -f3) ))
-  workspaces=$(seq -s' ' $(( $(xprop -root _NET_NUMBER_OF_DESKTOPS | cut -d' ' -f3) - 1 )) |
-                 sed 's/'${current}'/%{+o}'${current}'%{-o}/g')
-  echo "${overline}${bgd}${fgd}\
-        %{l}  $(clock)\
-        %{c}  ${workspaces}\
-        %{r}  $(battery)$(volume) "
+	if [ -n "$(cat /tmp/ding)" ]; then
+		echo "%{F${background}}%{B${color1}}%{l}%{c}$(cat /tmp/ding)%{r}"
+		sleep 5
+		printf '' > /tmp/ding
+	else
+		current=$(( $(xprop -root _NET_CURRENT_DESKTOP | cut -d' ' -f3) ))
+		workspaces=$(seq -s' ' $(( $(xprop -root _NET_NUMBER_OF_DESKTOPS | cut -d' ' -f3) - 1 )) |
+									 sed 's/'${current}'/%{+u}'${current}'%{-u}/g')
+		echo "${overline}${bgd}${fgd}\
+					%{l}  $(clock)\
+					%{c}  ${workspaces}\
+					%{r}  $(battery)$(volume) "
+	fi
 done

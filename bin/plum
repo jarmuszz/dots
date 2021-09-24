@@ -1,0 +1,41 @@
+#!/bin/gawk -f
+
+function urxvt(cmd) {
+	system("sh -c \"urxvt -e " cmd "\"")
+}
+
+function xdg_open(cmd) {
+	system("xdg-open '"cmd"'")
+}
+
+BEGIN {
+	FS=":::"
+	ORS=""
+}
+
+# Man pages
+/.*\(([0-9]|1p)\)/ {
+	urxvt("man '" $0 "'")
+	exit
+}
+
+# URLs
+/https*:\/\/.*/ {
+	exit
+}
+
+# Search
+$1 ~ /&s/ {
+	xdg_open("https://duckduckgo.com/?q="$2)
+	exit
+}
+
+# Files
+/^[~/.].*/ {
+	urxvt("nvim " $1)
+	exit
+}
+
+/.*/ {
+	exit 1
+}

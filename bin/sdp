@@ -1,0 +1,23 @@
+#!/bin/sh
+
+[ -z "$1" ] && {
+	echo "Supply an argument"
+	exit 1
+}
+
+check() {
+	echo "Checking $1:"
+	ldd "$1" | grep 'not found' | while read -r lib_orig; do
+		printf "%s - %s: %s\n" "$1" "$lib_orig"	\
+			"$(slackpkg file-search $(echo $lib_orig | sed 's/\..*$//') 2>/dev/null |
+				grep ' : ' | 
+				sed 's/^.* : //; s/-[0-9].*$//')" 1>&2
+	done | sort | uniq
+}
+
+if [ "$1" = "-w" ]; then
+	shift
+	check "$(which $1)"
+else
+	check "$1"
+fi

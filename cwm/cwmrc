@@ -1,7 +1,7 @@
-command "λ firefox" firefox
-command "λ discord" discord
-command "λ urxvt"   urxvt
-command "λ kill"    xkill
+command "* firefox" firefox
+command "* discord" discord
+command "* urxvt"   urxvt
+command "* kill"    xkill
 
 # Snap to groups by default
 sticky yes
@@ -12,7 +12,7 @@ autogroup 3 "Discord,Lightcord"
 
 # Bar
 ignore bar      # lemonbar
-gap 22 0 0 0    # 22 - lemonbar width
+gap 19 2 2 2    # 17 - lemonbar width
 autogroup 0 bar # omnipresent
 
 # Move amount
@@ -22,7 +22,7 @@ moveamount 5
 snapdist 20
 
 # Width of the border
-borderwidth 5
+borderwidth 2
 
 # Keybindings
 bind-key XF86AudioRaiseVolume  "amixer -q set Master 2%+ unmute"
@@ -35,13 +35,26 @@ bind-key XF86MonBrightnessDown "xbacklight -2"
 # Theme changing
 bind-key 4-p									 "cht"
 
+# Screenshots
+bind-key 4-Print               "sh -c 'maim ~/ltmp/$(date +%Y-%m-%d:%H:%M:%S).png'"
+bind-key 4S-Print              "sh -c 'maim -s ~/ltmp/$(date +%Y-%m-%d:%H:%M:%S).png'"
+
+# Note taking
+bind-key 4-n                   "sh -c 'urxvt -e nvim ~/.cache/notes.md'"
+
+# Plumber
+bind-key 4-q                   "xplum"
+bind-key 4S-q                  "xplum -s"
+bind-key 4-e                   "xplum -c"
+bind-key 4S-e                  "xplum -c -s"
+
 # Colors
-color activeborder   "{background}"
+color activeborder   "{color1}"
 color font           "{foreground}"
-color selfont        "{color1}"
+color selfont        "{foreground}"
 color groupborder    "{color2}"
 color inactiveborder "{foreground}"
 color menubg         "{background}"
-color menufg         "{background}"
+color menufg         "{color7}"
 color urgencyborder  "{foreground}"
-color ungroupborder  "{color3}"
+color ungroupborder  "{color1}"

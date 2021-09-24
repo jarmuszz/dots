@@ -1,4 +1,30 @@
 """"""""""""""""""""""""""""""
+" Plugins
+""""""""""""""""""""""""""""""
+
+call plug#begin(stdpath('data'))
+ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate', 'branch' : '0.5-compat'}
+call plug#end()
+
+lua <<EOF
+require 'nvim-treesitter.configs'.setup {
+	highlight = {
+		enable = true,
+		disable = nil,
+	},
+	indent = {
+		enable = false,
+		disable = nil,
+	},
+	ensure_installed = {
+		"bash",
+		"lua",
+		"commonlisp",
+		}
+}
+EOF
+
+""""""""""""""""""""""""""""""
 "  General 
 """"""""""""""""""""""""""""""
 
@@ -56,12 +82,18 @@ set splitright
 " Complete
 set complete+="kspell"
 
+" Show search count
+set shortmess-=S
+
+" Enable mouse
+set mouse=a
+
 """"""""""""""""""""""""""""""
 " Appearance
 """"""""""""""""""""""""""""""
 
 " Theme
-colorscheme min
+colorscheme min2
 
 " Statusline
 set laststatus=2

@@ -45,8 +45,8 @@
   font-family: "iosevka" !important;
 	color: {foreground};
 	--brand-experiment-200: {foreground};
-  --brand-experiment-560: {color1};
-  --brand-experiment-560: {color1};
+  --brand-experiment-560: {color2};
+  --brand-experiment-560: {color2};
 }}
 
 /*
@@ -88,12 +88,12 @@ element {{
   --background-floating: var(--background);
   --background-mobile-primary: var(--background);
   --background-mobile-secondary: var(--color1);
-  --background-modifier-hover: rgba({color1.rgb}, 0.48);
-  --background-modifier-active: rgba({color1.rgb}, 0.64);
-  --background-modifier-selected: rgba({color1.rgb}, 0.72);
+  --background-modifier-hover: rgba({color2.rgb}, 0.48);
+  --background-modifier-active: rgba({color2.rgb}, 0.64);
+  --background-modifier-selected: rgba({color2.rgb}, 0.72);
   --background-modifier-accent: hsla(0, 0%, 100%, 0.06);
   --background-mentioned: rgba({color1.rgb}, 0.05);
-  --background-mentioned-hover: rgba({color1.rgb}, 0.01);
+  --background-mentioned-hover: rgba({color2.rgb}, 0.01);
   --background-message-hover: rgba(4, 4, 5, 0.07);
   --elevation-stroke: 0 0 0 1px rgba(4, 4, 5, 0.15);
   --elevation-low: 0 1px 0 rgba(4, 4, 5, 0.2), 0 1.5px 0 rgba(6, 6, 7, 0.05),
@@ -112,7 +112,7 @@ element {{
   --deprecated-quickswitcher-input-placeholder: var(--background);
   --deprecated-text-input-bg: rgba(0, 0, 0, 0.1);
   --deprecated-text-input-border: rgba(0, 0, 0, 0.3);
-  --deprecated-text-input-border-hover: {color1};
+  --deprecated-text-input-border-hover: {color2};
   --deprecated-text-input-border-disabled: #202225;
   --deprecated-text-input-prefix: #dcddde;
 
@@ -565,7 +565,7 @@ html body div#app-mount.appMount-3lHmkl {{
 /* Button color */
 .selectorButtonSelected-t5V9On,
 .lookFilled-1Gx00P.colorBrand-3pXr91 {{
-  background-color: rgba({color1.rgb}, 0.55);
+  background-color: rgba({color2.rgb}, 0.55);
 }}
 
 /* Smaller avatars */
@@ -579,9 +579,9 @@ html body div#app-mount.appMount-3lHmkl {{
 	color: var(--foreground);
 }}
 
-/* Cooldown in foreground color */
+/* Cooldown */
 .cooldownWrapper-3joyFc {{
-	color: var(--foreground) !important;
+	color: var(--color1) !important;
 }}
 
 /* Disable colored usernames */

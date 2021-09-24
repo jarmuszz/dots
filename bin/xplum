@@ -1,0 +1,17 @@
+#!/bin/bash
+
+SELECTION=primary
+
+for arg; do case $arg in
+	-c)
+		SELECTION=clipboard
+		shift
+		;;
+	-s)
+		PREFIX="&s:::"
+		shift
+		;;
+esac done
+
+S="$(xclip -o -selection $SELECTION)"
+printf "${PREFIX}%s" "$S" | plum || ding "Plum could not match \"$S\"."

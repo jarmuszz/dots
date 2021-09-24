@@ -9,11 +9,11 @@
 (load-module "ttf-fonts")
 
 ;; next thing is important (nothing else has worked for me)
-(clx-truetype:cache-font-file "/usr/share/fonts/TTF/Hack-Regular.ttf")
+(clx-truetype:cache-font-file "/usr/share/fonts/TTF/iosevka.ttf")
 
 (set-font
  (make-instance 'xft:font
-		:family "Hack"
+		:family "Iosevka"
 		:subfamily "Regular"
-		:size 9
+		:size 11
 		:antialias t))
