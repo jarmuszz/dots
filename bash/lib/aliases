@@ -1,0 +1,39 @@
+# Sudo
+alias sudo="doas "
+alias doas="doas "
+
+# Ls
+alias ls="ls --color=auto"
+alias sl="ls"
+alias l="ls -l"
+alias ll="ls -l"
+alias la="ls -a"
+alias lla="ls -la"
+alias s="ls -sh"
+
+# Editors
+alias e="emacs -nw"
+alias se="sudo emacs -nw"
+alias v="nvim"
+alias n="nvim"
+alias sv="sudo nvim"
+alias vv="nvim -S Session.vim"
+
+# Programming
+alias cl="clisp"
+alias rsbcl="rlwrap sbcl"
+
+# Tr
+alias s2n='tr " " "\n"'
+alias n2s='tr "\n" " "'
+
+# Shorthands
+alias h="htop -C"
+alias rmr="rm -r"
+alias mak="make"
+alias cmd="WINEDEBUG=-all wine cmd"
+alias tcli="transmission-cli"
+alias ch="curl -s 'ftp://ftp.osuosl.org/pub/slackware/slackware-current/ChangeLog.txt' | less"
+alias so="REPO=~/sbo/repo; . ~/prj/shell/sbo-shell/sbo-shell.sh"
+alias ssr="simplescreenrecorder"
+alias vim="nvim"

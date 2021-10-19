@@ -1,0 +1,93 @@
+#!/bin/sh
+# XTerm bar for FreeBSD.
+
+WIDTH=170
+
+[ -z "$1" ] && {
+	. ~/.cache/wal/colors.sh
+	xterm -name xtbar	\
+		-title xtbar	\
+		-geometry ${WIDTH}x1+0+0	\
+		-e "$0 --script"
+	exit $?
+}
+
+BATTERY_OFFSET=165
+VOLUME_OFFSET=161
+CLOCK_OFFSET=1
+WORKSPACES_OFFSET=75
+
+WS_FIRST=1
+WS_LAST=9
+WSLIST="$(seq $WS_FIRST $WS_LAST | tr '\n' ' ')"
+WSLIST="${WSLIST% }"
+
+battery() {
+	bat="$(sysctl -n hw.acpi.battery.life)"
+
+	tput sc
+	tput cm $BATTERY_OFFSET 0
+
+	if [ "$bar" = "100" ]; then
+		printf "full"
+	else
+		printf "%3d%%" "$bat"
+	fi
+
+	tput rc
+	unset -v bat
+}
+
+volume() {
+	vol="$(mixer -s vol)"
+	pcm="$(mixer -s pcm)"
+	vol="${vol#*:}*${pcm#*:}"
+
+	tput sc
+	tput cm $VOLUME_OFFSET 0
+
+	printf "%s%%" "$vol"
+
+	tput rc
+}
+
+clock() {
+	tput sc
+	tput cm $CLOCK_OFFSET 0
+
+	printf "%s" "$(date +%H:%M)"
+
+	tput rc
+}
+
+workspaces() {
+	current="$(xprop -root _NET_CURRENT_DESKTOP)"
+	current="${current##* }"
+
+	tput sc
+	tput cm $WORKSPACES_OFFSET 0
+
+	printf '%s' "$WSLIST" | sed "s/${current}/•/"
+
+	tput rc
+	unset -v current 
+}
+
+# Invisible cursor
+tput vi
+
+# Main loop
+{
+	xprop -spy -root _NET_CURRENT_DESKTOP	&
+	while :; do sleep 1; echo; done &
+} | while read _; do
+	# Left
+	clock
+
+	# Center
+	workspaces
+
+	# Right
+	battery
+	volume
+done

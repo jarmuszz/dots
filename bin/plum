@@ -1,7 +1,7 @@
-#!/bin/gawk -f
+#!/usr/bin/nawk -f
 
-function urxvt(cmd) {
-	system("sh -c \"urxvt -e " cmd "\"")
+function xterm(cmd) {
+	system("sh -c \"xterm -e " cmd "\"")
 }
 
 function xdg_open(cmd) {
@@ -15,7 +15,7 @@ BEGIN {
 
 # Man pages
 /.*\(([0-9]|1p)\)/ {
-	urxvt("man '" $0 "'")
+	xterm("man '" $0 "'")
 	exit
 }
 
@@ -31,8 +31,8 @@ $1 ~ /&s/ {
 }
 
 # Files
-/^[~/.].*/ {
-	urxvt("nvim " $1)
+/^[~\/.].*/ {
+	xterm("nvim " $1)
 	exit
 }
 

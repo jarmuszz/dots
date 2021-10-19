@@ -1,9 +1,6 @@
 " vim: ts=2 sw=2 noexpandtab
 " maintainer: jarmusz (jarmusz at tuta dot io)
-" repo: `https://github.com/jarmuszz/dots/tree/master/nvim/colors/min.vim'
-"
-" Distraction free coding. Uses color 1 as an accent and color 7 as a
-" foreground.
+" repo: `https://github.com/jarmuszz/dots/tree/master/nvim/colors/min2.vim'
 
 hi clear
 if exists("syntax_on")
@@ -21,7 +18,7 @@ hi String ctermfg=2
 hi Function cterm=bold
 
 hi Identifier cterm=NONE
-hi Statement cterm=bold
+hi Statement ctermfg=0 cterm=bold
 
 hi PreProc ctermfg=1
 
@@ -35,8 +32,9 @@ hi	Special			ctermfg=0		         	cterm=bold
 hi	Error				ctermfg=0		ctermbg=1		cterm=bold
 hi	Todo				ctermfg=0		ctermbg=1
 hi	Directory		ctermfg=0
-hi	CursorLineNr cterm=reverse
+hi	CursorLineNr	ctermfg=0	cterm=reverse
 hi	CursorLine	ctermfg=0
+hi	LineNr			ctermfg=0
 hi	Visual			ctermfg=0		ctermbg=2
 
 "hi	String	ctermfg=1

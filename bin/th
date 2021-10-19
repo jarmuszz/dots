@@ -1,0 +1,45 @@
+#!/bin/sh
+
+LIGHT="lite_light"
+DARK="lite_dark"
+LAST=/tmp/pywaltheme
+
+[ ! -e "/$LAST" ] && echo l > $LAST
+
+post() {
+	. ~/.cache/wal/colors.sh
+
+	# Restart CWM
+	pkill -1 cwm
+
+	# Restart xterm bar
+	pkill xtbar
+	xtbar &
+}
+
+case "$1" in
+	l)
+		wal -f "$LIGHT"
+		echo d > /tmp/pywaltheme
+		;;
+	d)
+		wal -f "$DARK"
+		echo l > /tmp/pywaltheme
+		;;
+	c)
+		t="$(cat /tmp/pywaltheme)"
+		if [ "$(cat /tmp/pywaltheme)" -eq d ]; then
+			$0 d
+		else
+			$0 l
+		fi
+		exit
+		;;
+	r)
+		$0 "$(cat /tmp/pywaltheme)"
+		exit
+		;;
+	*)
+		echo "$0: l|d|c|r" >/dev/stderr
+esac
+post

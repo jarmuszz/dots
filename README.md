@@ -1,12 +1,12 @@
-![Screen](images/cwm/3.png)
+![Screen](images/cwm/bsd.png)
 -----------------------
-	* Distro: Slackware
-	* WM:     CWM (Cum Window Manager)
-	* Bar:    Lemonbar (cwm/cwmbar.sh)
+	* OS:     FreeBSD
+	* WM:     CWM 
+	* Bar:    XTerm (cwm/xtbar)
 	* Sh:     Bash
-	* Term:   URxvt
-	* Editor: Nvim
-	* Font:   Iosevka (CWM), Hack (StumpWM)
+	* Term:   Xterm
+	* Editor: NVim
+	* Font:   Gohu (CWM), Hack (StumpWM)
 -----------------------
 
 Most of my CWM configs are placed into the source code directly. I

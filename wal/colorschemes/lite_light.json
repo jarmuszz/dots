@@ -1,0 +1,28 @@
+{
+    "wallpaper": "/home/jarmusz/other/wallpapers/lite_lightbg.png",
+    "alpha": "100",
+    "special": {
+        "background": "#f7f0c6",
+        "foreground": "#423d37",
+        "cursor": "#423d37"
+    },
+    "colors": {
+        "color0": "#423d37",
+        "color1": "#fc7047",
+        "color2": "#7c9299",
+        "color3": "#423d37",
+        "color4": "#423d37",
+        "color5": "#423d37",
+        "color6": "#423d37",
+        "color7": "#ede6be",
+
+        "color8": "#423d37",
+        "color9":  "#423d37",
+        "color10": "#423d37",
+        "color11": "#423d37",
+        "color12": "#423d37",
+        "color13": "#423d37",
+        "color14": "#423d37",
+        "color15": "#ede6be"
+    }
+}

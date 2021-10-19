@@ -1,0 +1,28 @@
+{
+    "wallpaper": "/home/jarmusz/other/wallpapers/lite_darkbg.png",
+    "alpha": "100",
+    "special": {
+        "background": "#423d37",
+        "foreground": "#f7f0c6",
+        "cursor": "#f7f0c6"
+    },
+    "colors": {
+        "color0": "#f7f0c6",
+        "color1": "#fc7047",
+        "color2": "#7c9299",
+        "color3": "#f7f0c6",
+        "color4": "#f7f0c6",
+        "color5": "#f7f0c6",
+        "color6": "#f7f0c6",
+        "color7": "#4e4842",
+
+        "color8": "#f7f0c6",
+        "color9":  "#f7f0c6",
+        "color10": "#f7f0c6",
+        "color11": "#f7f0c6",
+        "color12": "#f7f0c6",
+        "color13": "#f7f0c6",
+        "color14": "#f7f0c6",
+        "color15": "#4e4842"
+    }
+}

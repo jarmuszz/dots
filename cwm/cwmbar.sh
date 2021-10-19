@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # To use with lemonbar
 # not 100% POSIX -- "echo -n" used
 

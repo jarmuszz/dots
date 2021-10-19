@@ -1,0 +1,3 @@
+alias audi="pkg audit -F"
+alias linux='PATH="/compat/linux/bin/:/compat/linux/usr/bin:${PATH}" '
+alias sus="doas acpiconf -s 3"
