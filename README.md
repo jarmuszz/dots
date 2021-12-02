@@ -4,7 +4,7 @@
 	* WM:     CWM 
 	* Bar:    XTerm (cwm/xtbar)
 	* Sh:     Bash
-	* Term:   Xterm
+	* Term:   XTerm
 	* Editor: NVim
 	* Font:   Gohu (CWM), Hack (StumpWM)
 -----------------------
