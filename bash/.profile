@@ -3,8 +3,8 @@
 #
 
 # Exports
-export PATH="${PATH}:/home/jarmusz/.local/bin/:/home/jarmusz/.scripts"
-export TERMINAl="urxvt"
+export PATH="${PATH}:/home/jarmusz/.local/bin/:/home/jarmusz/.scripts:/sbin:/usr/sbin"
+export TERMINAl="xterm"
 export BROWSER="firefox"
 export EDITOR="nvim"
 export VISUAL="nvim"
@@ -31,10 +31,9 @@ export WINEPREFIX="/home/jarmusz/.cache/wine"
 
 # ls
 export LS_COLORS="no=00:fi=00:di=0;1:ex=0;31:ln=0;4"
-
-musicpd &
+export LSCOLORS="Axcxxxxxbx"
 
 . ~/.bashrc
 
 # startx on tty1
-[ "`tty`" = "/dev/ttyv0" ] && startx
+[ "$(tty)" = "/dev/tty1" ] && startx

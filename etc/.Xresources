@@ -31,9 +31,9 @@ XTerm.vt100.translations: #override \n\
 !XTerm*faceSize: 9
 !XTerm*font: *-fixed-*-*-*-18-*
 
-XTerm*faceName: Hack Regular
+!XTerm*faceName: Hack Regular
 !XTerm*faceSize: 9
-!XTerm.vt100.font: xft:Iosevka :regular :size=11
+XTerm.vt100.font: xft:Terminus (TTF) :medium :size=13
 
 ! fuck bell, nobody likes bell
 XTerm*visualBell: False

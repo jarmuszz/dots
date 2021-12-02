@@ -1,7 +1,7 @@
 #!/bin/sh
-# XTerm bar for FreeBSD.
+# XTerm bar for Linux.
 
-WIDTH=170
+WIDTH=152
 
 [ -z "$1" ] && {
 	. ~/.cache/wal/colors.sh
@@ -12,10 +12,10 @@ WIDTH=170
 	exit $?
 }
 
-BATTERY_OFFSET=165
-VOLUME_OFFSET=158
+BATTERY_OFFSET=146
+VOLUME_OFFSET=142
 CLOCK_OFFSET=1
-WORKSPACES_OFFSET=75
+WORKSPACES_OFFSET=65
 
 WS_FIRST=1
 WS_LAST=9
@@ -23,10 +23,10 @@ WSLIST="$(seq $WS_FIRST $WS_LAST | tr '\n' ' ')"
 WSLIST="${WSLIST% }"
 
 battery() {
-	bat="$(sysctl -n hw.acpi.battery.life)"
+	bat="$(cat /sys/class/power_supply/BAT0/capacity)"
 
 	tput sc
-	tput cm $BATTERY_OFFSET 0
+	tput cup 0 $BATTERY_OFFSET
 
 	if [ "$bar" = "100" ]; then
 		printf "full"
@@ -39,26 +39,19 @@ battery() {
 }
 
 volume() {
-	vol="$(mixer -s vol)"
-
-	set -f
-	case "$(mixer -s pcm)" in 
-		*0:0) pcm=0 ; ;;
-		*)    pcm=1 ; ;;
-	esac
-	set +f
+	vol="$(amixer sget Master | grep -o -m 1 '[0-9]\+%')"
 
 	tput sc
-	tput cm $VOLUME_OFFSET 0
+	tput cup 0 $VOLUME_OFFSET
 
-	printf "%d*%02d%%" "$pcm" "${vol#*:}"
+	printf "%s" "$pcm" "${vol#*:}"
 
 	tput rc
 }
 
 clock() {
 	tput sc
-	tput cm $CLOCK_OFFSET 0
+	tput cup 0 $CLOCK_OFFSET
 
 	printf "%s" "$(date +%H:%M)"
 
@@ -70,7 +63,7 @@ workspaces() {
 	current="${current##* }"
 
 	tput sc
-	tput cm $WORKSPACES_OFFSET 0
+	tput cup 0 $WORKSPACES_OFFSET
 
 	printf '%s' "$WSLIST" | sed "s/${current}/•/"
 
@@ -79,7 +72,7 @@ workspaces() {
 }
 
 # Invisible cursor
-tput vi
+tput civis
 
 # Main loop
 {

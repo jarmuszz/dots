@@ -1,0 +1,17 @@
+MARKFILE="~/.cache/marks"
+
+m() {
+	[ "$#" -eq 2 ] && {
+		printf "%s\t%s\n" "$1" "$2" | tee -a "$MARKFILE"
+		return $?
+	}
+	
+	[ "$#" -eq 1 ] && {
+		DIR="$(grep -m 1 "^$1	" "$MARKFILE" | cut -d'	' -f 2)" || return $?
+		echo "$DIR"
+		cd "$DIR"
+		unset -v DIR
+	}
+}
+
+alias ml="cat $MARKFILE"

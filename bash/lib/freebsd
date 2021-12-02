@@ -1,3 +1,5 @@
 alias audi="pkg audit -F"
 alias linux='PATH="/compat/linux/bin/:/compat/linux/usr/bin:${PATH}" '
 alias sus="doas acpiconf -s 3"
+alias therm="sysctl -n hw.acpi.thermal.tz0.temperature"
+alias afastboot="/usr/local/bin/fastboot"

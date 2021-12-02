@@ -1,0 +1,1 @@
+alias au="sudo sh -c 'apt update && apt upgrade'"

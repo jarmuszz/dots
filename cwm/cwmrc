@@ -12,7 +12,7 @@ autogroup 3 "Discord,Lightcord"
 
 # Bar
 ignore xtbar
-gap 19 0 0 0
+gap 23 0 0 0
 autogroup 0 xtbar # omnipresent
 
 # Move amount
@@ -27,9 +27,8 @@ borderwidth 2
 # Keybindings
 bind-key XF86AudioRaiseVolume  "amixer -q set Master 2%+ unmute"
 bind-key XF86AudioLowerVolume  "amixer -q set Master 2%- unmute"
-bind-key XF86AudioMute         "mute-toggle"
-bind-key S-XF86AudioMute        "mute-toggle mic"
-#bind-key XF86AudioMicMute      "mute-toggle mic"
+bind-key XF86AudioMute         "amixer -q set Master toggle"
+bind-key S-XF86AudioMute       "amixer -q set Capture toggle"
 bind-key XF86MonBrightnessUp   "xbacklight +2"
 bind-key XF86MonBrightnessDown "xbacklight -2"
 
@@ -37,8 +36,8 @@ bind-key XF86MonBrightnessDown "xbacklight -2"
 bind-key 4-p									 "th r"
 
 # Screenshots
-bind-key 4-Print               "sh -c 'maim ~/ltmp/$(date +%Y-%m-%d:%H:%M:%S).png'"
-bind-key 4S-Print              "sh -c 'maim -s ~/ltmp/$(date +%Y-%m-%d:%H:%M:%S).png'"
+bind-key 4-Print               "sh -c 'maim ~/stmp/$(date +%Y-%m-%d:%H:%M:%S).png'"
+bind-key 4S-Print              "sh -c 'maim -s ~/stmp/$(date +%Y-%m-%d:%H:%M:%S).png'"
 
 # Note taking
 bind-key 4-n                   "sh -c 'xterm -e nvim ~/.cache/notes.md'"

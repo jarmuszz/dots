@@ -1,26 +1,21 @@
 map() {
 	# Mapping function
-	if [ "$1" = "-s" ]; then
-		application="$(sed 's/'$2'/\n/g' /dev/stdin)"
-		shift 2
-	else
-		application="$(cat /dev/stdin)"
-	fi
-
-	echo "$application" | while read -r args; do $@ $args; done
-
-	unset -v application
+	while read -r args; do $@ $args; done
 }
 
 lam() {
 	# Lambda
 	[ -z "$1" ] && return 1
 
-	fname="l$(mcookie)"
-	fun $fname "$1"
+	fname="l$(head -1 /dev/urandom | sha1)"
+	eval "$fname"'()' "{ $1; }"
 	shift
 	$fname $@
 
 	unset -f $fname 
 	unset -v fname
+}
+
+lmap() {
+	map "lam $@ $(cat /dev/stdin)"
 }

@@ -3,7 +3,7 @@ alias sudo="doas "
 alias doas="doas "
 
 # Ls
-alias ls="ls --color=auto"
+alias ls="ls -F --color=yes"
 alias sl="ls"
 alias l="ls -l"
 alias ll="ls -l"
@@ -37,3 +37,4 @@ alias ch="curl -s 'ftp://ftp.osuosl.org/pub/slackware/slackware-current/ChangeLo
 alias so="REPO=~/sbo/repo; . ~/prj/shell/sbo-shell/sbo-shell.sh"
 alias ssr="simplescreenrecorder"
 alias vim="nvim"
+alias filter="grep -v"

@@ -10,10 +10,10 @@ post() {
 	. ~/.cache/wal/colors.sh
 
 	# Restart CWM
-	pkill -1 cwm
+	pkill -f -SIGHUP cwm
 
 	# Restart xterm bar
-	pkill xtbar
+	pkill -f xtbar
 	xtbar &
 }
 
