@@ -1,4 +1,4 @@
-MARKFILE="~/.cache/marks"
+MARKFILE=~/.cache/marks
 
 m() {
 	[ "$#" -eq 2 ] && {

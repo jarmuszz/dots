@@ -1,6 +1,6 @@
 ![Screen](images/cwm/bsd.png)
 -----------------------
-	* OS:     FreeBSD
+	* OS:     Devuan
 	* WM:     CWM 
 	* Bar:    XTerm (cwm/xtbar)
 	* Sh:     Bash
