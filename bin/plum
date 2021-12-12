@@ -20,8 +20,9 @@ BEGIN {
 }
 
 # URLs
-/https*:\/\/.*/ {
-	firefox $1
+/https{,1}:\/\/.*/ {
+	xdg_open($0)
+	exit
 }
 
 # Search

@@ -1,7 +1,7 @@
 #!/bin/sh
 # XTerm bar for Linux.
 
-WIDTH=152
+WIDTH=170
 
 [ -z "$1" ] && {
 	. ~/.cache/wal/colors.sh
@@ -12,10 +12,10 @@ WIDTH=152
 	exit $?
 }
 
-BATTERY_OFFSET=146
-VOLUME_OFFSET=142
+BATTERY_OFFSET=165
+VOLUME_OFFSET=160
 CLOCK_OFFSET=1
-WORKSPACES_OFFSET=65
+WORKSPACES_OFFSET=76
 
 WS_FIRST=1
 WS_LAST=9

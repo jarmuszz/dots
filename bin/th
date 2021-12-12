@@ -1,7 +1,7 @@
 #!/bin/sh
 
-LIGHT="lite_light"
-DARK="lite_dark"
+LIGHT="rose-pine-dawn"
+DARK="rose-pine"
 LAST=/tmp/pywaltheme
 
 [ ! -e "/$LAST" ] && echo l > $LAST
@@ -27,16 +27,16 @@ case "$1" in
 		echo l > /tmp/pywaltheme
 		;;
 	c)
-		t="$(cat /tmp/pywaltheme)"
-		if [ "$(cat /tmp/pywaltheme)" -eq d ]; then
+		$0 "$(cat /tmp/pywaltheme)"
+		exit
+		;;
+	r)
+		if [ "$(cat /tmp/pywaltheme)" != "d" ]; then
 			$0 d
 		else
 			$0 l
 		fi
 		exit
-		;;
-	r)
-		$0 "$(cat /tmp/pywaltheme)"
 		exit
 		;;
 	*)

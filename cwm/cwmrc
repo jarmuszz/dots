@@ -1,4 +1,4 @@
-command "* firefox" "firefox -P default-default"
+command "* firefox" firefox
 command "* discord" discord
 command "* xterm"   xterm
 command "* kill"    xkill
@@ -9,7 +9,6 @@ sticky yes
 # Discord should spawn at group #3
 autogroup 3 "Discord,Lightcord"
 
-
 # Bar
 ignore xtbar
 gap 23 0 0 0
@@ -19,7 +18,7 @@ autogroup 0 xtbar # omnipresent
 moveamount 5
 
 # How far windows should snap to edges
-snapdist 20
+snapdist 19
 
 # Width of the border
 borderwidth 2
@@ -33,7 +32,7 @@ bind-key XF86MonBrightnessUp   "xbacklight +2"
 bind-key XF86MonBrightnessDown "xbacklight -2"
 
 # Theme changing
-bind-key 4-p									 "th r"
+bind-key 4-p                   "th c"
 
 # Screenshots
 bind-key 4-Print               "sh -c 'maim ~/stmp/$(date +%Y-%m-%d:%H:%M:%S).png'"
@@ -45,16 +44,19 @@ bind-key 4-n                   "sh -c 'xterm -e nvim ~/.cache/notes.md'"
 # Plumber
 bind-key 4-q                   "xplum"
 bind-key 4S-q                  "xplum -s"
-bind-key 4-e                   "xplum -c"
-bind-key 4S-e                  "xplum -c -s"
+bind-key 4-w                   "xplum -c"
+bind-key 4S-w                  "xplum -c -s"
+
+# Emacs
+bind-key 4-semicolon           "emacs"
 
 # Colors
-color activeborder   "{color1}"
+color activeborder   "{color3}"
 color font           "{foreground}"
-color selfont        "{foreground}"
 color groupborder    "{color2}"
-color inactiveborder "{foreground}"
+color inactiveborder "{background}"
+color selfont        "{color1}"
 color menubg         "{background}"
-color menufg         "{color7}"
+color menufg         "{background}"
 color urgencyborder  "{foreground}"
 color ungroupborder  "{color1}"

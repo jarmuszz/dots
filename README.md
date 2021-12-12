@@ -1,4 +1,4 @@
-![Screen](images/cwm/bsd.png)
+![Screen](images/cwm/devuan.png)
 -----------------------
 	* OS:     Devuan
 	* WM:     CWM 

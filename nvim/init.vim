@@ -4,6 +4,7 @@
 
 call plug#begin(stdpath('data'))
  "Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate', 'branch' : '0.5-compat'}
+ Plug 'rose-pine/neovim'
 call plug#end()
 
 "lua <<EOF
@@ -37,10 +38,7 @@ set wildmenu
 " Relative numbers
 set number relativenumber
 
-" Ignore case when searching
-set ignorecase
-
-" Highlight search resoults
+" Highlight search results
 set hlsearch
 
 " Increment search
@@ -93,7 +91,7 @@ set mouse=a
 """"""""""""""""""""""""""""""
 
 " Theme
-colorscheme min2
+colorscheme rose-pine
 
 " Statusline
 set laststatus=2
