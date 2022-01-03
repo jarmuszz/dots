@@ -1,4 +1,4 @@
-fLocal Variables:
+Local Variables:
 eval: (ispell-change-dictionary "american")
 eval: (flyspell-mode)
 End:
@@ -9,6 +9,7 @@ End:
 #+begin_src emacs-lisp
 (defvar user/conf-org-file (concat user-emacs-directory "conf.org"))
 (defvar user/conf-el-file (concat user-emacs-directory "conf.el"))
+(defvar user/conf-elc-file (concat user-emacs-directory "conf.elc"))
 
 (defun tangle-conf ()
   (when (equal (buffer-file-name)
@@ -16,7 +17,7 @@ End:
     (let ((prog-mode-hook nil))
       (org-babel-tangle)
       (byte-compile-file user/conf-el-file)
-      (load user/conf-el-file))))
+      (load user/conf-elc-file))))
 (add-hook 'after-save-hook 'tangle-conf)
 #+end_src
 
@@ -24,7 +25,7 @@ End:
 #+begin_src emacs-lisp
 (defmacro add-multiple-hooks (modes hook)
   `(mapc (lambda (mode)
-          (add-hook mode ,hook))
+           (add-hook mode ,hook))
         ,modes))
 #+end_src
 
@@ -154,7 +155,11 @@ I'm using [[https://github.com/raxod502/straight.el][straight.el]] to manage my 
   (local-set-key (kbd "TAB") 'indent-for-tab-command)
   (setq indent-tabs-mode nil))
 
-(add-hook 'prog-mode-hook 'enable-tabs)
+(add-multiple-hooks
+ '(prog-mode-hook
+   cc-mode-hook
+  )
+ 'enable-tabs)
 
 (add-multiple-hooks
   '(lisp-mode-hook
@@ -163,7 +168,5 @@ I'm using [[https://github.com/raxod502/straight.el][straight.el]] to manage my 
    )
   'disable-tabs)
 
-(add-multiple-hooks
-  '(c-mode c++-mode)
-  #'(lambda () (c-toggle-syntactic-indentation -1)))
+(setq c-syntactic-indentation nil)
 #+end_src

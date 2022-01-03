@@ -1,6 +1,6 @@
 ;(load-file "~/.config/emacs/plugins.el")
 
-(load-file  (concat user-emacs-directory "conf.el"))
+
 ;(org-babel-load-file (concat user-emacs-directory "conf.org"))
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -21,3 +21,5 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(minimap-font-face ((t (:height 36 :family "Terminus (TTF)")))))
+
+(load-file  (concat user-emacs-directory "conf.el"))
