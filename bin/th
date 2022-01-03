@@ -1,6 +1,8 @@
 #!/bin/sh
 
 LIGHT="rose-pine-dawn"
+LIGHTWP="/home/jarmusz/other/wallpapers/ceschi.png"
+
 DARK="rose-pine"
 LAST=/tmp/pywaltheme
 
@@ -20,17 +22,18 @@ post() {
 case "$1" in
 	l)
 		wal -f "$LIGHT"
-		echo d > /tmp/pywaltheme
+		echo l > /tmp/pywaltheme
+		nitrogen --set-scaled "$LIGHTWP"
 		;;
 	d)
 		wal -f "$DARK"
-		echo l > /tmp/pywaltheme
+		echo d > /tmp/pywaltheme
 		;;
-	c)
+	r)
 		$0 "$(cat /tmp/pywaltheme)"
 		exit
 		;;
-	r)
+	c)
 		if [ "$(cat /tmp/pywaltheme)" != "d" ]; then
 			$0 d
 		else

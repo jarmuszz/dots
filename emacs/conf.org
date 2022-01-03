@@ -1,0 +1,169 @@
+fLocal Variables:
+eval: (ispell-change-dictionary "american")
+eval: (flyspell-mode)
+End:
+
+#+PROPERTY: header-args :tangle conf.el
+
+* Tangle Init
+#+begin_src emacs-lisp
+(defvar user/conf-org-file (concat user-emacs-directory "conf.org"))
+(defvar user/conf-el-file (concat user-emacs-directory "conf.el"))
+
+(defun tangle-conf ()
+  (when (equal (buffer-file-name)
+               (expand-file-name user/conf-org-file))
+    (let ((prog-mode-hook nil))
+      (org-babel-tangle)
+      (byte-compile-file user/conf-el-file)
+      (load user/conf-el-file))))
+(add-hook 'after-save-hook 'tangle-conf)
+#+end_src
+
+* Meta
+#+begin_src emacs-lisp
+(defmacro add-multiple-hooks (modes hook)
+  `(mapc (lambda (mode)
+          (add-hook mode ,hook))
+        ,modes))
+#+end_src
+
+* Plugins
+I'm using [[https://github.com/raxod502/straight.el][straight.el]] to manage my plugins.
+** Foreign
+*** Init
+#+begin_src emacs-lisp
+(load (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory)  nil 'nomessage)
+
+(defun straight-use-packages (&rest recipes)
+  (mapcar 'straight-use-package recipes))
+
+(straight-use-packages
+ 'xresources-theme
+ 'undo-tree
+ 'helm
+ 'ivy
+ 'eglot
+ '(base16-theme
+   :type git
+   :host github
+   :repo "jarmuszz/base16-emacs")
+ 'all-the-icons
+ 'neotree
+ 'minimap
+ 'meson-mode
+ 'geiser
+ 'highlight-indent-guides
+ )
+#+end_src
+*** Ivy
+#+begin_src emacs-lisp
+(ivy-mode)
+#+end_src
+
+*** Undo tree
+#+begin_src emacs-lisp
+(undo-tree-mode)
+#+end_src
+
+*** Eglot
+#+begin_src emacs-lisp
+(require 'eglot)
+(add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
+(add-multiple-hooks
+  '(c-mode-hook c++-mode-hook)
+  'eglot-ensure)
+#+end_src
+
+*** Neotree
+#+begin_src emacs-lisp
+(require 'neotree)
+(setq neo-theme (if (display-graphic-p) 'icons 'arrow))
+(global-set-key [f12] 'neotree-toggle)
+#+end_src
+*** Minimap
+#+begin_src emacs-lisp
+(require 'minimap)
+(custom-set-faces
+ '(minimap-font-face ((t (:height 36 :family "Terminus (TTF)")))))
+(custom-set-variables
+  '(minimap-window-location 'right))
+#+end_src
+*** Ident guides
+#+begin_src emacs-lisp
+(add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
+
+(custom-set-variables
+ '(highlight-indent-guides-method 'character))
+#+end_src
+** Built-in
+*** Tool-bar mode
+#+begin_src emacs-lisp
+(tool-bar-mode 0)
+#+end_src
+
+*** Menu-bar mode
+#+begin_src emacs-lisp
+(menu-bar-mode 0)
+#+end_src
+
+*** Scroll-bar mode
+#+begin_src emacs-lisp
+(scroll-bar-mode 0)
+#+end_src
+
+*** Org-mode
+#+begin_src emacs-lisp
+(setq org-src-fontify-natively t)
+#+end_src
+* Miscellaneous options
+** Auto-save
+#+begin_src emacs-lisp
+(defvar autosave-dir (concat user-emacs-directory "autosave/"))
+(make-directory autosave-dir t)
+#+end_src
+** Keybinds
+#+begin_src emacs-lisp
+(global-set-key (kbd "C-x C-a") 'completion-at-point)
+#+end_src
+** Backups
+#+begin_src emacs-lisp
+(setq make-backup-files nil)
+#+end_src
+* Look and Feel
+** Theme
+#+begin_src emacs-lisp
+(require 'base16-theme)
+(load-theme 'base16-rose-pine-dawn t)
+#+end_src
+** Font
+#+begin_src emacs-lisp
+(set-frame-font "Terminus (TTF) 12" nil t)
+#+end_src
+* Indent
+#+begin_src emacs-lisp
+(defvar tab-width 4)
+
+(defun enable-tabs ()
+  (interactive)
+  (local-set-key (kbd "TAB") 'tab-to-tab-stop)
+  (setq indent-tabs-mode t))
+
+(defun disable-tabs ()
+  (interactive)
+  (local-set-key (kbd "TAB") 'indent-for-tab-command)
+  (setq indent-tabs-mode nil))
+
+(add-hook 'prog-mode-hook 'enable-tabs)
+
+(add-multiple-hooks
+  '(lisp-mode-hook
+    emacs-lisp-mode-hook
+    scheme-mode-hook
+   )
+  'disable-tabs)
+
+(add-multiple-hooks
+  '(c-mode c++-mode)
+  #'(lambda () (c-toggle-syntactic-indentation -1)))
+#+end_src

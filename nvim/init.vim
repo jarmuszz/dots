@@ -3,27 +3,33 @@
 """"""""""""""""""""""""""""""
 
 call plug#begin(stdpath('data'))
- "Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate', 'branch' : '0.5-compat'}
+ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate', 'branch' : '0.5-compat'}
  Plug 'rose-pine/neovim'
+ Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': 'python3 -m chadtree deps'}
 call plug#end()
 
-"lua <<EOF
-"require 'nvim-treesitter.configs'.setup {
-"	highlight = {
-"		enable = true,
-"		disable = nil,
-"	},
-"	indent = {
-"		enable = false,
-"		disable = nil,
-"	},
-"	ensure_installed = {
-"		"bash",
-"		"lua",
-"		"commonlisp",
-"		}
-"}
-"EOF
+lua <<EOF
+require 'nvim-treesitter.configs'.setup {
+	highlight = {
+		enable = true,
+		disable = nil,
+	},
+	indent = {
+		enable = false,
+		disable = true,
+	},
+	ensure_installed = {
+		"bash",
+		"lua",
+		"commonlisp",
+		"rust",
+		"c"
+		}
+}
+EOF
+
+" CHADTree
+let g:chadtree_settings = { 'view.open_direction': 'right', 'view.width': 30 }
 
 """"""""""""""""""""""""""""""
 "  General 

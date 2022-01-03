@@ -3,7 +3,8 @@
 TEMPLATE_DIR=~/.config/templates
 
 usage() {
-	echo "$0:"
+	PROG="$(basename \"$0\")"
+	printf "Usage: %s (filename.suffix|suffix)\n" "$(basename $0)"
 }
 
 [ -z "$1" ] && {

@@ -30,8 +30,8 @@ export DIALOGRC="~/.config/dialog"
 export WINEPREFIX="/home/jarmusz/.cache/wine"
 
 # ls
-export LS_COLORS="no=00:fi=00:di=0;1:ex=0;31:ln=0;4"
-export LSCOLORS="Axcxxxxxbx"
+#export LS_COLORS="no=00:fi=00:di=0;1:ex=0;31:ln=0;4"
+#export LSCOLORS="Axcxxxxxbx"
 
 . ~/.bashrc
 
