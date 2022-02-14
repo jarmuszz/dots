@@ -1,0 +1,79 @@
+# -*- fvwm -*-
+
+WindowTitle {FvwmScript Audio}
+WindowSize  90 44
+WindowPosition 1261 50
+Colorset    10
+
+Init
+Begin
+  Set $MasterCommand  = {amixer sget Master  | grep -o -m 1 "[0-9]\+%"}
+  Set $CaptureCommand = {amixer sget Capture | grep -o -m 1 "[0-9]\+%"}
+
+  Set $Master  = { } (GetOutput $MasterCommand  1 -1)
+  Set $Capture = { } (GetOutput $CaptureCommand 1 -1)
+
+  If (GetOutput {amixer sget Master} 6 6)=={[off]} Then
+     ChangeValue 1 0
+  Else
+     ChangeValue 1 1
+
+  If (GetOutput {amixer sget Capture} 6 6)=={[off]} Then
+     ChangeValue 2 0
+  Else
+     ChangeValue 2 1
+
+  ChangeTitle 1 $Master
+  ChangeTitle 2 $Capture
+End
+
+PeriodicTasks
+Begin
+  Set $Master  = { } (GetOutput $MasterCommand  1 -1)
+  Set $Capture = { }  (GetOutput $CaptureCommand  1 -1)
+
+  If (GetOutput {amixer sget Master} 6 6)=={[off]} Then
+     ChangeValue 1 0
+  Else
+     ChangeValue 1 1
+
+  If (GetOutput {amixer sget Capture} 6 6)=={[off]} Then
+     ChangeValue 2 0
+  Else
+     ChangeValue 2 1
+
+  ChangeTitle 1 $Master
+  ChangeTitle 2 $Capture
+End
+
+Widget 1
+Property
+  Position 0 0
+  Size 100 100
+  Value 1
+  Type CheckBox
+  Flags NoReliefString NoFocus
+  Title {Lorem ipsum}
+Main
+  Case message of
+   SingleClic :
+   Begin
+     Do { Exec amixer -q set Master toggle }
+   End
+End
+
+Widget 2
+Property
+  Position  0 20
+  Size 100 20
+  Value 1
+  Type CheckBox
+  Flags NoReliefString NoFocus
+  Title {Lorem ipsum}
+Main
+  Case message of
+   SingleClic :
+   Begin
+     Do { Exec amixer -q set Capture toggle }
+   End
+End

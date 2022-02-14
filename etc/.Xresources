@@ -1,4 +1,5 @@
 #include ".cache/wal/colors.Xresources"
+#include ".config/irix.Xresources"
 
 !
 ! XTRERM
@@ -22,6 +23,8 @@ XTerm.vt100.translations: #override \n\
   Ctrl Shift <Key>V: insert-selection(CLIPBOARD) \n\
   Ctrl Shift <Key>+: larger-vt-font() \n\
   Ctrl <Key>-: smaller-vt-font() \n\
+  Alt <Key>W: copy-selection(CLIPBOARD) \n\
+  Ctrl <Key>Y: insert-selection(CLIPBOARD) \n\
 
 ! Font
 !xterm*faontSize: 14
@@ -35,10 +38,11 @@ XTerm.vt100.translations: #override \n\
 !XTerm*faceSize: 9
 XTerm.vt100.font: xft:Terminus (TTF) :medium :size=12
 
-! fuck bell, nobody likes bell
+! Fuck the bell, nobody likes bell
 XTerm*visualBell: False
 
-! urxvt
-URxvt.font: xft:Iosevka :regular :size=11
-URxvt.scrollBar: false
-URxvt.internalBorder: 8
+! Internal border
+XTerm*internalBorder: 5
+
+! Title
+XTerm*title: winterm

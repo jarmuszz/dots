@@ -1,12 +1,11 @@
-![Screen](images/cwm/devuan.png)
+![Screen](images/fvwm/1.png)
 -----------------------
 	* OS:     Devuan
-	* WM:     CWM 
-	* Bar:    XTerm (cwm/xtbar)
+	* WM:     FVWM 
 	* Sh:     Bash
 	* Term:   XTerm
-	* Editor: NVim
-	* Font:   Gohu (CWM), Hack (StumpWM)
+	* Editor: Emacs
+	* Font:   Terminus (TTF)
 -----------------------
 
 Most of my CWM configs are placed into the source code directly. I

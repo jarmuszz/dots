@@ -50,6 +50,9 @@ bind-key 4S-w                  "xplum -c -s"
 # Emacs
 bind-key 4-semicolon           "emacs"
 
+# Skippy
+bind-key 4-space               "skippy-xd"
+
 # Colors
 color activeborder   "{color3}"
 color font           "{foreground}"

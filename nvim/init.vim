@@ -139,7 +139,7 @@ cnoremap <m-f> <S-right>
 cnoremap <m-b> <S-left>
 
 " Copying into system clipboard
-vmap <C-y> "+y
+map <C-y> "+y
 
 " Clearing search highlight
 nmap <leader>/ :noh<CR>

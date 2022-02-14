@@ -1,4 +1,4 @@
-Local Variables:
+fLocal Variables:
 eval: (ispell-change-dictionary "american")
 eval: (flyspell-mode)
 End:
@@ -7,166 +7,237 @@ End:
 
 * Tangle Init
 #+begin_src emacs-lisp
-(defvar user/conf-org-file (concat user-emacs-directory "conf.org"))
-(defvar user/conf-el-file (concat user-emacs-directory "conf.el"))
-(defvar user/conf-elc-file (concat user-emacs-directory "conf.elc"))
+  (defvar user/conf-org-file (concat user-emacs-directory "conf.org"))
+  (defvar user/conf-el-file (concat user-emacs-directory "conf.el"))
+  (defvar user/conf-elc-file (concat user-emacs-directory "conf.elc"))
 
-(defun tangle-conf ()
-  (when (equal (buffer-file-name)
-               (expand-file-name user/conf-org-file))
-    (let ((prog-mode-hook nil))
-      (org-babel-tangle)
-      (byte-compile-file user/conf-el-file)
-      (load user/conf-elc-file))))
-(add-hook 'after-save-hook 'tangle-conf)
+  (defun tangle-conf ()
+    (when (equal (buffer-file-name)
+		 (expand-file-name user/conf-org-file))
+      (let ((prog-mode-hook nil))
+	(org-babel-tangle)
+	(byte-compile-file user/conf-el-file)
+	(load user/conf-elc-file))))
+  (add-hook 'after-save-hook 'tangle-conf)
 #+end_src
 
 * Meta
-#+begin_src emacs-lisp
-(defmacro add-multiple-hooks (modes hook)
-  `(mapc (lambda (mode)
-           (add-hook mode ,hook))
-        ,modes))
+#+begin_src elisp
+  (defmacro add-multiple-hooks (modes hook)
+    `(mapc (lambda (mode)
+	     (add-hook mode ,hook))
+	  ,modes))
 #+end_src
 
 * Plugins
 I'm using [[https://github.com/raxod502/straight.el][straight.el]] to manage my plugins.
 ** Foreign
 *** Init
-#+begin_src emacs-lisp
-(load (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory)  nil 'nomessage)
+#+begin_src elisp
+  (load (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory)  nil 'nomessage)
 
-(defun straight-use-packages (&rest recipes)
-  (mapcar 'straight-use-package recipes))
+  (defun straight-use-packages (&rest recipes)
+    (mapcar 'straight-use-package recipes))
 
-(straight-use-packages
- 'xresources-theme
- 'undo-tree
- 'helm
- 'ivy
- 'eglot
- '(base16-theme
-   :type git
-   :host github
-   :repo "jarmuszz/base16-emacs")
- 'all-the-icons
- 'neotree
- 'minimap
- 'meson-mode
- 'geiser
- 'highlight-indent-guides
- )
+  (straight-use-packages
+   'xresources-theme
+   'undo-tree
+   'helm
+   'ivy
+   'eglot
+   '(base16-theme
+     :local-repo "base16-emacs")
+   'all-the-icons
+   'neotree
+   'minimap
+   'meson-mode
+   'geiser
+   'highlight-indent-guides
+   'slime
+   'd-mode
+   'good-scroll
+   'fvwm-mode
+   'edit-server
+   'org-superstar
+   'projectile
+   )
 #+end_src
-*** Ivy
-#+begin_src emacs-lisp
-(ivy-mode)
-#+end_src
-
-*** Undo tree
-#+begin_src emacs-lisp
-(undo-tree-mode)
+*** Edit server
+#+begin_src elisp
+  (edit-server-start)
 #+end_src
 
 *** Eglot
-#+begin_src emacs-lisp
-(require 'eglot)
-(add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
-(add-multiple-hooks
-  '(c-mode-hook c++-mode-hook)
-  'eglot-ensure)
+#+begin_src elisp
+  (require 'eglot)
+  (add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
+  (add-multiple-hooks
+    '(c-mode-hook c++-mode-hook)
+    'eglot-ensure)
+#+end_src
+
+*** Good scroll
+#+begin_src elisp
+  (good-scroll-mode 1)
+#+end_src
+
+*** Ident guides
+#+begin_src elisp
+  (add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
+
+  (custom-set-variables
+   '(highlight-indent-guides-method 'character))
+#+end_src
+
+*** Ivy
+#+begin_src elisp
+  (ivy-mode)
+#+end_src
+
+*** Minimap
+#+begin_src elisp
+  ;(require 'minimap)
+  (custom-set-faces
+   '(minimap-font-face ((t (:height 36 :family "Terminus (TTF)")))))
+  (custom-set-variables
+    '(minimap-window-location 'right))
 #+end_src
 
 *** Neotree
-#+begin_src emacs-lisp
-(require 'neotree)
-(setq neo-theme (if (display-graphic-p) 'icons 'arrow))
-(global-set-key [f12] 'neotree-toggle)
+#+begin_src elisp
+  (require 'neotree)
+  (setq neo-theme 'icons)
+  (global-set-key [f12] 'neotree-toggle)
 #+end_src
-*** Minimap
-#+begin_src emacs-lisp
-(require 'minimap)
-(custom-set-faces
- '(minimap-font-face ((t (:height 36 :family "Terminus (TTF)")))))
-(custom-set-variables
-  '(minimap-window-location 'right))
-#+end_src
-*** Ident guides
-#+begin_src emacs-lisp
-(add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
 
-(custom-set-variables
- '(highlight-indent-guides-method 'character))
+*** Org Superstar
+#+begin_src elisp
+  (add-hook 'org-mode-hook #'(lambda () (org-superstar-mode 1)))
+#+end_src elisp
+
+*** Projectile
+#+begin_src elisp
+  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+  (setq projectile-project-search-path '("~/prj"))
+  (setq projectile-indexing-method 'native)
+  (projectile-register-project-type 'dlang-dub '("dub.sdl" "dub.json")
+                    :project-file "dub.sdl"
+                    :compile "dub build"
+                    :src-dir "src/"
+                    :test "dub test"
+                    :run "dub run")
+  (projectile-mode +1)
 #+end_src
+*** Undo tree
+#+begin_src elisp
+  (global-undo-tree-mode)
+#+end_src
+
 ** Built-in
 *** Tool-bar mode
-#+begin_src emacs-lisp
-(tool-bar-mode 0)
+#+begin_src elisp
+  (tool-bar-mode 0)
 #+end_src
 
 *** Menu-bar mode
-#+begin_src emacs-lisp
-(menu-bar-mode 0)
+#+begin_src elisp
+  (menu-bar-mode 0)
 #+end_src
 
 *** Scroll-bar mode
-#+begin_src emacs-lisp
-(scroll-bar-mode 0)
+#+begin_src elisp
+  (scroll-bar-mode 0)
 #+end_src
 
 *** Org-mode
-#+begin_src emacs-lisp
-(setq org-src-fontify-natively t)
+#+begin_src elisp
+  (setq org-hide-emphasis-markers t)
+  (setq org-src-fontify-natively nil)
+  (add-hook 'org-mode-hook 'org-indent-mode)
+  (setq org-adapt-indentation nil)
 #+end_src
+
 * Miscellaneous options
 ** Auto-save
-#+begin_src emacs-lisp
-(defvar autosave-dir (concat user-emacs-directory "autosave/"))
-(make-directory autosave-dir t)
+#+begin_src elisp
+  (defvar autosave-dir (concat user-emacs-directory "autosave/"))
+  (make-directory autosave-dir t)
 #+end_src
-** Keybinds
-#+begin_src emacs-lisp
-(global-set-key (kbd "C-x C-a") 'completion-at-point)
-#+end_src
+
 ** Backups
-#+begin_src emacs-lisp
-(setq make-backup-files nil)
+#+begin_src elisp
+  (setq make-backup-files nil)
+#+end_src
+
+** Emacsclient
+#+begin_src elisp
+  ;; Fixes for emacsclient
+  (add-hook 'after-make-frame-functions 
+    #'(lambda (_)  
+	(set-frame-font "Terminus (TTF) 12" nil t)		; Fixes font issues
+	))
 #+end_src
 * Look and Feel
 ** Theme
-#+begin_src emacs-lisp
-(require 'base16-theme)
-(load-theme 'base16-rose-pine-dawn t)
+#+begin_src elisp
+  (set-fringe-mode 0)
+  (require 'base16-theme)
+
+  (custom-set-variables
+    '(base16-highlight-mode-line 'box))
+  (load-theme 'base16-irix t)
 #+end_src
+
 ** Font
-#+begin_src emacs-lisp
-(set-frame-font "Terminus (TTF) 12" nil t)
+#+begin_src elisp
+  (set-frame-font "Terminus (TTF) 12" nil t)
 #+end_src
-* Indent
-#+begin_src emacs-lisp
-(defvar tab-width 4)
 
-(defun enable-tabs ()
-  (interactive)
-  (local-set-key (kbd "TAB") 'tab-to-tab-stop)
-  (setq indent-tabs-mode t))
+** Start fullscreen
+#+begin_src elisp
+  (add-to-list 'default-frame-alist '(fullscreen . maximized))
+#+end_src
 
-(defun disable-tabs ()
-  (interactive)
-  (local-set-key (kbd "TAB") 'indent-for-tab-command)
-  (setq indent-tabs-mode nil))
+** Indent
+#+begin_src elisp
+  (defvar tab-width 4)
 
-(add-multiple-hooks
- '(prog-mode-hook
-   cc-mode-hook
-  )
- 'enable-tabs)
+  (defun enable-tabs ()
+    (interactive)
+    (local-set-key (kbd "TAB") 'tab-to-tab-stop)
+    (setq indent-tabs-mode t))
 
-(add-multiple-hooks
-  '(lisp-mode-hook
-    emacs-lisp-mode-hook
-    scheme-mode-hook
-   )
-  'disable-tabs)
+  (defun disable-tabs ()
+    (interactive)
+    (local-set-key (kbd "TAB") 'indent-for-tab-command)
+    (setq indent-tabs-mode nil))
 
-(setq c-syntactic-indentation nil)
+  (add-multiple-hooks
+   '(prog-mode-hook
+     cc-mode-hook
+    )
+   'enable-tabs)
+
+  (add-multiple-hooks
+    '(lisp-mode-hook
+      elisp-mode-hook
+      scheme-mode-hook
+      fvwm-mode-hook
+     )
+    'disable-tabs)
+
+  (setq c-syntactic-indentation nil)
+#+end_src
+
+** Misc kbds
+*** Helm
+#+begin_src elisp
+  (global-set-key (kbd "M-x") 'helm-M-x)	
+  (global-set-key (kbd "C-x b") 'helm-buffers-list)
+  (global-set-key (kbd "C-x C-f") 'helm-find-files)
+  (defun foobar ()
+    (interactive)
+    (print (helm-mark-ring)))
+
+  (global-set-key (kbd "C-x m") #'(print (helm-mark-ring)))
 #+end_src

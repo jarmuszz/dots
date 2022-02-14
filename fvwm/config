@@ -1,0 +1,435 @@
+# -*- fvwm -*-
+
+# 1. Store
+# 2. Functions
+# 3. Init
+# 4. Feel
+# 5. Look
+# 6. Menus
+# 7. Keysbinds
+# 8. Modules
+
+# Store
+InfoStoreAdd terminal xterm
+InfoStoreAdd browser  firefox
+InfoStoreAdd editor   "emacsclient -c"
+
+InfoStoreAdd font     "xft:Terminus (TTF):medium:size=12"
+
+# Functions
+DestroyFunc ViewManPage
+AddToFunc   ViewManPage
++ I Exec exec $[infostore.terminal] \
+  -n "Manual Page -$0" \
+  -T "Manual Page -$0" \
+  -e man "$0"
+
+DestroyFunc RaiseMove
+AddToFunc   RaiseMove
++ I Raise
++ M $0
++ D $1
+
+# Init
+DestroyFunc StartFunction
+AddToFunc   StartFunction
++ I Module FvwmButtons Desks
++ I Module FvwmButtons TimeNDate
++ I Module FvwmScript Audio
++ I Exec picom       
++ I Exec nitrogen --restore
+
+# Feel
+## Desktops
+DesktopSize 3x3
+
+## Edges
+EdgeScroll     0 0
+EdgeResistance 0
+EdgeThickness  1
+Style * EdgeMoveDelay 0, EdgeMoveResistance 0
+
+## Screen Padding
+EwmhBaseStruts 5 110 5 5
+
+## Double click & Move
+ClickTIme     250
+MoveThreshold 3
+
+## Window Placement & Focus
+Style * MinOverlapPlacement, UsePPosition, GrabFocus, IconBox 100x600-5+130, NoUseIconPosition
+
+## Moving and Resizing
+OpaqueMoveSize unlimited
+Style * ResizeOpaque, SnapAttraction 30 SameType ScreenAll, SnapGrid
+
+## Transistent Windows
+Style * DecorateTransient, StackTransientParent
+Style * !FPGrabFocusTransient, FPReleaseFocusTransient
+
+## Shading
+Style * WindowShadeScrolls, WindowShadeSteps 10
+
+## Icons
+Style * Icon
+
+## Toolbar
+Mouse 1 4 A Iconify
+Mouse 1 2 A Maximize
+Mouse 1 1 A Menu MenuWindowOps Close
+Mouse 1 1 4 Menu MenuWindowOps Destroy
+
+AddToFunc MouseScroll
++ M Scroll
+
+Mouse 1 T A RaiseMove Move Maximize
+Mouse 1 W 4 RaiseMove Move Resize
+Mouse 3 I A Menu MenuIconOps
+Mouse 3 T A Menu MenuIconOps
+Mouse 4 T A WindowShade True
+Mouse 5 T A WindowShade False
+Mouse 2 A 4 Scroll reverse
+
+## Icons
+Mouse 1 I A RaiseMove Move "Iconify off"
+
+
+## Window-specific Styles
+Style Desks     !Title, Borders, !Handles, Sticky, \
+      WindowListSkip, NeverFocus, FixedSize, FixedPosition, Layer 6
+Style TimeNDate !Title, Borders, !Handles, Sticky, \
+      WindowListSkip, NeverFocus, FixedSize, FixedPosition, Layer 6
+Style Audio     !Title, Borders, !Handles, Sticky, \
+      WindowListSkip, NeverFocus, FixedSize, FixedPosition, Layer 6
+Style Run       !Title, Borders, !Handles, Layer 6
+
+Style FvwmIdent WindowListSkip
+
+# Look
+DefaultFont $[infostore.font]
+AddToDecor IRIXDecor
++ AddButtonStyle 1 Vector 3 23x58@0 77x58@0 77x42@0
++ AddButtonStyle 1 Vector 3 23x58@0 23x42@0 77x42@0
++ AddButtonStyle 1 Vector 3 25x60@0 80x60@0 80x44@0
+
++ AddButtonStyle 4 Vector 3 42x42@0 42x58@0 58x58@0
++ AddButtonStyle 4 Vector 3 42x42@0 58x42@0 58x58@0
++ AddButtonStyle 4 Vector 3 44x60@0 60x60@0 60x44@0
+
++ AddButtonStyle 2 Vector 3 20x12@0 20x75@0 75x75@0
++ AddButtonStyle 2 Vector 3 20x12@0 75x12@0 75x75@0
++ AddButtonStyle 2 Vector 3 28x76@0 76x76@0 76x20@0
+
++ TitleStyle Height MinHeight 25 LeftJustified
+
+Style * Colorset 1, HilightColorset 2, \
+        BorderColorset 3, HilightBorderColorset 4, \
+        BorderWidth 5, HandleWidth 8, \
+        MWMBorder, MWMButtons, \
+	UseDecor IRIXDecor, \
+	Animation
+
+## Colorset
+#   0 - Default
+#   1 - Inactive Windows
+#   2 - Active Window
+#   3 - Inactive Windows Borders
+#   4 - Active Windows Borders
+#   5 - Menu - Inactive Item
+#   6 - Menu - Active Item
+#   7 - Menu - Grayed Item
+#   8 - Menu - Title
+#   9 - Reserved
+#  10+ Modules
+#      10 - Module Default
+#      11 - Module Hilight
+#      12 - Module ActiveButton (Mouse Hover)
+#      13 - FvwmPager Active Page
+#      14 - FvwmIconMan Iconified Buttonx
+
+### General
+Colorset 0 fg red, bg blue, hi, sh Plain NoShape
+Colorset 1  fg #000000, bg #808080, hi #c1bdad, sh, Plain,  NoShape
+Colorset 2  fg #393939, bg #a59f80, hi #c1bdad, sh, Plain,  NoShape
+Colorset 3  fg black,   bg #808080, hi #c1bdad, sh #626262
+Colorset 4  fg black,   bg #a59f80, hi #c1bdad, sh #626262, Plain, NoShape
+
+### TODO - Menu
+Colorset 5  fg #000000, bg #ffffff, hi, sh, Plain, NoShape
+Colorset 6  fg #ffffff, bg #2d2d2d, hi, sh, Plain, NoShape
+Colorset 7  fg grey30,  bg #ffffff, hi, sh, Plain, NoShape
+Colorset 8  fg #ffffff, bg #003c3c, hi, sh, Plain, NoShape
+
+### Modules
+Colorset 10 fg #000000, bg #c0c0c0, hi #aaaaaa, sh #999999, Plain, NoShape
+Colorset 11 fg #000000, bg #B4637A, hi #ffffff, sh #000000, Plain, NoShape
+Colorset 12 fg #2d2d2d, bg #999999, hi #cccccc, sh #4c4c4c
+Colorset 13 fg #ffffff, bg #c0c0c0, hi,         sh,         Plain, NoShape
+Colorset 14 fg #555555, bg #c0c0c0, hi #aaaaaa, sh #999999, Plain, NoShape
+
+### Misc
+Colorset 15 fg #c6c6c6, bg #00003f, hi, sh
+
+# Menus
+MenuStyle * MenuColorset 12, ActiveColorset 11, GreyedColorset 7, TitleColorset 11
+MenuStyle * MWM, HilightBack, HilightTitleBack, SeparatorsLong
+
+## Root menu
+DestroyMenu MenuFvwmRoot
+AddToMenu   MenuFvwmRoot "Fvwm" Title
++ "&Terminal" Exec exec $[infostore.terminal]
++ "&Editor" Exec exec emacs
++ "&Browser" Exec exec $[infostore.browser]
++ "&Comunicator" Exec exec discord
++ "" Nop
++ "&Man pages" Popup MenuFvwmManPages
++ "&Fvwm Terminal" Module FvwmConsole -terminal $[infostore.terminal]
++ "" Nop
++ "&Restart" Restart
+
+## Man menu
+DestroyMenu MenuFvwmManPages
+AddToMenu   MenuFvwmManPages "Help" Title
++ "fvwm"                ViewManPage fvwm
++ "FvwmAnimate"         ViewManPage FvwmAnimate
++ "FvwmAuto"            ViewManPage FvwmAuto
++ "FvwmBacker"          ViewManPage FvwmBacker
++ "FvwmBanner"          ViewManPage FvwmBanner
++ "FvwmButtons"         ViewManPage FvwmButtons
++ "FvwmCommand"         ViewManPage FvwmCommand
++ "FvwmConsole"         ViewManPage FvwmConsole
++ "FvwmEvent"           ViewManPage FvwmEvent
++ "FvwmForm"            ViewManPage FvwmForm
++ "FvwmIconMan"         ViewManPage FvwmIconMan
++ "FvwmIdent"           ViewManPage FvwmIdent
++ "FvwmPager"           ViewManPage FvwmPager
++ "FvwmPerl"            ViewManPage FvwmPerl
++ "FvwmProxy"           ViewManPage FvwmProxy
++ "FvwmRearrange"       ViewManPage FvwmRearrange
++ "FvwmScript"          ViewManPage FvwmScript
++ "" Nop
++ "fvwm-root"	        ViewManPage fvwm-root
++ "fvwm-menu-desktop"   ViewManPage fvwm-menu-desktop
++ "fvwm-menu-directory" ViewManPage fvwm-menu-directory
++ "fvwm-menu-headlines" ViewManPage fvwm-menu-headlines
++ "fvwm-menu-xlock"     ViewManPage fvwm-menu-xlock
++ "fvwm-config"         ViewManPage fvwm-config
+
+## Window Operations Menus
+DestroyMenu MenuWindowOps
+AddToMenu   MenuWindowOps
++ "Move"      Move
++ "Resize"    Resize
++ "Iconify"   Iconify
++ "Maximize"  Maximize
++ "Shade"     WindowShade
++ "Stick"     Stick
++ "" Nop
++ "Close"     Close
++ "More..."   Menu MenuWindowOpsLong This 0 0
+
+
+DestroyMenu MenuWindowOpsLong
+AddToMenu   MenuWindowOpsLong
++ "Move"                Move
++ "Resize"              Resize
++ "(De)Iconify"         Iconify
++ "(Un)Maximize"        Maximize
++ "(Un)Shade"           WindowShade
++ "(Un)Sticky"		Stick
++ "(No)TitleBar"	Pick (CirculateHit) ToggleTitle
++ "Send To"             Popup MenuSendTo
++ "" Nop
++ "Close"               Close
++ "Destroy"             Destroy
++ "" Nop
++ "Raise"		Raise
++ "Lower"		Lower
++ "" Nop
++ "StaysOnTop"          Pick (CirculateHit) Layer 0 6
++ "StaysPut"            Pick (CirculateHit) Layer 0 4
++ "StaysOnBottom"       Pick (CirculateHit) Layer 0 2
++ "" Nop
++ "Identify"            Module FvwmIdent
+
+
+## Icon Menu
+DestroyMenu MenuIconOps
+AddToMenu   MenuIconOps
++ "(De)Iconify"         Iconify
++ "(Un)Maximize"        Maximize
++ "(Un)Shade"           WindowShade
++ "(Un)Sticky"		Stick
++ "(No)TitleBar"	Pick (CirculateHit) ToggleTitle
++ "Send To"             Popup MenuSendTo
++ "" Nop
++ "Close"               Close
++ "Destroy"             Destroy
++ "" Nop
++ "Raise"		Raise
++ "Lower"		Lower
++ "" Nop
++ "StaysOnTop"          Pick (CirculateHit) Layer 0 6
++ "StaysPut"            Pick (CirculateHit) Layer 0 4
++ "StaysOnBottom"       Pick (CirculateHit) Layer 0 2
++ "" Nop
++ "Identify"            Module FvwmIdent
+
+## Desk/Page menus
+DestroyMenu MenuSendTo
+AddToMenu MenuSendTo
++ "Current" MoveToCurrent
++ "Page" PopUp MenuSendToPage
++ "Desk" PopUp MenuSendToDesk
+
+DestroyMenu MenuSendToDesk
+AddToMenu   MenuSendToDesk
++ "Desk 0"	MoveToDesk 0 0
++ "Desk 1"	MoveToDesk 0 1
++ "Desk 2"	MoveToDesk 0 2
++ "Desk 3"	MoveToDesk 0 3
+
+DestroyMenu MenuSendToPage
+AddToMenu   MenuSendToPage
++ "Page (0,0)"	MoveToPage 0 0
++ "Page (0,1)"	MoveToPage 0 1
++ "Page (1,0)"	MoveToPage 1 0
++ "Page (1,1)"	MoveToPage 1 1
+
+# Key bindings
+## Utility
+Key F1  A 4 Menu MenuFvwmRoot
+Key Tab A 4 WindowList Root c c, SelectOnRelease Meta_L
+Key d   A 4 Module FvwmForm Run
+
+## Spawning
+Key Return A 4 Exec exec $[infostore.terminal]
+Key e      A 4 Exec exec $[infostore.editor]
+
+## Windows
+Key x W S4  Close
+Key m W 4   Maximize
+
+Key c W 4   AnimatedMove 50-50w    0-50w    Warp
+
+Key h W 4   AnimatedMove w-8	   w        Warp
+Key j W 4   AnimatedMove w 	   w+8      Warp
+Key k W 4   AnimatedMove w 	   w-8      Warp
+Key l W 4   AnimatedMove w+8 	   w        Warp
+
+Key h W S4  AnimatedMove 0+w 	   w        Warp
+Key j W S4  AnimatedMove w 	   100-100w Warp
+Key k W S4  AnimatedMove w 	   0+w 	    Warp
+Key l W S4  AnimatedMove 100-100w  w        Warp
+
+## Desks
+Key F1 A 4 GotoDesk 0 0
+Key F2 A 4 GotoDesk 0 1
+Key F3 A 4 GotoDesk 0 2
+Key F4 A 4 GotoDesk 0 3
+
+Key F1 A S4 MovetoDesk 0 0
+Key F2 A S4 MovetoDesk 0 1
+Key F3 A S4 MovetoDesk 0 2
+Key F4 A S4 MovetoDesk 0 3
+
+## Pages
+Key 1 A 4 GotoPage 0 0
+Key 2 A 4 GotoPage 1 0
+Key 3 A 4 GotoPage 2 0
+Key 4 A 4 GotoPage 0 1
+Key 5 A 4 GotoPage 1 1
+Key 6 A 4 GotoPage 2 1
+Key 7 A 4 GotoPage 0 2
+Key 8 A 4 GotoPage 1 2
+Key 9 A 4 GotoPage 2 2
+
+Key 1 A S4 MovetoPage 0 0
+Key 2 A S4 MovetoPage 1 0
+Key 3 A S4 MovetoPage 2 0
+Key 4 A S4 MovetoPage 0 1
+Key 5 A S4 MovetoPage 1 1
+Key 6 A S4 MovetoPage 2 1
+Key 7 A S4 MovetoPage 0 2
+Key 8 A S4 MovetoPage 1 2
+Key 9 A S4 MovetoPage 2 2
+
+## Media
+Key XF86AudioMute A N         Exec amixer -q set Master toggle
+Key XF86AudioRaiseVolume A N  Exec amixer -q set Master 2%+ unmute
+Key XF86AudioLowerVolume A N  Exec amixer -q set Master 2%- unmute
+Key XF86AudioMute A N         Exec amixer -q set Master toggle
+Key XF86AudioMute A 4         Exec amixer -q set Capture toggle
+Key XF86MonBrightnessUp A N   Exec xbacklight +2
+Key XF86MonBrightnessDown A N Exec xbacklight -2
+
+# Modules
+## Desks
+DestroyModuleConfig Desks:*
+*Desks: Geometry 90x100-5-5
+*Desks: Colorset 10
+*Desks: Rows 	 5
+*Desks: Columns  1
+
+*Desks: (1x1, Container(Padding 0, Rows 85, Columns 88))
+*Desks: (22x20, Id desk0, Title "F1", Action (Mouse 1) GotoDesk 0 0, Colorset 12, Padding 0)
+*Desks: (22x20, Id desk1, Title "F2", Action (Mouse 1) GotoDesk 0 1, Colorset 12, Padding 0)
+*Desks: (22x20, Id desk2, Title "F3", Action (Mouse 1) GotoDesk 0 2, Colorset 12, Padding 0)
+*Desks: (22x20, Id desk3, Title "F4", Action (Mouse 1) GotoDesk 0 3, Colorset 12, Padding 0)
+*Desks: (End)
+
+*Desks: (1x4, Container(Rows 1, Columns 1))
+*Desks: (1x1, Swallow FvwmPager 'Module FvwmPager *', Frame 0)
+
+### Pager
+DestroyModuleConfig FvwmPager:*
+*FvwmPager: Colorset * 3ls
+*FvwmPager: HilightColorset * 12
+*FvwmPager: WindowColorsets 10 11
+*FvwmPager: Font       None
+*FvwmPager: Baloons    All
+*FvwmPager: BaloonFont $[va.DefaultFont]
+*FvwmPager: Windiw3dBorders
+*FvwmPager: MiniIcons
+
+## DateNTime
+*FvwmScript-DateTime: Font $[vp.DefaultFont]
+
+DestroyModuleConfig TimeNDate:*
+*TimeNDate: DefaultFont $[infostore.font]
+*TimeNDate: Geometry 90x30-5+5
+*TimeNDate: Colorset 10
+*TimeNDate: Rows     $[vp.height]
+*TimeNDate: Columns  100Au
+*TimeNDate: Frame    10
+
+*TimeNDate: (100x30 Swallow DateTime \
+	    'Module FvwmScript FvwmScript-DateTime', Frame 0)
+
+
+*FvwmScript: DefaultFont $[infostore.font]
+
+## Audio
+DestroyModuleConfig Audio:*
+*Audio: Geometry 10x44+35-5
+# TODO - Doesn't work
+*Audio: DefaultFont "xft:Terminus (TTF):medium:size=12"
+
+## Run
+DestroyModuleConfig Run:*
+*Run: GrabServer
+*Run: InputFont $[infostore.font]
+*Run: ButtonFont $[infostore.font]
+*Run: Colorset 10
+*Run: ItemColorset 12
+*Run: WrapPointer
+*Run: Line center
+*Run: Input Command 20
+*Run: Button quit "Run" ^M
+*Run: Command Exec exec $(Command)
+*Run: Button quit "Cancel" ^C
+
+## FvwmIdent
+DestroyModuleConfig FvwmIdent:*
+*FvwmIdent: Colorset 10
+*FvwmIdent: Font     $[va.DefaultFont]

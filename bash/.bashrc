@@ -4,8 +4,6 @@
 # Source pywal
 . ~/.cache/wal/colors.sh
 
-shopt -s autocd
-
 # One-line functions
 fun() { eval "function $1 {" ${2} '; }'; }
 
@@ -28,6 +26,7 @@ esac
 lib higher
 lib aliases
 lib marks
+lib plan9
 
 . /usr/share/bash-completion/bash_completion
 

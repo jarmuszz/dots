@@ -1,0 +1,6 @@
+export PLAN9=/home/jarmusz/src/plan9
+export PATH="$PATH:$PLAN9/bin"
+
+p9() {
+	$PLAN9/bin/$@
+}
