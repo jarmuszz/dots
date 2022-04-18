@@ -1,9 +1,10 @@
-fLocal Variables:
+Local Variables:
 eval: (ispell-change-dictionary "american")
 eval: (flyspell-mode)
 End:
 
 #+PROPERTY: header-args :tangle conf.el
+#+STARTUP: content
 
 * Tangle Init
 #+begin_src emacs-lisp
@@ -13,20 +14,28 @@ End:
 
   (defun tangle-conf ()
     (when (equal (buffer-file-name)
-		 (expand-file-name user/conf-org-file))
+                 (expand-file-name user/conf-org-file))
       (let ((prog-mode-hook nil))
-	(org-babel-tangle)
-	(byte-compile-file user/conf-el-file)
-	(load user/conf-elc-file))))
+        (org-babel-tangle)
+        (byte-compile-file user/conf-el-file)
+        (load user/conf-elc-file))))
   (add-hook 'after-save-hook 'tangle-conf)
 #+end_src
 
 * Meta
 #+begin_src elisp
-  (defmacro add-multiple-hooks (modes hook)
-    `(mapc (lambda (mode)
-	     (add-hook mode ,hook))
-	  ,modes))
+(defmacro add-multiple-hooks (modes hook)
+  `(mapc (lambda (mode)
+           (add-hook mode ,hook))
+        ,modes))
+
+;(defmacro global-set-keys (map &rest body)
+;  (loop for (key . lambda) in ,@body
+;(require 'cl-lib)
+;(defun define-multiple-keys (keymap &rest body)
+;  (loop for (key . proc) in body
+;    do `(define-key ,keymap (kbd key) #'(lambda () (message (format nil "~s" proc))))))
+
 #+end_src
 
 * Plugins
@@ -45,6 +54,8 @@ I'm using [[https://github.com/raxod502/straight.el][straight.el]] to manage my 
    'helm
    'ivy
    'eglot
+   '(acme-search
+     :local-repo "acme-search")
    '(base16-theme
      :local-repo "base16-emacs")
    'all-the-icons
@@ -58,13 +69,21 @@ I'm using [[https://github.com/raxod502/straight.el][straight.el]] to manage my 
    'good-scroll
    'fvwm-mode
    'edit-server
-   'org-superstar
    'projectile
+   'god-mode
+   'tuareg
+   'merlin
    )
+#+end_src
+*** Acme Search
+#+begin_src elisp
+(require 'acme-search)
+(global-set-key (kbd "<mouse-3>") 'acme-search-forward)
+(global-set-key (kbd "S-<mouse-3>")'acme-search-backward)
 #+end_src
 *** Edit server
 #+begin_src elisp
-  (edit-server-start)
+(edit-server-start)
 #+end_src
 
 *** Eglot
@@ -76,6 +95,32 @@ I'm using [[https://github.com/raxod502/straight.el][straight.el]] to manage my 
     'eglot-ensure)
 #+end_src
 
+*** God mode
+#+begin_src elisp
+(require 'god-mode)
+(global-set-key (kbd "<escape>") #'god-local-mode)
+
+(define-key god-local-mode-map (kbd ".") #'repeat)
+(define-key god-local-mode-map (kbd "i") #'god-local-mode)
+(define-key god-local-mode-map (kbd "(") 
+  #'(lambda ()
+      (interactive)
+      (insert-parentheses)
+      (god-local-mode 0)))
+(define-key god-local-mode-map (kbd "K") #'kill-rectangle)
+
+(define-key god-local-mode-map (kbd "I")
+  #'(lambda ()
+      (interactive)
+      (delete-char 1)
+      (god-local-mode 0)))
+
+(define-key god-local-mode-map (kbd "S-SPC") #'rectangle-mark-mode)
+
+(add-hook 'post-command-hook
+  #'(lambda ()
+      (setq cursor-type (if god-local-mode 'box 'bar))))
+#+end_src
 *** Good scroll
 #+begin_src elisp
   (good-scroll-mode 1)
@@ -110,13 +155,9 @@ I'm using [[https://github.com/raxod502/straight.el][straight.el]] to manage my 
   (global-set-key [f12] 'neotree-toggle)
 #+end_src
 
-*** Org Superstar
-#+begin_src elisp
-  (add-hook 'org-mode-hook #'(lambda () (org-superstar-mode 1)))
-#+end_src elisp
-
 *** Projectile
 #+begin_src elisp
+  (require 'projectile)
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
   (setq projectile-project-search-path '("~/prj"))
   (setq projectile-indexing-method 'native)
@@ -131,9 +172,24 @@ I'm using [[https://github.com/raxod502/straight.el][straight.el]] to manage my 
 *** Undo tree
 #+begin_src elisp
   (global-undo-tree-mode)
+  (global-set-key (kbd "C-?") #'undo-tree-redo)
 #+end_src
 
+
 ** Built-in
+*** Recent File Mode
+#+begin_src elisp
+  (require 'recentf)
+  (recentf-mode 1)
+  (setq recentf-max-menu-items 20)
+  (setq recentf-max-saved-items 20)
+  (global-set-key (kbd "C-c r") #'recentf-open-files)
+#+end_src
+*** Show Paren mode
+#+begin_src elisp
+(setq show-paren-delay 0)
+(show-paren-mode)
+#+end_src
 *** Tool-bar mode
 #+begin_src elisp
   (tool-bar-mode 0)
@@ -152,11 +208,13 @@ I'm using [[https://github.com/raxod502/straight.el][straight.el]] to manage my 
 *** Org-mode
 #+begin_src elisp
   (setq org-hide-emphasis-markers t)
-  (setq org-src-fontify-natively nil)
   (add-hook 'org-mode-hook 'org-indent-mode)
-  (setq org-adapt-indentation nil)
 #+end_src
 
+*** DocView
+#+begin_src elisp
+(add-hook 'doc-view-mode-hook #'auto-revert-mode)
+#+end_src
 * Miscellaneous options
 ** Auto-save
 #+begin_src elisp
@@ -174,18 +232,22 @@ I'm using [[https://github.com/raxod502/straight.el][straight.el]] to manage my 
   ;; Fixes for emacsclient
   (add-hook 'after-make-frame-functions 
     #'(lambda (_)  
-	(set-frame-font "Terminus (TTF) 12" nil t)		; Fixes font issues
+        (set-frame-font "Terminus (TTF) 12" nil t)		; Fixes font issues
 	))
 #+end_src
 * Look and Feel
 ** Theme
 #+begin_src elisp
-  (set-fringe-mode 0)
-  (require 'base16-theme)
-
-  (custom-set-variables
-    '(base16-highlight-mode-line 'box))
-  (load-theme 'base16-irix t)
+(eval-when-compile (require 'server))
+(add-hook 'emacs-startup-hook 
+  #'(lambda ()
+      (interactive)
+      (when (or (server-running-p) (display-graphic-p))
+        (require 'base16-theme)
+        (set-fringe-mode 0)
+        (custom-set-variables
+          '(base16-highlight-mode-line 'box))
+        (load-theme 'base16-irix t))))
 #+end_src
 
 ** Font
@@ -235,9 +297,10 @@ I'm using [[https://github.com/raxod502/straight.el][straight.el]] to manage my 
   (global-set-key (kbd "M-x") 'helm-M-x)	
   (global-set-key (kbd "C-x b") 'helm-buffers-list)
   (global-set-key (kbd "C-x C-f") 'helm-find-files)
-  (defun foobar ()
-    (interactive)
-    (print (helm-mark-ring)))
-
-  (global-set-key (kbd "C-x m") #'(print (helm-mark-ring)))
+  (global-set-key (kbd "C-x m") 'helm-mark-ring)
+#+end_src
+*** Other
+#+begin_src elisp
+(global-set-key (kbd "C-j") 'join-line)
+(global-set-key (kbd "<f5>") 'compile)
 #+end_src

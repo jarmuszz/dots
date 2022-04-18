@@ -6,7 +6,7 @@
 # 4. Feel
 # 5. Look
 # 6. Menus
-# 7. Keysbinds
+# 7. Keybinds
 # 8. Modules
 
 # Store
@@ -36,6 +36,7 @@ AddToFunc   StartFunction
 + I Module FvwmButtons Desks
 + I Module FvwmButtons TimeNDate
 + I Module FvwmScript Audio
++ I Module FvwmScript Stats
 + I Exec picom       
 + I Exec nitrogen --restore
 
@@ -85,7 +86,7 @@ AddToFunc MouseScroll
 Mouse 1 T A RaiseMove Move Maximize
 Mouse 1 W 4 RaiseMove Move Resize
 Mouse 3 I A Menu MenuIconOps
-Mouse 3 T A Menu MenuIconOps
+Mouse 3 T A Menu MenuIconpOps
 Mouse 4 T A WindowShade True
 Mouse 5 T A WindowShade False
 Mouse 2 A 4 Scroll reverse
@@ -100,6 +101,8 @@ Style Desks     !Title, Borders, !Handles, Sticky, \
 Style TimeNDate !Title, Borders, !Handles, Sticky, \
       WindowListSkip, NeverFocus, FixedSize, FixedPosition, Layer 6
 Style Audio     !Title, Borders, !Handles, Sticky, \
+      WindowListSkip, NeverFocus, FixedSize, FixedPosition, Layer 6
+Style Stats     !Title, Borders, !Handles, Sticky, \
       WindowListSkip, NeverFocus, FixedSize, FixedPosition, Layer 6
 Style Run       !Title, Borders, !Handles, Layer 6
 
@@ -127,6 +130,7 @@ Style * Colorset 1, HilightColorset 2, \
         BorderWidth 5, HandleWidth 8, \
         MWMBorder, MWMButtons, \
 	UseDecor IRIXDecor, \
+        !Title, \
 	Animation
 
 ## Colorset
@@ -178,11 +182,12 @@ MenuStyle * MWM, HilightBack, HilightTitleBack, SeparatorsLong
 DestroyMenu MenuFvwmRoot
 AddToMenu   MenuFvwmRoot "Fvwm" Title
 + "&Terminal" Exec exec $[infostore.terminal]
-+ "&Editor" Exec exec emacs
++ "&Editor" Exec exec $[infostore.editor]
 + "&Browser" Exec exec $[infostore.browser]
 + "&Comunicator" Exec exec discord
 + "" Nop
 + "&Man pages" Popup MenuFvwmManPages
++ "&Iconify" Iconify
 + "&Fvwm Terminal" Module FvwmConsole -terminal $[infostore.terminal]
 + "" Nop
 + "&Restart" Restart
@@ -296,21 +301,23 @@ AddToMenu   MenuSendToPage
 + "Page (1,0)"	MoveToPage 1 0
 + "Page (1,1)"	MoveToPage 1 1
 
-# Key bindings
+# Keybinds
 ## Utility
-Key F1  A 4 Menu MenuFvwmRoot
-Key Tab A 4 WindowList Root c c, SelectOnRelease Meta_L
-Key d   A 4 Module FvwmForm Run
+Key Tab A 4 WindowList Root, MaxLabelWidth 15, NoGeometry, CurrentDesk, OnlyNormal
+Key x   A 4 Module FvwmForm Run
 
 ## Spawning
-Key Return A 4 Exec exec $[infostore.terminal]
-Key e      A 4 Exec exec $[infostore.editor]
+Key f A 4 Exec exec $[infostore.terminal]
+Key r A 4 Exec exec $[infostore.editor]
+Key Print A 4 Exec exec maim ~/stmp/ss/$(date +%Y-%m-%d-%H-%M-%S).png
+Key Print A S4 Exec exec maim -s ~/stmp/ss/$(date +%Y-%m-%d-%H-%M-%S).png
 
 ## Windows
 Key x W S4  Close
-Key m W 4   Maximize
+Key z W 4   Maximize
+Key v W 4   Iconify
 
-Key c W 4   AnimatedMove 50-50w    0-50w    Warp
+Key c W 4   AnimatedMove 50-50w    50-50w   Warp
 
 Key h W 4   AnimatedMove w-8	   w        Warp
 Key j W 4   AnimatedMove w 	   w+8      Warp
@@ -337,29 +344,28 @@ Key F4 A S4 MovetoDesk 0 3
 Key 1 A 4 GotoPage 0 0
 Key 2 A 4 GotoPage 1 0
 Key 3 A 4 GotoPage 2 0
-Key 4 A 4 GotoPage 0 1
-Key 5 A 4 GotoPage 1 1
-Key 6 A 4 GotoPage 2 1
-Key 7 A 4 GotoPage 0 2
-Key 8 A 4 GotoPage 1 2
-Key 9 A 4 GotoPage 2 2
+Key q A 4 GotoPage 0 1
+Key w A 4 GotoPage 1 1
+Key e A 4 GotoPage 2 1
+Key a A 4 GotoPage 0 2
+Key s A 4 GotoPage 1 2
+Key d A 4 GotoPage 2 2
 
 Key 1 A S4 MovetoPage 0 0
 Key 2 A S4 MovetoPage 1 0
 Key 3 A S4 MovetoPage 2 0
-Key 4 A S4 MovetoPage 0 1
-Key 5 A S4 MovetoPage 1 1
-Key 6 A S4 MovetoPage 2 1
-Key 7 A S4 MovetoPage 0 2
-Key 8 A S4 MovetoPage 1 2
-Key 9 A S4 MovetoPage 2 2
+Key q A S4 MovetoPage 0 1
+Key w A S4 MovetoPage 1 1
+Key e A S4 MovetoPage 2 1
+Key a A S4 MovetoPage 0 2
+Key s A S4 MovetoPage 1 2
+Key d A S4 MovetoPage 2 2
 
 ## Media
-Key XF86AudioMute A N         Exec amixer -q set Master toggle
-Key XF86AudioRaiseVolume A N  Exec amixer -q set Master 2%+ unmute
-Key XF86AudioLowerVolume A N  Exec amixer -q set Master 2%- unmute
-Key XF86AudioMute A N         Exec amixer -q set Master toggle
-Key XF86AudioMute A 4         Exec amixer -q set Capture toggle
+Key XF86AudioRaiseVolume A N  Exec amixer -q sset Master 2%+ unmute
+Key XF86AudioLowerVolume A N  Exec amixer -q sset Master 2%- unmute
+Key XF86AudioMute A N         Exec amixer -q sset Master toggle
+Key XF86AudioMute A 4         Exec amixer -q sset Capture toggle
 Key XF86MonBrightnessUp A N   Exec xbacklight +2
 Key XF86MonBrightnessDown A N Exec xbacklight -2
 
@@ -415,6 +421,12 @@ DestroyModuleConfig Audio:*
 # TODO - Doesn't work
 *Audio: DefaultFont "xft:Terminus (TTF):medium:size=12"
 
+## Stats
+DestroyModuleConfig Stats:*
+*Stats: Geometry 10x44+35-5
+# TODO - Doesn't work
+*Stats: DefaultFont "xft:Terminus (TTF):medium:size=12"
+
 ## Run
 DestroyModuleConfig Run:*
 *Run: GrabServer
@@ -427,7 +439,7 @@ DestroyModuleConfig Run:*
 *Run: Input Command 20
 *Run: Button quit "Run" ^M
 *Run: Command Exec exec $(Command)
-*Run: Button quit "Cancel" ^C
+*Run: Button quit "Cancel" ^G
 
 ## FvwmIdent
 DestroyModuleConfig FvwmIdent:*

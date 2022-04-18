@@ -1,0 +1,51 @@
+# -*- fvwm -*-
+
+WindowTitle {FvwmScript Stats}
+WindowSize  90 45
+WindowPosition	1261 110
+
+Init
+ Begin
+  Set $Battery = (GetOutput {cat /sys/class/power_supply/BAT0/capacity} 1 -1) {%}
+	Set $Remaining = (GetOutput {acpi | grep -o '..:..:..'} 1 -1) 
+
+  ChangeTitle 1 $Battery
+  ChangeTitle 2 $Remaining
+End
+
+PeriodicTasks
+ Begin 
+  Set $Battery = (GetOutput {cat /sys/class/power_supply/BAT0/capacity} 1 -1) {%}
+	Set $Remaining = (GetOutput {acpi | grep -o '..:..:..'} 1 -1) 
+
+  ChangeTitle 1 $Battery
+  ChangeTitle 2 $Remaining
+End
+
+Widget 1
+Property
+ Position 0 0
+ Size 50 20
+ Type ItemDraw
+ Flags NoReliefString
+ Title {}
+Main
+ Case message of
+  SingleClic :
+  Begin
+  End
+End
+
+Widget 2
+Property
+ Position 0 20
+ Size 80 20
+ Type ItemDraw
+ Flags NoReliefString
+ Title {}
+Main
+ Case message of
+  SingleClic :
+  Begin
+  End
+End

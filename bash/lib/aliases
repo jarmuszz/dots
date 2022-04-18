@@ -9,6 +9,7 @@ alias l="ls -l"
 alias ll="ls -l"
 alias la="ls -a"
 alias lla="ls -la"
+alias ns="ls -t"
 alias s="ls -sh"
 
 # Editors
