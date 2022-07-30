@@ -1,0 +1,16 @@
+#!/bin/sh
+dc() {
+	DIR="$(\ls -a --color=no |\
+	       fzf --color=bw \
+	           --preview='file {}'\
+	           --bind '?:preview:cat {}')"
+
+	if [ "$DIR" = "." ]; then
+		cd "$DIR"
+	elif [ -d "$DIR" ]; then
+		cd "$DIR"
+		dc	
+	else
+		cd "$(dirname \"${DIR}\")"
+	fi
+}

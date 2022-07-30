@@ -3,7 +3,8 @@
 #
 
 # Exports
-export PATH="${PATH}:/home/jarmusz/.local/bin/:/home/jarmusz/.scripts:/sbin:/usr/sbin"
+export PATH="/home/jarmusz/.nix-profile/bin:/usr/pkg/bin/usr/pkg/sbin:${PATH}:/home/jarmusz/.local/bin/:/home/jarmusz/.scripts:/sbin:/usr/sbin:/home/jarmusz/.local/share/coursier/bin"
+export MANPATH="/usr/pkg/man:$MANPATH"
 export TERMINAl="xterm"
 export BROWSER="firefox"
 export EDITOR="nvim"
@@ -30,8 +31,7 @@ export DIALOGRC="~/.config/dialog"
 export WINEPREFIX="/home/jarmusz/.cache/wine"
 
 # ls
-#export LS_COLORS="no=00:fi=00:di=0;1:ex=0;31:ln=0;4"
-#export LSCOLORS="Axcxxxxxbx"
+export LS_COLORS="no=00:fi=00:di=0;1:ex=0;3:ln=0;4:su=40;01"
 
 . ~/.bashrc
 

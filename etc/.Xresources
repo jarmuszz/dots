@@ -26,6 +26,8 @@ XTerm.vt100.translations: #override \n\
   Alt <Key>W: copy-selection(CLIPBOARD) \n\
   Ctrl <Key>Y: insert-selection(CLIPBOARD) \n\
 
+XTerm*OmitTranslation: fullscreen
+
 ! Font
 !xterm*faontSize: 14
 ! start with TrueType fonts disabled
@@ -36,7 +38,7 @@ XTerm.vt100.translations: #override \n\
 
 !XTerm*faceName: Hack Regular
 !XTerm*faceSize: 9
-XTerm.vt100.font: xft:Terminus (TTF) :medium :size=12
+XTerm.vt100.font: xft:Go Mono:medium :size=10
 
 ! Fuck the bell, nobody likes bell
 XTerm*visualBell: False
@@ -46,3 +48,7 @@ XTerm*internalBorder: 5
 
 ! Title
 XTerm*title: winterm
+
+! Cursor
+!Xcursor.theme: phinger-cursors-light
+Xcursor.theme: default

@@ -5,5 +5,4 @@ p9() {
 	$PLAN9/bin/$@
 }
 
-alias ls="\ls -1"
 alias lc="ls --color=no -C -F"

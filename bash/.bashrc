@@ -27,7 +27,11 @@ lib higher
 lib aliases
 lib marks
 lib plan9
+lib dc
 
 . /usr/share/bash-completion/bash_completion
+
+[ "$TERM" = "xterm" ] &&
+	trap 'echo -ne "\e]0;XT-$BASH_COMMAND\007"' DEBUG
 
 motd

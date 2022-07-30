@@ -5,7 +5,6 @@
 call plug#begin(stdpath('data'))
  Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate', 'branch' : '0.5-compat'}
  Plug 'rose-pine/neovim'
- Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': 'python3 -m chadtree deps'}
 call plug#end()
 
 lua <<EOF
@@ -27,9 +26,6 @@ require 'nvim-treesitter.configs'.setup {
 		}
 }
 EOF
-
-" CHADTree
-let g:chadtree_settings = { 'view.open_direction': 'right', 'view.width': 30 }
 
 """"""""""""""""""""""""""""""
 "  General 

@@ -1,3 +1,12 @@
+sync_status() {
+	printf "Syncing..."
+	if sync; then
+		echo "OK"
+	else
+		return 1
+	fi
+}
+
 # Sudo
 alias sudo="doas "
 alias doas="doas "
@@ -29,12 +38,14 @@ alias s2n='tr " " "\n"'
 alias n2s='tr "\n" " "'
 
 # Shorthands
-alias h="htop -C"
-alias rmr="rm -r"
-alias mak="make"
-alias cmd="WINEDEBUG=-all wine cmd"
-alias tcli="transmission-cli"
-alias ssr="simplescreenrecorder"
-alias vim="nvim"
-alias filter="grep -v"
 alias ..="cd .."
+alias cmd="WINEDEBUG=-all wine cmd"
+alias filter="grep -v"
+alias h="htop -C"
+alias mak="make"
+alias rmr="rm -r"
+alias ssr="sudo service"
+alias tcli="transmission-cli"
+alias uc="cp -u"
+alias umount="sync_status && umount"
+alias vim="nvim"

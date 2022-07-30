@@ -1,131 +1,99 @@
-Local Variables:
-eval: (ispell-change-dictionary "american")
-eval: (flyspell-mode)
-End:
+#+TITLE: Emacs Configuration
 
 #+PROPERTY: header-args :tangle conf.el
 #+STARTUP: content
 
+* Requires
+#+begin_src elisp
+  (eval-when-compile
+    (dolist (lib '(server cl-lib)) (require lib)))
+#+end_src
+* Meta
+#+begin_src elisp
+  ;;  -*- lexical-binding:t -*-
+  (defun add-multiple-hooks (modes hook)
+    (dolist (mode modes)
+      (add-hook mode hook)))
+  
+  (defmacro lambda-interactive (args body)
+    `(lambda ,args (interactive) ,body))
+
+  (defmacro defun-interactive (name args body)
+    `(defun ,name ,args (interactive) ,body))
+  #+end_src
 * Tangle Init
 #+begin_src emacs-lisp
   (defvar user/conf-org-file (concat user-emacs-directory "conf.org"))
   (defvar user/conf-el-file (concat user-emacs-directory "conf.el"))
   (defvar user/conf-elc-file (concat user-emacs-directory "conf.elc"))
 
-  (defun tangle-conf ()
+  (defun retangle-conf ()
+    (interactive)
     (when (equal (buffer-file-name)
                  (expand-file-name user/conf-org-file))
       (let ((prog-mode-hook nil))
-        (org-babel-tangle)
-        (byte-compile-file user/conf-el-file)
-        (load user/conf-elc-file))))
-  (add-hook 'after-save-hook 'tangle-conf)
+        (and
+          (org-babel-tangle)
+          (byte-compile-file user/conf-el-file)
+          (load user/conf-elc-file)))))
+  (add-hook 'after-save-hook 'retangle-conf)
+
+  (defun reload-config ()
+    (interactive)
+    (load user/conf-elc-file))
 #+end_src
-
-* Meta
-#+begin_src elisp
-(defmacro add-multiple-hooks (modes hook)
-  `(mapc (lambda (mode)
-           (add-hook mode ,hook))
-        ,modes))
-
-;(defmacro global-set-keys (map &rest body)
-;  (loop for (key . lambda) in ,@body
-;(require 'cl-lib)
-;(defun define-multiple-keys (keymap &rest body)
-;  (loop for (key . proc) in body
-;    do `(define-key ,keymap (kbd key) #'(lambda () (message (format nil "~s" proc))))))
-
-#+end_src
-
 * Plugins
 I'm using [[https://github.com/raxod502/straight.el][straight.el]] to manage my plugins.
-** Foreign
-*** Init
+** Init
 #+begin_src elisp
   (load (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory)  nil 'nomessage)
 
   (defun straight-use-packages (&rest recipes)
     (mapcar 'straight-use-package recipes))
 
-  (straight-use-packages
-   'xresources-theme
-   'undo-tree
-   'helm
-   'ivy
-   'eglot
-   '(acme-search
-     :local-repo "acme-search")
-   '(base16-theme
-     :local-repo "base16-emacs")
-   'all-the-icons
-   'neotree
-   'minimap
-   'meson-mode
-   'geiser
-   'highlight-indent-guides
-   'slime
-   'd-mode
-   'good-scroll
-   'fvwm-mode
-   'edit-server
-   'projectile
-   'god-mode
-   'tuareg
-   'merlin
-   )
+  (let ((pkglist
+         '(;; Look
+           (base16-theme :local-repo "base16-emacs")
+           (ligature.el :type git :host github :repo "mickeynp/ligature.el")
+           all-the-icons
+           highlight-indent-guides
+           org-superstar
+         
+           ;; Language support
+           d-mode
+           fvwm-mode
+           geiser
+           merlin
+           meson-mode
+           scala-mode
+           slime
+           tree-sitter
+           tree-sitter-langs
+           tuareg
+         
+           ;; Utility
+           company
+           edit-server
+           eglot
+           good-scroll
+           helm
+           magit
+           neotree
+           projectile
+           undo-tree
+           )))
+    (dolist (pkg pkglist) (straight-use-package pkg)))
 #+end_src
-*** Acme Search
+** Foreign
+*** Company mode
 #+begin_src elisp
-(require 'acme-search)
-(global-set-key (kbd "<mouse-3>") 'acme-search-forward)
-(global-set-key (kbd "S-<mouse-3>")'acme-search-backward)
+  (setq company-tooltip-align-annotations t)
+  (setq company-idle-delay 0)
+
+  (add-hook 'after-init-hook 'global-company-mode)
+  
+  (global-set-key (kbd "C-M-i") 'company-complete)
 #+end_src
-*** Edit server
-#+begin_src elisp
-(edit-server-start)
-#+end_src
-
-*** Eglot
-#+begin_src elisp
-  (require 'eglot)
-  (add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
-  (add-multiple-hooks
-    '(c-mode-hook c++-mode-hook)
-    'eglot-ensure)
-#+end_src
-
-*** God mode
-#+begin_src elisp
-(require 'god-mode)
-(global-set-key (kbd "<escape>") #'god-local-mode)
-
-(define-key god-local-mode-map (kbd ".") #'repeat)
-(define-key god-local-mode-map (kbd "i") #'god-local-mode)
-(define-key god-local-mode-map (kbd "(") 
-  #'(lambda ()
-      (interactive)
-      (insert-parentheses)
-      (god-local-mode 0)))
-(define-key god-local-mode-map (kbd "K") #'kill-rectangle)
-
-(define-key god-local-mode-map (kbd "I")
-  #'(lambda ()
-      (interactive)
-      (delete-char 1)
-      (god-local-mode 0)))
-
-(define-key god-local-mode-map (kbd "S-SPC") #'rectangle-mark-mode)
-
-(add-hook 'post-command-hook
-  #'(lambda ()
-      (setq cursor-type (if god-local-mode 'box 'bar))))
-#+end_src
-*** Good scroll
-#+begin_src elisp
-  (good-scroll-mode 1)
-#+end_src
-
 *** Ident guides
 #+begin_src elisp
   (add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
@@ -134,20 +102,23 @@ I'm using [[https://github.com/raxod502/straight.el][straight.el]] to manage my 
    '(highlight-indent-guides-method 'character))
 #+end_src
 
-*** Ivy
+*** Ligatures
 #+begin_src elisp
-  (ivy-mode)
+  (ligature-set-ligatures 't
+    '("|||>" "<|||" "<==>" "<!--" "####" "~~>" "***" "||=" "||>"
+      ":::" "::=" "=:=" "===" "==>" "=!=" "=>>" "=<<" "=/=" "!=="
+      "!!." ">=>" ">>=" ">>>" ">>-" ">->" "->>" "-->" "---" "-<<"
+      "<~~" "<~>" "<*>" "<||" "<|>" "<$>" "<==" "<=>" "<=<" "<->"
+      "<--" "<-<" "<<=" "<<-" "<<<" "<+>" "</>" "###" "#_(" "..<"
+      "..." "+++" "/==" "///" "_|_" "www" "&&" "^=" "~~" "~@" "~="
+      "~>" "~-" "**" "*>" "*/" "||" "|}" "|]" "|=" "|>" "|-" "{|"
+      "[|" "]#" "::" ":=" ":>" ":<" "$>" "==" "=>" "!=" "!!" ">:"
+      ">=" ">>" ">-" "-~" "-|" "->" "--" "-<" "<~" "<*" "<|" "<:"
+      "<$" "<=" "<>" "<-" "<<" "<+" "</" "#{" "#[" "#:" "#=" "#!"
+      "##" "#(" "#?" "#_" "%%" ".=" ".-" ".." ".?" "+>" "++" "?:"
+      "?=" "?." "??" ";;" "/*" "/=" "/>" "//" "__" "~~" "(*" "*)"
+      "\\\\" "://"))
 #+end_src
-
-*** Minimap
-#+begin_src elisp
-  ;(require 'minimap)
-  (custom-set-faces
-   '(minimap-font-face ((t (:height 36 :family "Terminus (TTF)")))))
-  (custom-set-variables
-    '(minimap-window-location 'right))
-#+end_src
-
 *** Neotree
 #+begin_src elisp
   (require 'neotree)
@@ -167,20 +138,40 @@ I'm using [[https://github.com/raxod502/straight.el][straight.el]] to manage my 
                     :src-dir "src/"
                     :test "dub test"
                     :run "dub run")
-  (projectile-mode +1)
+#+end_src
+*** Tree sitter
+#+begin_src elisp
+  (defun tree-sitter-require-multiple (&rest body)
+    (mapc #'tree-sitter-require body))
+
+  (tree-sitter-require-multiple
+   'c
+   'cpp
+   'bash
+   'd
+   'ocaml
+   'scala
+   )
+
+  (add-multiple-hooks
+   '(c-mode-common-hook
+     shell-mode-hook
+     d-mode-hook
+     tuareg-mode-hook
+     scala-mode-hook
+     )
+   #'tree-sitter-hl-mode)
+
 #+end_src
 *** Undo tree
 #+begin_src elisp
-  (global-undo-tree-mode)
   (global-set-key (kbd "C-?") #'undo-tree-redo)
 #+end_src
-
 
 ** Built-in
 *** Recent File Mode
 #+begin_src elisp
   (require 'recentf)
-  (recentf-mode 1)
   (setq recentf-max-menu-items 20)
   (setq recentf-max-saved-items 20)
   (global-set-key (kbd "C-c r") #'recentf-open-files)
@@ -188,32 +179,117 @@ I'm using [[https://github.com/raxod502/straight.el][straight.el]] to manage my 
 *** Show Paren mode
 #+begin_src elisp
 (setq show-paren-delay 0)
-(show-paren-mode)
 #+end_src
-*** Tool-bar mode
-#+begin_src elisp
-  (tool-bar-mode 0)
-#+end_src
-
 *** Menu-bar mode
 #+begin_src elisp
-  (menu-bar-mode 0)
-#+end_src
+  (menu-bar-mode 1)
+  (setq imenu-auto-rescan t)
 
-*** Scroll-bar mode
-#+begin_src elisp
-  (scroll-bar-mode 0)
+  (add-multiple-hooks
+   '(prog-mode-hook
+     org-mode-hook
+     emacs-lisp-mode-hook
+     )
+            #'(lambda ()
+                (interactive)
+                (imenu-add-to-menubar "Imenu")))
 #+end_src
 
 *** Org-mode
 #+begin_src elisp
-  (setq org-hide-emphasis-markers t)
+  (setq
+   org-hide-emphasis-markers t
+   org-superstar-leading-bullet ?\s
+   org-hide-leading-stars t
+   org-startup-with-inline-images t)
+
+  (setq-default line-spacing 3)
+
+  (add-hook 'org-mode-hook
+    #'(lambda () (plist-put org-format-latex-options :scale 1.5)))
+  (add-hook 'org-mode-hook 'org-toggle-pretty-entities)
+  (add-hook 'org-mode-hook 'org-superstar-mode)
   (add-hook 'org-mode-hook 'org-indent-mode)
 #+end_src
 
 *** DocView
 #+begin_src elisp
 (add-hook 'doc-view-mode-hook #'auto-revert-mode)
+#+end_src
+** Disable/Enable
+- Requires
+#+begin_src elisp
+(require 'eglot)
+#+end_src
+
+- Simple enable
+#+begin_src elisp
+(edit-server-start)
+(global-ligature-mode t)
+(global-undo-tree-mode)
+(good-scroll-mode 1)
+(projectile-mode 1)
+(recentf-mode 1)
+(show-paren-mode)
+#+end_src
+
+- Disable defaults
+#+begin_src elisp 
+(scroll-bar-mode 0)
+(tool-bar-mode 0)
+#+end_src
+* Utils
+** Indentation
+#+begin_src elisp
+  (defun-interactive retab ()
+    (save-excursion
+      (beginning-of-line)
+      (delete-horizontal-space)
+      (indent-for-tab-command)))
+
+  (defun-interactive untab ()
+    (save-excursion
+      (beginning-of-line)
+      (delete-horizontal-space)))
+
+  (defun-interactive hardindent ()
+    (save-excursion
+      (beginning-of-line)
+      (insert "\t")))
+#+end_src
+** Miscellaneous
+Marker
+#+begin_src elisp
+  (defun-interactive marker-colorize ()
+    (overlay-put
+     (make-overlay (region-beginning) (region-end))
+     'face `(:background "#e67e80" :foreground "#2b3339" :weight bold )))
+
+  (defun-interactive marker-erase ()
+    (remove-overlays (region-beginning) (region-end)))
+#+end_src
+* Languages
+** C and C++
+I guess this is not needed
+#+begin_src elisp
+  (add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
+#+end_src
+Why isn't this the default?
+#+begin_src elisp
+  (add-multiple-hooks
+   '(c-mode-hook c++-mode-hook)
+    'eglot-ensure)
+#+end_src
+#+begin_src elisp
+  (setq c-syntactic-indentation nil)
+#+end_src
+** OCaml
+#+begin_src elisp
+  (add-multiple-hooks
+   '(tuareg-mode-hook)
+    'eglot-ensure)
+
+  (add-hook 'tuareg-mode-hook 'merlin-mode)
 #+end_src
 * Miscellaneous options
 ** Auto-save
@@ -232,27 +308,34 @@ I'm using [[https://github.com/raxod502/straight.el][straight.el]] to manage my 
   ;; Fixes for emacsclient
   (add-hook 'after-make-frame-functions 
     #'(lambda (_)  
-        (set-frame-font "Terminus (TTF) 12" nil t)		; Fixes font issues
-	))
+        (set-frame-font "Liga Go Mono 10" nil t)		; Fixes font issues
+        ))
+
+  (when (server-running-p)
+    (global-set-key (kbd "C-x C-c")
+                    #'(lambda ()
+                        (delete-frame))))
+
 #+end_src
 * Look and Feel
 ** Theme
 #+begin_src elisp
-(eval-when-compile (require 'server))
-(add-hook 'emacs-startup-hook 
-  #'(lambda ()
-      (interactive)
-      (when (or (server-running-p) (display-graphic-p))
-        (require 'base16-theme)
-        (set-fringe-mode 0)
-        (custom-set-variables
-          '(base16-highlight-mode-line 'box))
-        (load-theme 'base16-irix t))))
+  (setq-default left-margin-width 1 right-margin-width 1)
+  
+  (add-hook 'emacs-startup-hook 
+    #'(lambda ()
+        (interactive)
+        (when (or (server-running-p) (display-graphic-p))
+          (require 'base16-theme)
+          (set-fringe-mode 0)
+          (custom-set-variables
+            '(base16-highlight-mode-line 'box))
+          (load-theme 'base16-everforest t))))
 #+end_src
 
 ** Font
 #+begin_src elisp
-  (set-frame-font "Terminus (TTF) 12" nil t)
+  (set-frame-font "Liga Go Mono 10" nil t)
 #+end_src
 
 ** Start fullscreen
@@ -266,29 +349,27 @@ I'm using [[https://github.com/raxod502/straight.el][straight.el]] to manage my 
 
   (defun enable-tabs ()
     (interactive)
-    (local-set-key (kbd "TAB") 'tab-to-tab-stop)
+    (local-set-key (kbd "<tab>") 'tab-to-tab-stop)
     (setq indent-tabs-mode t))
 
   (defun disable-tabs ()
     (interactive)
-    (local-set-key (kbd "TAB") 'indent-for-tab-command)
+    (local-set-key (kbd "<tab>") 'indent-for-tab-command)
     (setq indent-tabs-mode nil))
 
   (add-multiple-hooks
-   '(prog-mode-hook
-     cc-mode-hook
+   '(cc-mode-hook
     )
    'enable-tabs)
 
   (add-multiple-hooks
     '(lisp-mode-hook
-      elisp-mode-hook
+      emacs-lisp-mode-hook
       scheme-mode-hook
       fvwm-mode-hook
+      tuareg-mode-hook
      )
     'disable-tabs)
-
-  (setq c-syntactic-indentation nil)
 #+end_src
 
 ** Misc kbds
@@ -297,10 +378,19 @@ I'm using [[https://github.com/raxod502/straight.el][straight.el]] to manage my 
   (global-set-key (kbd "M-x") 'helm-M-x)	
   (global-set-key (kbd "C-x b") 'helm-buffers-list)
   (global-set-key (kbd "C-x C-f") 'helm-find-files)
+  (global-set-key (kbd "C-x r b") #'helm-filtered-bookmarks)
   (global-set-key (kbd "C-x m") 'helm-mark-ring)
+#+end_src
+*** Whitespace
+#+begin_src elisp
+  (global-set-key (kbd "M-\\") #'untab)
+  (global-set-key (kbd "C-<tab>") #'retab)
+  (global-set-key (kbd "M-<tab>") #'hardindent)
 #+end_src
 *** Other
 #+begin_src elisp
-(global-set-key (kbd "C-j") 'join-line)
-(global-set-key (kbd "<f5>") 'compile)
+  (global-set-key (kbd "C-j") 'join-line)
+  (global-set-key (kbd "<f5>") 'compile)
+  (global-set-key (kbd "S-<mouse-2>") 'eval-region)
+  (global-set-key (kbd "C-,") 'repeat-complex-command)
 #+end_src

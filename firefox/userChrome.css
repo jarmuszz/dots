@@ -69,13 +69,11 @@
   --arrowpanel-padding: 0px !important;
 
   
-  font-family: GohuFont !important;
   font-size: 11pt !important;
 }
 
 * {
   /*! color: var(--foreground) !important; */
-  font-family: GohuFont !important;
   color: var(--foreground);
   /*background-color: var(--background) !important;*/
 }
@@ -195,7 +193,7 @@ toolbarbutton {
 }
 
 panel[type="arrow"] {
-	background-color: var(--background) !important;;
+	background-color: var(--background) !important;
 }
 
 .PanelUI-subView toolbarseparator.proton-zap {

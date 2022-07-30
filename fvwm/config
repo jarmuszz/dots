@@ -10,11 +10,12 @@
 # 8. Modules
 
 # Store
-InfoStoreAdd terminal xterm
-InfoStoreAdd browser  firefox
-InfoStoreAdd editor   "emacsclient -c"
+InfoStoreAdd terminal  xterm
+InfoStoreAdd browser   firefox
+InfoStoreAdd editor    "lemacsclient -c"
+InfoStoreAdd editoralt "lemacs"
 
-InfoStoreAdd font     "xft:Terminus (TTF):medium:size=12"
+InfoStoreAdd font     "xft:Go Mono:medium:size=12"
 
 # Functions
 DestroyFunc ViewManPage
@@ -24,19 +25,47 @@ AddToFunc   ViewManPage
   -T "Manual Page -$0" \
   -e man "$0"
 
+DestroyFunc Tile
+AddtoFunc   Tile
+#+ I FvwmRearrange -tile -incx 15p -incy 5p
++ I ModuleSynchronous FvwmTile
+
 DestroyFunc RaiseMove
 AddToFunc   RaiseMove
 + I Raise
 + M $0
 + D $1
 
-# Init
-DestroyFunc StartFunction
-AddToFunc   StartFunction
+DestroyFunc StickWidgets
+AddToFunc StickWidgets
++ I Style FvwmButtons !Sticky
++ I Style FvwmScript !Sticky
+
+DestroyFunc KillWidgets
+AddToFunc KillWidgets
++ I KillModule FvwmButtons Desks
++ I KillModule FvwmButtons TimeNDate
++ I KillModule FvwmScript Audio
++ I KillModule FvwmScript Stats
++ I InfoStoreRemove widgetsShownp
+
+DestroyFunc SpawnWidgets
+AddToFunc SpawnWidgets
 + I Module FvwmButtons Desks
 + I Module FvwmButtons TimeNDate
 + I Module FvwmScript Audio
 + I Module FvwmScript Stats
++ I InfoStoreAdd widgetsShownp "true"
+
+DestroyFunc ToggleWidgets
+AddToFunc ToggleWidgets
++ I Next (FvwmScript) KillWidgets
++ I None (FvwmScript) SpawnWidgets
+
+# Init
+DestroyFunc StartFunction
+AddToFunc   StartFunction
++ I SpawnWidgets
 + I Exec picom       
 + I Exec nitrogen --restore
 
@@ -51,18 +80,22 @@ EdgeThickness  1
 Style * EdgeMoveDelay 0, EdgeMoveResistance 0
 
 ## Screen Padding
-EwmhBaseStruts 5 110 5 5
+#EwmhBaseStruts 5 110 5 5
+EwmhBaseStruts 5 5 5 5
 
 ## Double click & Move
 ClickTIme     250
 MoveThreshold 3
 
 ## Window Placement & Focus
-Style * MinOverlapPlacement, UsePPosition, GrabFocus, IconBox 100x600-5+130, NoUseIconPosition
+Style * MinOverlapPlacement, UsePPosition, ClickToFocus, ClickToFocusRaisesOff
+
+## IconBox
+Style * IconBox 100x600-5+180, NoUseIconPosition
 
 ## Moving and Resizing
 OpaqueMoveSize unlimited
-Style * ResizeOpaque, SnapAttraction 30 SameType ScreenAll, SnapGrid
+Style * ResizeOpaque, SnapAttraction 10 SameType ScreenAll, SnapGrid
 
 ## Transistent Windows
 Style * DecorateTransient, StackTransientParent
@@ -72,7 +105,7 @@ Style * !FPGrabFocusTransient, FPReleaseFocusTransient
 Style * WindowShadeScrolls, WindowShadeSteps 10
 
 ## Icons
-Style * Icon
+Style * Icon, IconTitleColorset 5, IconBackgroundColorset 5, IconSize 50 50
 
 ## Toolbar
 Mouse 1 4 A Iconify
@@ -93,7 +126,6 @@ Mouse 2 A 4 Scroll reverse
 
 ## Icons
 Mouse 1 I A RaiseMove Move "Iconify off"
-
 
 ## Window-specific Styles
 Style Desks     !Title, Borders, !Handles, Sticky, \
@@ -127,7 +159,7 @@ AddToDecor IRIXDecor
 
 Style * Colorset 1, HilightColorset 2, \
         BorderColorset 3, HilightBorderColorset 4, \
-        BorderWidth 5, HandleWidth 8, \
+        BorderWidth 5, HandleWidth 10, \
         MWMBorder, MWMButtons, \
 	UseDecor IRIXDecor, \
         !Title, \
@@ -155,28 +187,29 @@ Style * Colorset 1, HilightColorset 2, \
 Colorset 0 fg red, bg blue, hi, sh Plain NoShape
 Colorset 1  fg #000000, bg #808080, hi #c1bdad, sh, Plain,  NoShape
 Colorset 2  fg #393939, bg #a59f80, hi #c1bdad, sh, Plain,  NoShape
-Colorset 3  fg black,   bg #808080, hi #c1bdad, sh #626262
-Colorset 4  fg black,   bg #a59f80, hi #c1bdad, sh #626262, Plain, NoShape
+Colorset 3  fg black,   bg #4a555b, hi #101a1f, sh #626262
+Colorset 4  fg black,   bg #a7c080, hi #2f383e, sh #626262, Plain, NoShape
 
 ### TODO - Menu
-Colorset 5  fg #000000, bg #ffffff, hi, sh, Plain, NoShape
+Colorset 5  fg #000000, bg #DFDFDF, hi, sh
 Colorset 6  fg #ffffff, bg #2d2d2d, hi, sh, Plain, NoShape
-Colorset 7  fg grey30,  bg #ffffff, hi, sh, Plain, NoShape
-Colorset 8  fg #ffffff, bg #003c3c, hi, sh, Plain, NoShape
+Colorset 7  fg #ffffff, bg #ffffff, hi, sh, Plain, NoShape
+Colorset 8  fg #000000, bg #ffffff, hi, sh, Plain, NoShape
 
 ### Modules
-Colorset 10 fg #000000, bg #c0c0c0, hi #aaaaaa, sh #999999, Plain, NoShape
+Colorset 10 fg #000000, bg #DCDCDC, hi #aaaaaa, sh #999999, Plain, NoShape
 Colorset 11 fg #000000, bg #B4637A, hi #ffffff, sh #000000, Plain, NoShape
 Colorset 12 fg #2d2d2d, bg #999999, hi #cccccc, sh #4c4c4c
-Colorset 13 fg #ffffff, bg #c0c0c0, hi,         sh,         Plain, NoShape
+Colorset 13 fg #000000, bg #ffffff, hi,         sh,         Plain, NoShape
 Colorset 14 fg #555555, bg #c0c0c0, hi #aaaaaa, sh #999999, Plain, NoShape
 
 ### Misc
-Colorset 15 fg #c6c6c6, bg #00003f, hi, sh
+Colorset 15 fg #ffffff, bg #00003f, hi, sh
+
 
 # Menus
-MenuStyle * MenuColorset 12, ActiveColorset 11, GreyedColorset 7, TitleColorset 11
-MenuStyle * MWM, HilightBack, HilightTitleBack, SeparatorsLong
+MenuStyle * MenuColorset 5, ActiveColorset 5, GreyedColorset 5, TitleColorset 5, \
+            HilightBack, HilightTitleBack, SeparatorsLong, BorderWidth 3, MWMBorder, \
 
 ## Root menu
 DestroyMenu MenuFvwmRoot
@@ -191,6 +224,12 @@ AddToMenu   MenuFvwmRoot "Fvwm" Title
 + "&Fvwm Terminal" Module FvwmConsole -terminal $[infostore.terminal]
 + "" Nop
 + "&Restart" Restart
+
+## Tile menu
+DestroyMenu TileMenu
+AddToMenu   TileMenu "Tile" Title
++ "&Horizontal"       FvwmRearrange -tile -incx 15p -incy 5p -a -animate -r
++ "&Cascade"          FvwmRearrange -cascade -a
 
 ## Man menu
 DestroyMenu MenuFvwmManPages
@@ -223,6 +262,7 @@ AddToMenu   MenuFvwmManPages "Help" Title
 ## Window Operations Menus
 DestroyMenu MenuWindowOps
 AddToMenu   MenuWindowOps
++ "Tile"      FvwmRearrange -tile -incx 15p -incy 5p
 + "Move"      Move
 + "Resize"    Resize
 + "Iconify"   Iconify
@@ -302,20 +342,31 @@ AddToMenu   MenuSendToPage
 + "Page (1,1)"	MoveToPage 1 1
 
 # Keybinds
+## Disable default
+Key Tab A M -
+
 ## Utility
 Key Tab A 4 WindowList Root, MaxLabelWidth 15, NoGeometry, CurrentDesk, OnlyNormal
+Key i   A 4 WindowList Root, MaxLabelWidth 15, NoGeometry, CurrentDesk, OnlyIcons
 Key x   A 4 Module FvwmForm Run
 
+Mouse 8 A 4 WindowList Root, MaxLabelWidth 15, NoGeometry, CurrentDesk, OnlyIcons
+Mouse 9 A 4 WindowList Root, MaxLabelWidth 15, NoGeometry, CurrentDesk, OnlyNormal
+
 ## Spawning
-Key f A 4 Exec exec $[infostore.terminal]
-Key r A 4 Exec exec $[infostore.editor]
-Key Print A 4 Exec exec maim ~/stmp/ss/$(date +%Y-%m-%d-%H-%M-%S).png
+Key f A 4      Exec exec $[infostore.terminal]
+Key r A 4      Exec exec $[infostore.editor]
+Key r A S4     Exec exec $[infostore.editoralt]
+Key f A S4     Exec exec $[infostore.editoralt] --eval '(eshell)'
+Key Print A 4  Exec exec maim ~/stmp/ss/$(date +%Y-%m-%d-%H-%M-%S).png
 Key Print A S4 Exec exec maim -s ~/stmp/ss/$(date +%Y-%m-%d-%H-%M-%S).png
+Key z A S4     ToggleWidgets
 
 ## Windows
 Key x W S4  Close
 Key z W 4   Maximize
 Key v W 4   Iconify
+Key t A 4   Menu TileMenu This c c
 
 Key c W 4   AnimatedMove 50-50w    50-50w   Warp
 
@@ -373,7 +424,7 @@ Key XF86MonBrightnessDown A N Exec xbacklight -2
 ## Desks
 DestroyModuleConfig Desks:*
 *Desks: Geometry 90x100-5-5
-*Desks: Colorset 10
+*Desks: Colorset 14
 *Desks: Rows 	 5
 *Desks: Columns  1
 
@@ -389,9 +440,9 @@ DestroyModuleConfig Desks:*
 
 ### Pager
 DestroyModuleConfig FvwmPager:*
-*FvwmPager: Colorset * 3ls
-*FvwmPager: HilightColorset * 12
-*FvwmPager: WindowColorsets 10 11
+*FvwmPager: Colorset * 3
+*FvwmPager: HilightColorset * 14
+*FvwmPager: WindowColorsets 14 14
 *FvwmPager: Font       None
 *FvwmPager: Baloons    All
 *FvwmPager: BaloonFont $[va.DefaultFont]
@@ -400,11 +451,12 @@ DestroyModuleConfig FvwmPager:*
 
 ## DateNTime
 *FvwmScript-DateTime: Font $[vp.DefaultFont]
+*FvwmScript-DateTime: DefaultFont "xft:Go Mono:medium:size=12"
 
 DestroyModuleConfig TimeNDate:*
 *TimeNDate: DefaultFont $[infostore.font]
 *TimeNDate: Geometry 90x30-5+5
-*TimeNDate: Colorset 10
+*TimeNDate: Colorset 15
 *TimeNDate: Rows     $[vp.height]
 *TimeNDate: Columns  100Au
 *TimeNDate: Frame    10
@@ -419,13 +471,12 @@ DestroyModuleConfig TimeNDate:*
 DestroyModuleConfig Audio:*
 *Audio: Geometry 10x44+35-5
 # TODO - Doesn't work
-*Audio: DefaultFont "xft:Terminus (TTF):medium:size=12"
 
 ## Stats
 DestroyModuleConfig Stats:*
 *Stats: Geometry 10x44+35-5
 # TODO - Doesn't work
-*Stats: DefaultFont "xft:Terminus (TTF):medium:size=12"
+*Stats: DefaultFont "xft:Go Mono:medium:size=12"
 
 ## Run
 DestroyModuleConfig Run:*
@@ -433,7 +484,7 @@ DestroyModuleConfig Run:*
 *Run: InputFont $[infostore.font]
 *Run: ButtonFont $[infostore.font]
 *Run: Colorset 10
-*Run: ItemColorset 12
+*Run: ItemColorset 14
 *Run: WrapPointer
 *Run: Line center
 *Run: Input Command 20
