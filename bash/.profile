@@ -3,8 +3,8 @@
 #
 
 # Exports
-export PATH="/home/jarmusz/.nix-profile/bin:/usr/pkg/bin/usr/pkg/sbin:${PATH}:/home/jarmusz/.local/bin/:/home/jarmusz/.scripts:/sbin:/usr/sbin:/home/jarmusz/.local/share/coursier/bin"
-export MANPATH="/usr/pkg/man:$MANPATH"
+export PATH="/home/jarmusz/.nix-profile/bin:/usr/pkg/bin/usr/pkg/sbin:${PATH}:/home/jarmusz/.local/bin/:/home/jarmusz/.scripts:/sbin:/usr/sbin:/home/jarmusz/.local/share/coursier/bin:/home/jarmusz/.cargo/bin"
+export MANPATH="~/.local/share/man:/usr/pkg/man:$MANPATH"
 export TERMINAl="xterm"
 export BROWSER="firefox"
 export EDITOR="nvim"

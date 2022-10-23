@@ -1,4 +1,5 @@
 # -*- fvwm -*-
+# vim: ft=fvwm
 
 WindowTitle {FvwmScript Audio}
 WindowSize  90 44
@@ -7,12 +8,15 @@ Colorset    10
 
 Init
 Begin
-  Set $MasterCommand  = {amixer sget Master  | grep -o -m 1 "[0-9]\+%"}
-  Set $CaptureCommand = {amixer sget Capture | grep -o -m 1 "[0-9]\+%"}
 
-  Set $Master  = { } (GetOutput $MasterCommand  1 -1)
-  Set $Capture = { } (GetOutput $CaptureCommand 1 -1)
+	# s/ .*// removes [MUTED]
+	Set $MasterCommand  = {wpctl get-volume @DEFAULT_AUDIO_SINK@ | sed 's/.*\.//; s/ .*//'}
+	Set $CaptureCommand = {wpctl get-volume @DEFAULT_AUDIO_SOURCE@ | sed 's/.*\.//; s/ .*//'}
 
+  Set $Master  = { }(GetOutput $MasterCommand  1 -1)
+  Set $Capture = { }(GetOutput $CaptureCommand 1 -1)
+
+	# wpctl this
   If (GetOutput {amixer sget Master} 6 6)=={[off]} Then
      ChangeValue 1 0
   Else
@@ -29,8 +33,8 @@ End
 
 PeriodicTasks
 Begin
-  Set $Master  = { } (GetOutput $MasterCommand  1 -1)
-  Set $Capture = { }  (GetOutput $CaptureCommand  1 -1)
+  Set $Master  = { }(GetOutput $MasterCommand  1 -1)
+  Set $Capture = { }(GetOutput $CaptureCommand  1 -1)
 
   If (GetOutput {amixer sget Master} 6 6)=={[off]} Then
      ChangeValue 1 0
@@ -58,7 +62,7 @@ Main
   Case message of
    SingleClic :
    Begin
-     Do { Exec amixer -q set Master toggle }
+     Do {Exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle}
    End
 End
 
@@ -74,6 +78,6 @@ Main
   Case message of
    SingleClic :
    Begin
-     Do { Exec amixer -q set Capture toggle }
+     Do {Exec wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle}
    End
 End

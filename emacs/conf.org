@@ -58,7 +58,7 @@ I'm using [[https://github.com/raxod502/straight.el][straight.el]] to manage my 
            all-the-icons
            highlight-indent-guides
            org-superstar
-         
+
            ;; Language support
            d-mode
            fvwm-mode
@@ -70,7 +70,7 @@ I'm using [[https://github.com/raxod502/straight.el][straight.el]] to manage my 
            tree-sitter
            tree-sitter-langs
            tuareg
-         
+
            ;; Utility
            company
            edit-server
@@ -81,6 +81,7 @@ I'm using [[https://github.com/raxod502/straight.el][straight.el]] to manage my 
            neotree
            projectile
            undo-tree
+           yasnippet
            )))
     (dolist (pkg pkglist) (straight-use-package pkg)))
 #+end_src
@@ -290,6 +291,9 @@ Why isn't this the default?
     'eglot-ensure)
 
   (add-hook 'tuareg-mode-hook 'merlin-mode)
+#+end_src
+** Scala
+#+begin_src elisp
 #+end_src
 * Miscellaneous options
 ** Auto-save

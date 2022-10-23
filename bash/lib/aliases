@@ -3,7 +3,7 @@ sync_status() {
 	if sync; then
 		echo "OK"
 	else
-		return 1
+		return $?
 	fi
 }
 
@@ -19,6 +19,7 @@ alias ll="ls -l"
 alias la="ls -a"
 alias lla="ls -la"
 alias ns="ls -t"
+alias nsl="ls -lt"
 alias s="ls -sh"
 
 # Editors
@@ -43,9 +44,13 @@ alias cmd="WINEDEBUG=-all wine cmd"
 alias filter="grep -v"
 alias h="htop -C"
 alias mak="make"
+alias R="less -R"
 alias rmr="rm -r"
 alias ssr="sudo service"
 alias tcli="transmission-cli"
 alias uc="cp -u"
 alias umount="sync_status && umount"
 alias vim="nvim"
+
+# vim: filetype=sh
+

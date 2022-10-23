@@ -24,7 +24,7 @@ XTerm.vt100.translations: #override \n\
   Ctrl Shift <Key>+: larger-vt-font() \n\
   Ctrl <Key>-: smaller-vt-font() \n\
   Alt <Key>W: copy-selection(CLIPBOARD) \n\
-  Ctrl <Key>Y: insert-selection(CLIPBOARD) \n\
+  Alt <Key>Y: insert-selection(CLIPBOARD) \n\
 
 XTerm*OmitTranslation: fullscreen
 
@@ -38,7 +38,7 @@ XTerm*OmitTranslation: fullscreen
 
 !XTerm*faceName: Hack Regular
 !XTerm*faceSize: 9
-XTerm.vt100.font: xft:Go Mono:medium :size=10
+XTerm.vt100.font: xft:GoMono NF:medium :size=10
 
 ! Fuck the bell, nobody likes bell
 XTerm*visualBell: False

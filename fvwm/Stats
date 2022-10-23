@@ -1,8 +1,10 @@
-# -*- fvwm -*-
+#-*- fvwm -*-
+# vim: ft=fvwm
 
 WindowTitle {FvwmScript Stats}
 WindowSize  90 45
 WindowPosition	1261 110
+Colorset 10
 
 Init
  Begin

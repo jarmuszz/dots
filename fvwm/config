@@ -1,4 +1,5 @@
 # -*- fvwm -*-
+# vim: ft=fvwm
 
 # 1. Store
 # 2. Functions
@@ -10,7 +11,7 @@
 # 8. Modules
 
 # Store
-InfoStoreAdd terminal  xterm
+InfoStoreAdd terminal  tym
 InfoStoreAdd browser   firefox
 InfoStoreAdd editor    "lemacsclient -c"
 InfoStoreAdd editoralt "lemacs"
@@ -80,15 +81,15 @@ EdgeThickness  1
 Style * EdgeMoveDelay 0, EdgeMoveResistance 0
 
 ## Screen Padding
-#EwmhBaseStruts 5 110 5 5
-EwmhBaseStruts 5 5 5 5
+EwmhBaseStruts 5 110 5 5
+#EwmhBaseStruts 5 5 5 5
 
 ## Double click & Move
 ClickTIme     250
 MoveThreshold 3
 
 ## Window Placement & Focus
-Style * MinOverlapPlacement, UsePPosition, ClickToFocus, ClickToFocusRaisesOff
+Style * MinOverlapPlacement, UsePPosition
 
 ## IconBox
 Style * IconBox 100x600-5+180, NoUseIconPosition
@@ -125,7 +126,7 @@ Mouse 5 T A WindowShade False
 Mouse 2 A 4 Scroll reverse
 
 ## Icons
-Mouse 1 I A RaiseMove Move "Iconify off"
+Aouse 1 I A RaiseMove Move "Iconify off"
 
 ## Window-specific Styles
 Style Desks     !Title, Borders, !Handles, Sticky, \
@@ -136,7 +137,7 @@ Style Audio     !Title, Borders, !Handles, Sticky, \
       WindowListSkip, NeverFocus, FixedSize, FixedPosition, Layer 6
 Style Stats     !Title, Borders, !Handles, Sticky, \
       WindowListSkip, NeverFocus, FixedSize, FixedPosition, Layer 6
-Style Run       !Title, Borders, !Handles, Layer 6
+Style Run       !Title, Borders, !Handles, Layer 6, GrabFocus
 
 Style FvwmIdent WindowListSkip
 
@@ -197,7 +198,7 @@ Colorset 7  fg #ffffff, bg #ffffff, hi, sh, Plain, NoShape
 Colorset 8  fg #000000, bg #ffffff, hi, sh, Plain, NoShape
 
 ### Modules
-Colorset 10 fg #000000, bg #DCDCDC, hi #aaaaaa, sh #999999, Plain, NoShape
+Colorset 10 fg #bec5b2, bg #4a555b, hi #101a1f, sh #626262
 Colorset 11 fg #000000, bg #B4637A, hi #ffffff, sh #000000, Plain, NoShape
 Colorset 12 fg #2d2d2d, bg #999999, hi #cccccc, sh #4c4c4c
 Colorset 13 fg #000000, bg #ffffff, hi,         sh,         Plain, NoShape
@@ -219,6 +220,7 @@ AddToMenu   MenuFvwmRoot "Fvwm" Title
 + "&Browser" Exec exec $[infostore.browser]
 + "&Comunicator" Exec exec discord
 + "" Nop
++ "Stick"     Stick
 + "&Man pages" Popup MenuFvwmManPages
 + "&Iconify" Iconify
 + "&Fvwm Terminal" Module FvwmConsole -terminal $[infostore.terminal]
@@ -413,12 +415,19 @@ Key s A S4 MovetoPage 1 2
 Key d A S4 MovetoPage 2 2
 
 ## Media
-Key XF86AudioRaiseVolume A N  Exec amixer -q sset Master 2%+ unmute
-Key XF86AudioLowerVolume A N  Exec amixer -q sset Master 2%- unmute
-Key XF86AudioMute A N         Exec amixer -q sset Master toggle
-Key XF86AudioMute A 4         Exec amixer -q sset Capture toggle
-Key XF86MonBrightnessUp A N   Exec xbacklight +2
-Key XF86MonBrightnessDown A N Exec xbacklight -2
+### Out
+Key XF86AudioRaiseVolume   A N  Exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%+
+Key XF86AudioLowerVolume   A N  Exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-
+Key XF86AudioMute          A N  Exec wpctl set-mute   @DEFAULT_AUDIO_SINK@ toggle
+
+### In
+Key XF86AudioRaiseVolume   A 4  Exec wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 2%+
+Key XF86AudioLowerVolume   A 4  Exec wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 2%-
+Key XF86AudioMute          A 4  Exec wpctl set-mute   @DEFAULT_AUDIO_SOURCE@ toggle
+
+### Brightness
+Key XF86MonBrightnessUp    A N  Exec xbacklight +2
+Key XF86MonBrightnessDown  A N  Exec xbacklight -2
 
 # Modules
 ## Desks
@@ -456,7 +465,7 @@ DestroyModuleConfig FvwmPager:*
 DestroyModuleConfig TimeNDate:*
 *TimeNDate: DefaultFont $[infostore.font]
 *TimeNDate: Geometry 90x30-5+5
-*TimeNDate: Colorset 15
+*TimeNDate: Colorset 10
 *TimeNDate: Rows     $[vp.height]
 *TimeNDate: Columns  100Au
 *TimeNDate: Frame    10
@@ -475,6 +484,7 @@ DestroyModuleConfig Audio:*
 ## Stats
 DestroyModuleConfig Stats:*
 *Stats: Geometry 10x44+35-5
+*Stats: Colorset 10
 # TODO - Doesn't work
 *Stats: DefaultFont "xft:Go Mono:medium:size=12"
 
@@ -490,7 +500,7 @@ DestroyModuleConfig Run:*
 *Run: Input Command 20
 *Run: Button quit "Run" ^M
 *Run: Command Exec exec $(Command)
-*Run: Button quit "Cancel" ^G
+*Run: Button quit "Cancel" ^C
 
 ## FvwmIdent
 DestroyModuleConfig FvwmIdent:*
