@@ -38,7 +38,7 @@ XTerm*OmitTranslation: fullscreen
 
 !XTerm*faceName: Hack Regular
 !XTerm*faceSize: 9
-XTerm.vt100.font: xft:GoMono NF:medium :size=10
+XTerm.vt100.font: xft:DinaRemasterII :medium :size=12
 
 ! Fuck the bell, nobody likes bell
 XTerm*visualBell: False

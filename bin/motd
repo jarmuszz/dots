@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-info="`mpc current -f "%title%:%artist%:%album%"`"
+info="$(mpc current -f "%title%:%artist%:%album%")"
 
-[ -z "`mpc current 2>/dev/null`" ] && exit 1
+[ -z "$(mpc current 2>/dev/null)" ] && exit 1
 
 IFS=:
 read song artist album <<<"$info"

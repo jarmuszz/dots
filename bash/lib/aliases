@@ -23,11 +23,10 @@ alias nsl="ls -lt"
 alias s="ls -sh"
 
 # Editors
-alias e="emacs -nw"
-alias se="sudo emacs -nw"
 alias v="nvim"
 alias n="nvim"
 alias sv="sudo nvim"
+alias svim="sudo nvim"
 alias vv="nvim -S Session.vim"
 
 # Programming
@@ -40,17 +39,20 @@ alias n2s='tr "\n" " "'
 
 # Shorthands
 alias ..="cd .."
+alias chez="chezscheme"
+alias clr='grim -g "$(slurp -p)" -t ppm - | convert - -format '%[pixel:p{0,0}]' txt:-'
 alias cmd="WINEDEBUG=-all wine cmd"
+alias cpr="cp -r"
 alias filter="grep -v"
+alias g="git"
 alias h="htop -C"
 alias mak="make"
-alias R="less -R"
+alias R="less -XR"
 alias rmr="rm -r"
-alias ssr="sudo service"
 alias tcli="transmission-cli"
 alias uc="cp -u"
 alias umount="sync_status && umount"
+alias w1="watch -n 1 "
 alias vim="nvim"
 
 # vim: filetype=sh
-

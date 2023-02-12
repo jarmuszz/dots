@@ -1,6 +1,9 @@
 ;; Imports
 (local kbd (require :kbd))
 
+;;; A temporary workaround. A table field cannot be
+;;; localy reasigned in a `let` expression.
+;(set package.path (.. package.path ";/home/jarmusz/.nix-profile/share/lua/5.2/fennel.lua"))
 (local fennel (require :fennel))
 
 ;; Config auto compilation
@@ -20,11 +23,6 @@
   "BufWritePost"
   {:pattern "*kbd.fnl"
    :callback (compile "kbd.fnl" "lua/kbd.lua")})
-
-(vim.api.nvim_create_autocmd 
-  "BufWritePost"
-  {:pattern "*util.fnl"
-   :callback (compile "util.fnl" "lua/util.lua")})
 
 ;; Packages
 (local packer (require :packer))
@@ -48,9 +46,10 @@
   "kyazdani42/nvim-web-devicons"
   "pigpigyyy/Yuescript-vim"
   "lukas-reineke/indent-blankline.nvim"
-
   "tpope/vim-repeat"
   "ggandor/leap.nvim"
+  "anuvyklack/hydra.nvim"
+  "cshuaimin/ssr.nvim"
   )
 
 ;;; Setup 
@@ -61,9 +60,9 @@
  {:highlight {:enable true}
   :indent {:enable true}
   :ensure_installed 
-    ["bash"	 "lua"	 "commonlisp"
-     "rust"	 "c"	 "scala"
-     "fennel"
+    ["bash"   "lua"     "commonlisp"
+     "rust"   "c"       "cpp"
+     "scala"  "fennel"  "ocaml"
      ]})
 
 (setup :nvim-tree
@@ -97,7 +96,35 @@
      :init_options 
       {:compilerOptions 
        {:snippetAutoIndent true}}})
+  (lsp-req.ocamllsp.setup {:on_attach on-attach})
   (lsp-req.rust_analyzer.setup {:on_attach on-attach}))
+
+;;; Hydra
+(let [hydra (require :hydra)
+      hint "
+      ^   Options
+      ^ 
+      _s_ %{spell} spell
+      _p_: polski
+      _e_: english
+      _d_: Deutsch
+      ^
+      ^                 _<Esc>_
+      "
+      ]
+  (hydra {:name "Spell"
+          :hint hint
+          :config {:invoke_on_body true
+                   :hint {:border :rounded
+                          :position :middle}}
+          :mode :n
+          :body :<M-s>
+          :heads
+            [[:s (fn [] (set vim.o.spell (not vim.o.spell)))]
+             [:p (fn [] (set vim.opt_local.spelllang "pl"))]
+             [:e (fn [] (set vim.opt_local.spelllang "en_us"))]
+             [:d (fn [] (set vim.opt_local.spelllang "de"))]
+             ]}))
 
 ;; Options
 (macro vset [...]
@@ -126,7 +153,6 @@
   :wrap
   :autoindent
   :smartindent
-  [:foldmethod :=syntax]
   
   :splitbelow
   :splitright
@@ -147,6 +173,10 @@
 
 ;; Appearance
 ;;; Theme
+(vset 
+  [:background :=light]
+  )
+(set vim.g.everforest_background :hard)
 (set vim.g.everforest_better_performance 1)
 (vim.cmd "colo everforest")
 
@@ -155,3 +185,4 @@
   [:laststatus :=2]
   [:statusline "=%f%r%m\\ [%l/%L]\\ [%c]"]
   )
+

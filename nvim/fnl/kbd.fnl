@@ -13,17 +13,18 @@
 (macro vkmap [t ?opts] `(kmap ,t "v" ,(or ?opts nil)))
 (macro tkmap [t ?opts] `(kmap ,t "t" ,(or ?opts nil)))
 
+(fn ssr-open  [] 
+  ((. (require :ssr) :open)))
+
 (fn lsp [?opts]
-  ;(ikmap
-  ;  {:<C-n> vim.lsp.buf.completion})
   (nkmap 
-    {:gd        vim.lsp.buf.declaration 
-     :gD        vim.lsp.buf.definition
-     :<space>ls vim.lsp.buf.signature_help
-     :<space>lt vim.lsp.buf.type_definition
-     :<space>o  vim.diagnostic.open_float
-     :K         vim.lsp.buf.hover
-     :<space>R  vim.lsp.buf.references
+    {:gd         vim.lsp.buf.declaration 
+     :gD         vim.lsp.buf.definition
+     :<leader>ls vim.lsp.buf.signature_help
+     :<leader>lt vim.lsp.buf.type_definition
+     :<leader>o  vim.diagnostic.open_float
+     :K          vim.lsp.buf.hover
+     :<leader>R  vim.lsp.buf.references
      }
     (or opts {:noremap false}))
   (ikmap
@@ -32,12 +33,12 @@
 
 (nkmap
  {;; Buffers
-  "<space>," ":bn<CR>"
-  :<space>. ":bp<CR>"
-  :<space>bb ":buffers<CR>"
-  :<space>B  ":buffer "
-  :<space>bd ":bd<CR>"
-  :<space>bD ":bd!<CR>"
+  "<leader>," ":bn<CR>"
+  :<leader>.  ":bp<CR>"
+  :<leader>bb ":buffers<CR>"
+  :<leader>B  ":buffer "
+  :<leader>bd ":bd<CR>"
+  :<leader>bD ":bd!<CR>"
 
   ;; Windows
   :<m-h>  "<C-w>h"
@@ -77,16 +78,29 @@
   ;; Leap
   :<C-s>     "<Plug>(leap-forward)"
   :<C-A-S>   "<Plug>(leap-backward)"
-  :<space>s  "<Plug>(leap-cross-window)"
+  :<leader>d "<Plug>(leap-cross-window)"
+  
+  ;; SSR
+  :<F2>      ssr-open
+
+
+  ;; Acme
+  :<RightMouse> "<LeftMouse><LeftMouse>*"
 
 
   ;; Misc
-  :<space>/ ":noh<CR>"
+  :<leader>/ ":noh<CR>"
   :<f12>    ":NvimTreeToggle<CR>"
   })
 
 (vkmap
   {:<C-y> "\"+y"
+
+  ;; SSR
+  :<F2>      ssr-open
+
+  ;; Acme
+  :<RightMouse> "yq/p<CR>"
    }
   {:noremap true})
 
