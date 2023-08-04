@@ -3,19 +3,21 @@ map() {
 	while read -r args; do $@ $args; done
 }
 
-lam() {
-	# Lambda
+fun() {
+	# Inline function
 	[ -z "$1" ] && return 1
 
-	fname="l$(head -1 /dev/urandom | sha1)"
-	eval "$fname"'()' "{ $1; }"
+	fName="lambda-$(mcookie)"
+	eval "${fName}() { ${1}; }"
 	shift
-	$fname $@
+	$fName $@
 
-	unset -f $fname 
-	unset -v fname
+	unset -f $fName
+	unset -v fName
 }
 
+alias ?="fun"
+
 lmap() {
-	map "lam $@ $(cat /dev/stdin)"
+	while read -r args; do fun "$@" "$args"; done
 }

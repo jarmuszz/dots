@@ -15,6 +15,7 @@ set $right l
 
 # Your preferred terminal emulator
 set $term foot
+set $filemanager thunar
 
 # Wallapaper
 set $wallpaper ~/other/wallpapers/flcl1.png
@@ -52,14 +53,13 @@ output * bg $wallpaper fill
 ### Input configuration
 #
 input "2:7:SynPS/2_Synaptics_TouchPad" {
-#	events disabled
+	events disabled
 	accel_profile flat
 	natural_scroll enable
 	scroll_factor 0.35
 }
 
 input "type:keyboard" {
-	xkb_options caps:swapescape
 	xkb_layout pl
 }
 
@@ -74,12 +74,16 @@ input "type:keyboard" {
 #
 # Start a terminal
 bindsym $mod+Return exec $term
+bindsym $mod+Shift+Return exec $term --title="foot - floating"
 
 # Kill focused window
 bindsym $mod+Shift+x kill
 
 # Start your launcher
 bindsym $mod+d exec $menu
+
+# Lock screen
+bindsym $mod+Ctrl+Shift+l exec swaylock -c fffbef -k -l 
 
 # Drag floating windows by holding down $mod and left mouse button.
 # Resize them with right mouse button + $mod.
@@ -180,20 +184,26 @@ bindsym $mod+minus scratchpad show
 ## Out
 bindsym XF86AudioRaiseVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%+
 bindsym XF86AudioLowerVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-
-bindsym XF86AudioMute exec wpctl set-mute   @DEFAULT_AUDIO_SINK@ toggle
+bindsym XF86AudioMute        exec wpctl set-mute   @DEFAULT_AUDIO_SINK@ toggle
+
+bindsym --locked XF86MonBrightnessDown exec brightnessctl set 2%-
+bindsym --locked XF86MonBrightnessUp   exec brightnessctl set 2%+
+
 
 ## In
 bindsym $mod+XF86AudioRaiseVolume exec wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 2%+
 bindsym $mod+XF86AudioLowerVolume exec wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 2%-
-bindsym XF86AudioMicMute exec wpctl set-mute   @DEFAULT_AUDIO_SOURCE@ toggle
+bindsym XF86AudioMicMute          exec wpctl set-mute   @DEFAULT_AUDIO_SOURCE@ toggle
 
-bindsym --locked XF86MonBrightnessDown exec brightnessctl set 2%-
-bindsym --locked XF86MonBrightnessUp exec brightnessctl set 2%+
+## Screenshots
+bindsym $mod+Print						exec grimshot save screen ~/stmp/ss/$(date +%Y-%m-%d-%H-%M-%S).png
+bindsym $mod+Shift+Print			exec grimshot save area ~/stmp/ss/$(date +%Y-%m-%d-%H-%M-%S).png
+bindsym $mod+Ctrl+Print				exec grimshot copy area
+bindsym $mod+Ctrl+Shift+Print	exec grimshot save window ~/stmp/ss/$(date +%Y-%m-%d-%H-%M-%S).png
 
-bindsym $mod+Print exec grimshot save screen ~/stmp/ss/$(date +%Y-%m-%d-%H-%M-%S).png
-bindsym $mod+Shift+Print exec grimshot save area ~/stmp/ss/$(date +%Y-%m-%d-%H-%M-%S).png
-bindsym $mod+Ctrl+Shift+Print exec grimshot save window ~/stmp/ss/$(date +%Y-%m-%d-%H-%M-%S).png
-bindsym $mod+Ctrl+Print exec grimshot copy area
+
+# Swaync
+bindsym $mod+p exec swaync-client -t
 
 
 #
@@ -221,7 +231,8 @@ bindsym $mod+r mode "resize"
 #
 # Read `man 5 sway-bar` for more information about this section.
 bar {
-		font "DinaRemasterII+ 12"
+		#font "DinaRemasterII+ 12"
+		font Liga GoMono 10
     position top
 
     # When the status_command prints a new line to stdout, swaybar updates.
@@ -230,8 +241,8 @@ bar {
 
     colors {
         statusline #5c6a72
-        background #FFF9E8
-        inactive_workspace #5c6a72 #FFF9E8 #5c5c5c
+        background #FFFBEF
+        inactive_workspace #5c6a72 #FFFBEF #5c5c5c
 				focused_workspace #323232 #35a77c #ffffff
     }
 }
@@ -243,13 +254,22 @@ gaps inner 5
 default_border pixel 5
 
 # Colors:
-client.focused #e7ede5 #35a77c #ffffff
+client.focused   #e7ede5 #35a77c #ffffff #7FBBB3
+client.unfocused #35a77c #5C6A72 #ffffff #7FBBB3
 
 # Font
-font "DinaRemasterII+ 12"
+font Liga GoMono 10
+
+# Floating foot
+for_window [title="foot - floating"] floating enable
 
 # Autostart
 exec ~/.scripts/startpw
 exec clangd
 exec ocamllsp
 exec mpd
+exec evremap remap ~/.config/evremap.ini
+exec swaync
+exec syncthing
+exec /usr/lib/x86_64-linux-gnu/libexec/kdeconnectd	# Debian specific I think
+exec_always rm -f /tmp/sovpipe && mkfifo /tmp/sovpipe && tail -f /tmp/sovpipe | sov -t 500

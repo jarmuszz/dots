@@ -1,4 +1,5 @@
 vim.g.mapleader = " "
+local leap = require("leap")
 local function ssr_open()
   return (require("ssr")).open()
 end
@@ -11,7 +12,13 @@ local function lsp(_3fopts)
   end
   return nil
 end
-for k_2_auto, v_3_auto in pairs({["<leader>,"] = ":bn<CR>", ["<leader>."] = ":bp<CR>", ["<leader>bb"] = ":buffers<CR>", ["<leader>B"] = ":buffer ", ["<leader>bd"] = ":bd<CR>", ["<leader>bD"] = ":bd!<CR>", ["<m-h>"] = "<C-w>h", ["<m-j>"] = "<C-w>j", ["<m-k>"] = "<C-w>k", ["<m-l>"] = "<C-w>l", ["<m-1>"] = "1gt", ["<m-2>"] = "2gt", ["<m-3>"] = "3gt", ["<m-4>"] = "4gt", ["<m-5>"] = "5gt", ["<m-6>"] = "6gt", ["<m-7>"] = "7gt", ["<m-8>"] = "8gt", ["<m-9>"] = "9gt", ["<m-0>"] = "0gt", ["<m-->"] = ":tabclose<CR>", ["<m-=>"] = ":tabnew<CR>", ["<m-+>"] = ":tabedit", ["<C-a>"] = "<home>", ["<C-e>"] = "<end>", ["<C-f>"] = "<right>", ["<C-b>"] = "<left>", ["<m-f>"] = "<S-right>", ["<m-b>"] = "<S-left>", ["<leader>senus"] = ":setlocal spell! spelllang=en_us<CR>", ["<leader>spl"] = ":setlocal spell! spelllang=pl<CR>", ["<leader>sde"] = ":setlocal spell! spelllang=de<CR>", ["<leader>sno"] = ":set nospell<CR>", ["<C-s>"] = "<Plug>(leap-forward)", ["<C-A-S>"] = "<Plug>(leap-backward)", ["<leader>d"] = "<Plug>(leap-cross-window)", ["<F2>"] = ssr_open, ["<RightMouse>"] = "<LeftMouse><LeftMouse>*", ["<leader>/"] = ":noh<CR>", ["<f12>"] = ":NvimTreeToggle<CR>"}) do
+local function _1_()
+  return leap.leap(leap.opts)
+end
+local function _2_()
+  return leap.leap({backward = true})
+end
+for k_2_auto, v_3_auto in pairs({["<leader>,"] = ":bn<CR>", ["<leader>."] = ":bp<CR>", ["<leader>bb"] = ":buffers<CR>", ["<leader>B"] = ":buffer ", ["<leader>bd"] = ":bd<CR>", ["<leader>bD"] = ":bd!<CR>", ["<m-h>"] = "<C-w>h", ["<m-j>"] = "<C-w>j", ["<m-k>"] = "<C-w>k", ["<m-l>"] = "<C-w>l", ["<m-1>"] = "1gt", ["<m-2>"] = "2gt", ["<m-3>"] = "3gt", ["<m-4>"] = "4gt", ["<m-5>"] = "5gt", ["<m-6>"] = "6gt", ["<m-7>"] = "7gt", ["<m-8>"] = "8gt", ["<m-9>"] = "9gt", ["<m-0>"] = "0gt", ["<m-->"] = ":tabclose<CR>", ["<m-=>"] = ":tabnew<CR>", ["<m-+>"] = ":tabedit", ["<C-a>"] = "<home>", ["<C-e>"] = "<end>", ["<C-f>"] = "<right>", ["<C-b>"] = "<left>", ["<m-f>"] = "<S-right>", ["<m-b>"] = "<S-left>", ["<leader>senus"] = ":setlocal spell! spelllang=en_us<CR>", ["<leader>spl"] = ":setlocal spell! spelllang=pl<CR>", ["<leader>sde"] = ":setlocal spell! spelllang=de<CR>", ["<leader>sno"] = ":set nospell<CR>", ["<C-s>"] = _1_, ["<C-A-S>"] = _2_, ["<leader>d"] = "<Plug>(leap-cross-window)", ["<F2>"] = ssr_open, ["<RightMouse>"] = "<LeftMouse><LeftMouse>*", ["<leader>/"] = ":noh<CR>", ["<f12>"] = ":NvimTreeToggle<CR>"}) do
   vim.keymap.set("n", k_2_auto, v_3_auto, {noremap = false})
 end
 for k_2_auto, v_3_auto in pairs({["<C-y>"] = "\"+y", ["<F2>"] = ssr_open, ["<RightMouse>"] = "yq/p<CR>"}) do

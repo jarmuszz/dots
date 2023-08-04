@@ -1,28 +1,30 @@
 ;; Imports
 (local kbd (require :kbd))
-
-;;; A temporary workaround. A table field cannot be
-;;; localy reasigned in a `let` expression.
-;(set package.path (.. package.path ";/home/jarmusz/.nix-profile/share/lua/5.2/fennel.lua"))
 (local fennel (require :fennel))
 
 ;; Config auto compilation
 ;;; TODO: compiles only once for a session (?)
 (macro compile [in out]
-  `(λ []
-     (with-open [in# (io.open ,(.. "/home/jarmusz/.config/nvim/fnl/" in) :r)
-                 out# (io.open ,(.. "/home/jarmusz/.config/nvim/" out) :w)]
-       (out#:write (pick-values 1 (fennel.compileString (in#:read :*a)))))))
+   `(with-open [in# (io.open ,(.. "/home/jarmusz/.config/nvim/fnl/" in) :r)
+                out# (io.open ,(.. "/home/jarmusz/.config/nvim/" out) :w)]
+     (out#:write (pick-values 1 (fennel.compileString (in#:read :*a))))))
 
-(vim.api.nvim_create_autocmd 
-  "BufWritePost"
-  {:pattern "*init.fnl"
-   :callback (compile "init.fnl" "init.lua")})
+(vim.api.nvim_create_user_command 
+  "CompileInit"
+  (fn [] (compile "init.fnl" "init.lua")) {})
 
-(vim.api.nvim_create_autocmd 
-  "BufWritePost"
-  {:pattern "*kbd.fnl"
-   :callback (compile "kbd.fnl" "lua/kbd.lua")})
+(vim.api.nvim_create_user_command 
+  "CompileKbd"
+  (fn [] (compile "kbd.fnl" "lua/kbd.lua")) {})
+
+
+(vim.api.nvim_create_user_command 
+  "Foo"
+  (fn []
+    (let [regstart (vim.fn.getpos "'<")
+          regend   (vim.fn.getpos "'>")]
+      (print (?. regstart31) regend)))
+  {})
 
 ;; Packages
 (local packer (require :packer))
@@ -50,6 +52,7 @@
   "ggandor/leap.nvim"
   "anuvyklack/hydra.nvim"
   "cshuaimin/ssr.nvim"
+  "ziglang/zig.vim"
   )
 
 ;;; Setup 
@@ -60,9 +63,10 @@
  {:highlight {:enable true}
   :indent {:enable true}
   :ensure_installed 
-    ["bash"   "lua"     "commonlisp"
-     "rust"   "c"       "cpp"
-     "scala"  "fennel"  "ocaml"
+    ["bash"    "lua"     "commonlisp"
+     "rust"    "c"       "cpp"
+     "scala"   "fennel"  "ocaml"
+     "haskell" "elvish"
      ]})
 
 (setup :nvim-tree
@@ -97,7 +101,10 @@
       {:compilerOptions 
        {:snippetAutoIndent true}}})
   (lsp-req.ocamllsp.setup {:on_attach on-attach})
-  (lsp-req.rust_analyzer.setup {:on_attach on-attach}))
+  (lsp-req.rust_analyzer.setup {:on_attach on-attach})
+  (lsp-req.hls.setup 
+    {:on_attach on-attach 
+     :filetypes ["haskell" "lhaskell" "cabal"]}))
 
 ;;; Hydra
 (let [hydra (require :hydra)
@@ -185,4 +192,3 @@
   [:laststatus :=2]
   [:statusline "=%f%r%m\\ [%l/%L]\\ [%c]"]
   )
-

@@ -3,14 +3,13 @@
 #
 
 # Exports
-export PATH="/home/jarmusz/.nix-profile/bin:/usr/pkg/bin/usr/pkg/sbin:${PATH}:/home/jarmusz/.local/bin/:/home/jarmusz/.scripts:/sbin:/usr/sbin:/home/jarmusz/.local/share/coursier/bin:/home/jarmusz/.cargo/bin"
+export PATH="/home/jarmusz/.local/bin/:${PATH}:/home/jarmusz/.nix-profile/bin:/usr/pkg/bin/usr/pkg/sbin:/home/jarmusz/.scripts:/sbin:/usr/sbin:/home/jarmusz/.local/share/coursier/bin:/home/jarmusz/.cargo/bin:/home/jarmusz/.ghcup/bin"
 export MANPATH="~/.local/share/man:/usr/pkg/man:$MANPATH"
 export TERMINAL="tym"
 export BROWSER="firefox"
 export EDITOR="nvim"
-export VISUAL="nvim"
+export VISUAL="codium"
 export PAGER="less"
-
 
 # XDG
 export XDG_CONFIG_HOME="/home/jarmusz/.config"

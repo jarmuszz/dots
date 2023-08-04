@@ -1,4 +1,5 @@
 (set vim.g.mapleader " ")
+(local leap (require :leap))
 
 (macro kmap [t ?mode ?opts]
   `(each [k# v# (pairs ,t)]
@@ -76,8 +77,8 @@
   :<leader>sno	 ":set nospell<CR>"
 
   ;; Leap
-  :<C-s>     "<Plug>(leap-forward)"
-  :<C-A-S>   "<Plug>(leap-backward)"
+  :<C-s>     (fn [] (leap.leap leap.opts))
+  :<C-A-S>   (fn [] (leap.leap {:backward true}))
   :<leader>d "<Plug>(leap-cross-window)"
   
   ;; SSR
@@ -90,7 +91,7 @@
 
   ;; Misc
   :<leader>/ ":noh<CR>"
-  :<f12>    ":NvimTreeToggle<CR>"
+  :<f12>     ":NvimTreeToggle<CR>"
   })
 
 (vkmap
